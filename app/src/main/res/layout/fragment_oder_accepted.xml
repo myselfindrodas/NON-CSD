@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.OderAcceptedFragment">
+
+
+
+    <include
+        android:id="@+id/topnav"
+        layout="@layout/topnavbar" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topnav">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_15sdp"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/order_place_icon"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Your Order has Been \nAccepted"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/blue"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_16sdp" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Your Items has Placed and is on its way to being Processed."
+                android:fontFamily="@font/poppins_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_12sdp" />
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/rounded_blue_bg_btn"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Track Order"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvForgetPass" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Back to Home"
+                android:textColor="@color/orange"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="@dimen/_16sdp" />
+
+
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+
+</RelativeLayout>
+</layout>

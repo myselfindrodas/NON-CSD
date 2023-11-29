@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.FAQsFragment">
+
+    <include
+        android:id="@+id/topnav"
+        layout="@layout/topnavbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProductList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topnav"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        tools:listitem="@layout/faq_support_item"
+        tools:itemCount="5"
+        android:layout_marginRight="@dimen/_10sdp" />
+
+    <!--<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topnav">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. How to Check status of My Order"
+            android:layout_weight="0.1"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/_12ssp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:text="Receive notification relat to order status, payment and support Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudian dum. Quod si ita se habeat, non possit beatam praestare vitam sapientia."
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="@dimen/_10ssp" />
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. How to Check status of My Order"
+            android:layout_weight="0.1"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/_12ssp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:text="Receive notification relat to order status, payment and support Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudian dum. Quod si ita se habeat, non possit beatam praestare vitam sapientia."
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="@dimen/_10ssp" />
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. How to Check status of My Order"
+            android:layout_weight="0.1"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/_12ssp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:text="Receive notification relat to order status, payment and support Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudian dum. Quod si ita se habeat, non possit beatam praestare vitam sapientia."
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="@dimen/_10ssp" />
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. How to Check status of My Order"
+            android:layout_weight="0.1"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/_12ssp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:text="Receive notification relat to order status, payment and support Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudian dum. Quod si ita se habeat, non possit beatam praestare vitam sapientia."
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="@dimen/_10ssp" />
+
+
+
+
+    </LinearLayout>
+
+
+    </ScrollView>-->
+
+
+</RelativeLayout>
+</layout>

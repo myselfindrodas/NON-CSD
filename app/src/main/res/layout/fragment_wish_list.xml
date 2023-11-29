@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.WishListFragment">
+
+    <include
+        android:id="@+id/topnav"
+        layout="@layout/topnavbar2" />
+
+
+    <include
+        android:id="@+id/nodata"
+        layout="@layout/nodatalayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginStart="@dimen/_18sdp"
+        android:layout_marginEnd="@dimen/_18sdp"
+        android:layout_below="@+id/topnav"
+        android:id="@+id/llTotalQty"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvsubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_vertical"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/_11ssp"/>
+
+        <LinearLayout
+            android:id="@+id/llfilersort"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_25sdp"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center_vertical"
+                android:text="Filter by"
+                android:id="@+id/btnFilter"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:background="@drawable/rounded_grey_bg_btn"
+                android:drawableStart="@drawable/ic_filter_alt_24"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_8ssp"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_25sdp"
+                android:drawablePadding="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:id="@+id/btnSort"
+                android:gravity="center_vertical"
+                android:text="Sort by"
+                android:background="@drawable/rounded_grey_bg_btn"
+                android:drawableStart="@drawable/ic_sort"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_8ssp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvWishlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llTotalQty"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp" />
+
+
+</RelativeLayout>
+</layout>

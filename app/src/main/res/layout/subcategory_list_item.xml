@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvSubCategoryItemname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daawat biryani rice"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/_10ssp"
+        android:layout_margin="@dimen/_8sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:layout_centerVertical="true"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_light"/>
+
+</LinearLayout>

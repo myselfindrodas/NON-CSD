@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.grocery.sainik_grocery.ui.fragment.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
+
+    <fragment
+        android:id="@+id/nav_productlist"
+        android:name="com.grocery.sainik_grocery.ui.fragment.ProductListFragment"
+        android:label="Product List"
+        tools:layout="@layout/fragment_product_list" />
+
+
+    <fragment
+        android:id="@+id/nav_add_card"
+        android:name="com.grocery.sainik_grocery.ui.fragment.AddCardsFragment"
+        android:label="Product List"
+        tools:layout="@layout/fragment_add_cards" />
+
+
+    <fragment
+        android:id="@+id/nav_save_card"
+        android:name="com.grocery.sainik_grocery.ui.fragment.SavedCardsFragment"
+        android:label="Product List"
+        tools:layout="@layout/fragment_saved_cards" />
+
+
+
+    <fragment
+        android:id="@+id/nav_sort_by"
+        android:name="com.grocery.sainik_grocery.ui.fragment.SortByFragment"
+        android:label="Product List"
+        tools:layout="@layout/fragment_sort_by" />
+
+    <fragment
+        android:id="@+id/nav_filter_by"
+        android:name="com.grocery.sainik_grocery.ui.fragment.FilterFragment"
+        android:label="Product List"
+        tools:layout="@layout/fragment_filter" />
+
+    <fragment
+        android:id="@+id/nav_cart"
+        android:name="com.grocery.sainik_grocery.ui.fragment.CartFragment"
+        android:label="Product List"
+        tools:layout="@layout/fragment_cart" />
+
+
+
+    <fragment
+        android:id="@+id/nav_support"
+        android:name="com.grocery.sainik_grocery.ui.fragment.SupportFragment"
+        android:label="Helps and support"
+        tools:layout="@layout/fragment_support" />
+
+
+    <fragment
+        android:id="@+id/nav_faq"
+        android:name="com.grocery.sainik_grocery.ui.fragment.FAQsFragment"
+        android:label="FAQs"
+        tools:layout="@layout/fragment_f_a_qs" />
+
+
+    <fragment
+        android:id="@+id/nav_myorder"
+        android:name="com.grocery.sainik_grocery.ui.fragment.MyOrderFragment"
+        android:label="FAQs"
+        tools:layout="@layout/fragment_myorder" />
+
+    <fragment
+        android:id="@+id/nav_order_details"
+        android:name="com.grocery.sainik_grocery.ui.fragment.OrderDetailsFragment"
+        android:label="FAQs"
+        tools:layout="@layout/fragment_order_details" />
+
+
+    <fragment
+        android:id="@+id/nav_order_summery"
+        android:name="com.grocery.sainik_grocery.ui.fragment.OrderSummaryFragment"
+        android:label="FAQs"
+        tools:layout="@layout/fragment_order_summary" />
+
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.grocery.sainik_grocery.ui.fragment.ProfileFragment"
+        android:label="My Profile"
+        tools:layout="@layout/fragment_profile" />
+
+
+    <fragment
+        android:id="@+id/nav_notification"
+        android:name="com.grocery.sainik_grocery.ui.fragment.NotificationFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/nav_address"
+        android:name="com.grocery.sainik_grocery.ui.fragment.AddressFragment"
+        android:label="Address"
+        tools:layout="@layout/fragment_address" />
+
+
+    <fragment
+        android:id="@+id/nav_addaddress"
+        android:name="com.grocery.sainik_grocery.ui.fragment.AddAddressFragment"
+        android:label="Add Address"
+        tools:layout="@layout/fragment_add_address" />
+
+
+    <fragment
+        android:id="@+id/nav_productdetails"
+        android:name="com.grocery.sainik_grocery.ui.fragment.ProductDetailsFragment"
+        android:label="Product Details"
+        tools:layout="@layout/fragment_product_details" />
+
+
+    <fragment
+        android:id="@+id/nav_wishlist"
+        android:name="com.grocery.sainik_grocery.ui.fragment.WishListFragment"
+        android:label="Wish List"
+        tools:layout="@layout/fragment_wish_list" />
+
+    <fragment
+        android:id="@+id/nav_returnorder"
+        android:name="com.grocery.sainik_grocery.ui.fragment.ReturnOrderFragment"
+        android:label="Return order"
+        tools:layout="@layout/fragment_return_order" />
+
+</navigation>

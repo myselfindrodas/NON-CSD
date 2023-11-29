@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.AddAddressFragment">
+
+    <include
+        android:id="@+id/topnav"
+        layout="@layout/topnavbar" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topnav">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="House No"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_12ssp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/blue"
+                    android:id="@+id/etHouseNo"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:fontFamily="@font/poppins_semibold"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Landmark"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_12ssp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:id="@+id/etLandmark"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Street Details"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_12ssp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/blue"
+                android:id="@+id/etStreeDetails"
+                android:backgroundTint="@android:color/darker_gray"
+                android:fontFamily="@font/poppins_semibold"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Area Details"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_12ssp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/blue"
+                android:id="@+id/etAreaDetails"
+                android:backgroundTint="@android:color/darker_gray"
+                android:fontFamily="@font/poppins_semibold"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="City / District"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_12ssp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/blue"
+                    android:id="@+id/etCity"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:fontFamily="@font/poppins_semibold"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pincode"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_12ssp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:id="@+id/etPinCode"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Nick Name for This Address"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_12ssp"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnAddresshome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_orange_border"
+                    android:text="Home"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
+                    android:layout_weight="1"
+                    android:textColor="@color/orange"
+                    android:fontFamily="@font/poppins_medium"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnAddressoffice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_orange_border"
+                    android:text="OFFICE"
+                    android:layout_margin="@dimen/_7sdp"
+                    android:layout_weight="1"
+                    android:textColor="@color/orange"
+                    android:fontFamily="@font/poppins_medium"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnOther"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_orange_border"
+                    android:text="OTHER"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:textColor="@color/orange"
+                    android:fontFamily="@font/poppins_medium"/>
+
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llenteraddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nick Name this Address as"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_12ssp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_14ssp"
+                android:id="@+id/etOtherType"
+                android:textColor="@color/blue"
+                android:backgroundTint="@android:color/darker_gray"
+                android:fontFamily="@font/poppins_semibold"/>
+
+        </LinearLayout>
+
+
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_55sdp"
+            android:layout_marginBottom="@dimen/_35sdp"
+            android:background="@drawable/rounded_blue_bg_btn"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Add Address"
+            android:textColor="@color/white"
+            android:id="@+id/btnAddAddress"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvForgetPass" />
+
+
+
+
+
+
+    </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>
+</layout>

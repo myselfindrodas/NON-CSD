@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_2sdp"
+    android:layout_marginTop="@dimen/_2sdp"
+    app:cardCornerRadius="@dimen/_7sdp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:padding="@dimen/_4sdp"
+            android:gravity="center_vertical"
+            android:id="@+id/llTitle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvTitle"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="How to Check status of My Order"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_10ssp" />
+
+
+            <ImageView
+                android:id="@+id/btnMyoderexpand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotation="90"
+                android:src="@drawable/ic_arrow_right" />
+
+
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvSubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Receive notification relat to order status, payment and support Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudian dum. Quod si ita se habeat, non possit beatam praestare vitam sapientia."
+            android:textSize="@dimen/_8ssp"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

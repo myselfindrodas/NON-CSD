@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_120sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_10sdp">
+
+
+
+
+        <LinearLayout
+            android:id="@+id/llHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@drawable/grey_border_rounded"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvaddressTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="HOME"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/tvaddressfull"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Lorem Ipsum is simply 4031 Haymond Rocks Road Medford, OR 9750"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_11ssp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_25sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:id="@+id/btnhomeAddaddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:background="@drawable/rounded_orange_bg_btn">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10ssp"
+                            android:textAllCaps="false"
+                            android:textAlignment="center"
+                            android:text="Edit"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/btnDelete"
+                        android:backgroundTint="@color/red"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/rounded_blue_bg_btn">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10ssp"
+                            android:textAllCaps="false"
+                            android:textAlignment="center"
+                            android:text="Delete"/>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
+
+            <RadioButton
+                android:id="@+id/rbHome"
+                android:clickable="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/orange" />
+
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+

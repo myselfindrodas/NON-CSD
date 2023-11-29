@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.OtpActivity">
+
+        <RelativeLayout
+            android:id="@+id/rlLoading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/blackTransparent"
+            android:clickable="true"
+            android:elevation="@dimen/_10sdp"
+            android:focusable="true"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/orange"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clTopOtp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="@dimen/_175sdp"
+                android:layout_height="@dimen/_175sdp"
+                android:src="@drawable/logo_png"
+                app:layout_constraintBottom_toTopOf="@+id/ivLogin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivLogin"
+                android:layout_width="@dimen/_170sdp"
+                android:layout_height="@dimen/_130sdp"
+                android:src="@drawable/login_img"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/rounded_top_blue"
+            android:elevation="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clTopOtp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/mobileNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_50sdp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Enter OTP"
+                        android:textSize="@dimen/_15ssp"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/linearVerification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="20dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/mobileNo">
+
+                        <EditText
+                            android:id="@+id/otp1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="-"
+                            android:inputType="number"
+                            android:maxLength="1"
+                            android:layout_marginRight="10dp"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="20dp"
+                            android:paddingRight="30dp"
+                            android:paddingLeft="30dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/yellow"
+                            android:fontFamily="@font/poppins_regular"
+                            android:background="@drawable/mini_box"/>
+                        <EditText
+                            android:id="@+id/otp2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="-"
+                            android:inputType="number"
+                            android:maxLength="1"
+                            android:layout_marginRight="10dp"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="20dp"
+                            android:paddingRight="30dp"
+                            android:paddingLeft="30dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/yellow"
+                            android:fontFamily="@font/poppins_regular"
+                            android:background="@drawable/mini_box"/>
+                        <EditText
+                            android:id="@+id/otp3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="-"
+                            android:inputType="number"
+                            android:maxLength="1"
+                            android:layout_marginRight="10dp"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="20dp"
+                            android:paddingRight="30dp"
+                            android:paddingLeft="30dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/yellow"
+                            android:fontFamily="@font/poppins_regular"
+                            android:background="@drawable/mini_box"/>
+                        <EditText
+                            android:id="@+id/otp4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="-"
+                            android:inputType="number"
+                            android:maxLength="1"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="20dp"
+                            android:paddingRight="30dp"
+                            android:paddingLeft="30dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/yellow"
+                            android:fontFamily="@font/poppins_regular"
+                            android:background="@drawable/mini_box"/>
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnVerify"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:background="@drawable/rounded_orange_bg_btn"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="VERIFY"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearVerification" />
+
+                    <RelativeLayout
+                        android:id="@+id/rlTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btnVerify">
+
+                        <ImageView
+                            android:id="@+id/icTimer"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/icon_timer" />
+                        <TextView
+                            android:id="@+id/tvTimer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00:00"
+                            android:textSize="14sp"
+                            android:textColor="@color/orange"
+                            android:fontFamily="@font/poppins_medium"
+                            android:paddingStart="10dp"
+                            android:layout_toRightOf="@+id/icTimer" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tvResendOtp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Resend OTP"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"                        app:layout_constraintTop_toBottomOf="@+id/rlTimer" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

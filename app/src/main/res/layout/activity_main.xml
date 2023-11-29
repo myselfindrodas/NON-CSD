@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".ui.MainActivity">
+
+        <RelativeLayout
+            android:id="@+id/rlLoading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/blackTransparent"
+            android:clickable="true"
+            android:elevation="@dimen/_10sdp"
+            android:focusable="true"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="wrap_content"
+                android:indeterminateTint="@color/orange"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/contentMain"
+            layout="@layout/content_main"/>
+
+            <fragment
+                class="com.grocery.sainik_grocery.ui.fragment.DrawerFragment"
+                android:layout_width="@dimen/_255sdp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                tools:layout="@layout/drawer_layout_item" />
+
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+</layout>

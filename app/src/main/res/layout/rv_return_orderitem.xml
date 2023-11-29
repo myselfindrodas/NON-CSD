@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_white_bg_edit_text"
+        android:gravity="center"
+        android:id="@+id/llMain"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:paddingStart="@dimen/_14sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_14sdp"
+        android:paddingBottom="@dimen/_12sdp">
+
+
+        <ImageView
+            android:id="@+id/itemImg"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/orderitem" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@android:color/darker_gray" />
+
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+
+            <TextView
+                android:id="@+id/tvitemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Daawat biryani rice"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:id="@+id/tvOrderStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Daawat biryani rice"
+                android:textColor="@color/blue"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_11ssp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/orange"
+            android:text="Return"
+            android:visibility="gone"
+            android:id="@+id/cbReturned"
+            android:textColor="@color/orange"/>
+
+    </LinearLayout>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@android:color/darker_gray" />
+
+
+        <TextView
+            android:id="@+id/tvitemSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="15KG"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/_12ssp" />
+        <ImageView
+            android:id="@+id/ivDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:src="@drawable/ic_arrow_right"
+            android:rotation="90"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llMain"
+        android:id="@+id/llNote"
+        android:background="@color/grey_light"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Note"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/_11ssp" />
+
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/editTextbugDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:background="@drawable/rounded_white_bg_edit_text"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="top"
+            android:hint="Type here"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:padding="8dp"
+            android:textColor="@color/grey_text"
+            android:textColorHint="@color/grey_text"
+            android:textSize="@dimen/_9ssp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/rounded_green_bg_btn"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_gravity="end"
+            android:text="SUBMIT"
+            android:textSize="@dimen/_9ssp"
+            android:textColor="@color/white"/>
+        <!--                android:textCursorDrawable="@drawable/cursor_drawable_yellow"-->
+    </LinearLayout>
+
+
+
+</RelativeLayout>
