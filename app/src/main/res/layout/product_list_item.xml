@@ -82,36 +82,36 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
 
-                    <LinearLayout
-                        android:id="@+id/llDayLeft"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_28sdp"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:layout_marginEnd="10dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/rounded_shape">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="1 day"
-                            android:id="@+id/tvLeftDays"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_8ssp"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/poppins_medium" />
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/llDayLeft"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="@dimen/_28sdp"-->
+<!--                        android:gravity="center"-->
+<!--                        android:visibility="gone"-->
+<!--                        android:layout_marginEnd="10dp"-->
+<!--                        android:layout_alignParentEnd="true"-->
+<!--                        android:layout_alignParentTop="true"-->
+<!--                        android:background="@drawable/rounded_shape">-->
 
 
-                    </LinearLayout>
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="1 day"-->
+<!--                            android:id="@+id/tvLeftDays"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:textSize="@dimen/_8ssp"-->
+<!--                            android:layout_margin="10dp"-->
+<!--                            android:fontFamily="@font/poppins_medium" />-->
 
-                </RelativeLayout>
+
+<!--                    </LinearLayout>-->
+
+<!--                </RelativeLayout>-->
 
                 <TextView
                     android:id="@+id/tvItemname"
@@ -187,13 +187,27 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/tvAvailable"
+                    android:visibility="gone"
+                    android:background="@drawable/orange_rounded_shape"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp"
+                    android:text="Buy Time : 12:00-15:00"
+                    android:paddingStart="@dimen/_10ssp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_italic"/>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="end">
 
                     <LinearLayout
+                        android:id="@+id/llcounter"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
@@ -201,6 +215,7 @@
                         android:paddingTop="@dimen/_2sdp"
                         android:paddingBottom="@dimen/_2sdp"
                         android:gravity="end"
+                        android:visibility="gone"
                         android:paddingStart="@dimen/_5sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:background="@drawable/rounded_border_orange_bg_btn"
@@ -232,28 +247,30 @@
                             android:textSize="@dimen/_15ssp"
                             android:id="@+id/btnAdd"
                             android:background="@color/white"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black" />
                     </LinearLayout>
 
 
-                    <!--                    <androidx.appcompat.widget.AppCompatButton-->
-<!--                        android:id="@+id/btnGo"-->
-<!--                        android:layout_width="@dimen/_110sdp"-->
-<!--                        android:layout_height="@dimen/_30sdp"-->
-<!--                        android:background="@drawable/rounded_blue_bg_btn"-->
-<!--                        android:fontFamily="@font/poppins_regular"-->
-<!--                        android:text="Add"-->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnGo"
+                        android:layout_width="@dimen/_110sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
 
-<!--                        android:clickable="false"-->
-<!--                        android:layout_marginEnd="@dimen/_8sdp"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:layout_marginTop="@dimen/_7sdp"-->
-<!--                        android:textAllCaps="false"-->
-<!--                        android:textSize="@dimen/_10ssp"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        android:layout_gravity="end" />-->
+                        android:background="@drawable/rounded_blue_bg_btn"
+                        android:clickable="false"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Add"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintEnd_toEndOf="parent" />
 
-<!--                    <LinearLayout-->
+
+
+                    <!--                    <LinearLayout-->
 <!--                        android:id="@+id/llAddProduct"-->
 <!--                        android:layout_width="wrap_content"-->
 <!--                        android:layout_height="@dimen/_25sdp"-->

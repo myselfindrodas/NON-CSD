@@ -4,6 +4,7 @@ import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressAddRequest
 import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressEditRequest
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
+import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.deletewishlistmodel.DeletewishlistRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.getwishlistmodel.WishlistRequest
@@ -29,6 +30,7 @@ class ApiHelper(private val apiInterface: ApiInterface) {
     suspend fun login(requestBody: LoginRequest) = apiInterface.login(requestBody)
     suspend fun otpverify(requestBody: OtpverifyRequest) = apiInterface.otpverify(requestBody)
     suspend fun getnonCSDlist() = apiInterface.getnonCSDlist()
+    suspend fun GetNewOrderNumber() = apiInterface.GetNewOrderNumber()
     suspend fun categorylist() = apiInterface.categorylist()
     suspend fun addresslist(customerid:String) = apiInterface.addresslist(customerid)
     suspend fun notificationlist(customerid:String) = apiInterface.notificationlist(customerid)
@@ -47,6 +49,7 @@ class ApiHelper(private val apiInterface: ApiInterface) {
     suspend fun updateprofile(requestBody: UpdateProfileRequest) = apiInterface.updateprofile(requestBody)
     suspend fun updatecart(requestBody: CartUpdateRequest) = apiInterface.updatecart(requestBody)
     suspend fun deletecart(requestBody: DeleteCartRequest) = apiInterface.deletecart(requestBody)
+    suspend fun DeleteCustomerCart(requestBody: DeleteCustomerCartRequest) = apiInterface.DeleteCustomerCart(requestBody)
     suspend fun deletewishlist(requestBody: DeletewishlistRequest) = apiInterface.deletewishlist(requestBody)
     suspend fun ordersummery(requestBody: OrdersummeryRequest) = apiInterface.ordersummery(requestBody)
     suspend fun deleteaddress(id:String) = apiInterface.deleteaddress(id)

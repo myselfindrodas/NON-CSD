@@ -3,6 +3,7 @@ package com.grocery.sainik_grocery.ui.fragment
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.speech.RecognizerIntent
@@ -29,6 +30,7 @@ import com.example.sainikgrocerycustomer.data.model.DataProductList
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
+import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentHomeBinding
 import com.grocery.sainik_grocery.ui.LocationActivity
@@ -37,6 +39,7 @@ import com.grocery.sainik_grocery.ui.adapter.CategoryAdapter
 import com.grocery.sainik_grocery.ui.adapter.SlidingBannerAdapter
 import com.grocery.sainik_grocery.ui.adapter.TopsellingAdapter
 import com.grocery.sainik_grocery.utils.ItemOffsetDecoration
+import com.grocery.sainik_grocery.utils.Shared_Preferences
 import com.grocery.sainik_grocery.utils.Status
 import com.grocery.sainik_grocery.utils.Utilities
 import com.grocery.sainik_grocery.viewmodel.CommonViewModel
@@ -346,6 +349,15 @@ class HomeFragment : Fragment(),
         }
 
 
+        fragmentHomeBinding.btnPartyorder.setOnClickListener {
+
+
+            val navController = Navigation.findNavController(it)
+            navController.navigate(R.id.nav_partycategory)
+
+        }
+
+
 //        fragmentHomeBinding.shopbycategoryViewall.setOnClickListener {
 //
 //            val bundle = Bundle()
@@ -517,6 +529,84 @@ class HomeFragment : Fragment(),
         }
 
     }
+
+
+    private fun productCartList() {
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+
+            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), pageSize = 10, skip = 0))
+                .observe(this) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                resource.data.let {itResponse->
+
+                                    if (itResponse?.status == true) {
+
+
+                                        if (itResponse.totalCount==0){
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+                                        }else{
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+
+                                        }
+
+
+
+
+
+
+                                    } else {
+//                                        viewModel.cartListItem.value=0
+                                        if (itResponse!!.totalCount==0){
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+                                        }else{
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+
+                                        }
+                                    }
+
+                                }
+
+                            }
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+
+
 
 
 //    private fun dashboard(urcid: String, keyword: String = "") {
@@ -713,15 +803,17 @@ class HomeFragment : Fragment(),
             if (currentPage === slidingBannerAdapter!!.itemCount + 1 - 1) {
                 currentPage = 0
             }
-
-            if (currentPage === slidingBannerAdapter1!!.itemCount + 1 - 1) {
-                currentPage = 0
-            }
+//
+//            if (currentPage === slidingBannerAdapter1!!.itemCount + 1 - 1) {
+//                currentPage = 0
+//            }
             fragmentHomeBinding.slidingBanner.setCurrentItem(currentPage++, true)
-            fragmentHomeBinding.slidingBannerViewPager.setCurrentItem(currentPage++, true)
+//            fragmentHomeBinding.slidingBannerViewPager.setCurrentItem(currentPage++, true)
 
         }.also { runnable = it }, delay.toLong())
         super.onResume()
+
+        productCartList()
     }
 
 

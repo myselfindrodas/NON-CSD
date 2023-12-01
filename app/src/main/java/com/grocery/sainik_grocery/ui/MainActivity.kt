@@ -3,6 +3,7 @@ package com.grocery.sainik_grocery.ui
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,20 +21,27 @@ import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.base.BaseActivity
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
+import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.ActivityMainBinding
+import com.grocery.sainik_grocery.ui.fragment.HomeFragment.Companion.cartCount
 import com.grocery.sainik_grocery.utils.Shared_Preferences
 import com.grocery.sainik_grocery.utils.Status
 import com.grocery.sainik_grocery.utils.Utilities
 import com.grocery.sainik_grocery.viewmodel.CommonViewModel
-import com.razorpay.*
-import com.squareup.picasso.Picasso
+import com.razorpay.Checkout
+import com.razorpay.ExternalWalletListener
+import com.razorpay.PaymentData
+import com.razorpay.PaymentResultWithDataListener
 import org.json.JSONObject
+import kotlin.math.roundToInt
+
 
 class MainActivity : BaseActivity(),
     NavController.OnDestinationChangedListener,
@@ -44,7 +52,7 @@ class MainActivity : BaseActivity(),
     var orderid = ""
     var refid = ""
     private lateinit var viewModel: CommonViewModel
-    private lateinit var bottomNavView: BottomNavigationView
+    lateinit var bottomNavView: BottomNavigationView
 
     var ivImgProfile: ImageView? = null
     var tvUserName: TextView? = null
@@ -67,6 +75,7 @@ class MainActivity : BaseActivity(),
     var btnNavfaq: LinearLayout? = null
     var btnNavlogout: LinearLayout?= null
 
+
     var mNavController: NavController? = null
     override fun resourceLayout(): Int {
         return R.layout.activity_main
@@ -76,6 +85,7 @@ class MainActivity : BaseActivity(),
     companion object{
         var URCName = ""
         var payment = ""
+        var cartcount = ""
     }
     override fun initializeBinding(binding: ViewDataBinding) {
 
@@ -270,6 +280,7 @@ class MainActivity : BaseActivity(),
         tvUserName?.text = Shared_Preferences.getName()
 
 
+
         bottomNavView.setOnItemSelectedListener {item->
             when(item.itemId){
                 R.id.nav_home -> {
@@ -293,17 +304,40 @@ class MainActivity : BaseActivity(),
                     mNavController!!.navigate(R.id.nav_myorder)
                     true
                 }
+
                 R.id.nav_basket -> {
                     mNavController!!.navigateUp()
                     mNavController!!.navigate(R.id.nav_cart)
                     true
                 }
+
                 else -> false
             }
 
         }
 
+        Log.d(TAG, "cartcount-->"+cartCount)
+
+//        if (cartcount.isNotEmpty()){
+//
+//        }else{
+//
+//            bottomNavView.getOrCreateBadge(R.id.nav_basket).number = 0
+//            bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+//        }
+
+
+
+
+
+
     }
+
+
+
+
+
+
 
 
     fun showProgressDialog() {

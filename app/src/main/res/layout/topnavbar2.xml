@@ -134,7 +134,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/btnSearch"
+        android:id="@+id/rlBtnSearch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_35sdp"
         android:layout_below="@+id/lltopnav"
@@ -143,8 +143,8 @@
         android:background="@drawable/rounded_white_bg_edit_text">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etSearchProductList"
-            android:layout_width="wrap_content"
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:focusedByDefault="false"
             android:imeOptions="actionSearch"
@@ -160,15 +160,18 @@
             android:background="@null"/>
 
         <ImageView
-            android:id="@+id/ivMicProductList"
+            android:id="@+id/ivMic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/ic_mic"
-            app:tint="@color/orange"
-            android:layout_centerInParent="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"/>
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_mic"
+            app:tint="@color/orange" />
 
     </RelativeLayout>
 

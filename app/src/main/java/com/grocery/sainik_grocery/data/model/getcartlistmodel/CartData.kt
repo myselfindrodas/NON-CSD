@@ -14,6 +14,10 @@ data class CartData(
     val discountPercentage: Double,
     @SerializedName("id")
     val id: String,
+    @SerializedName("isAdvanceOrderRequest")
+    val isAdvanceOrderRequest: Boolean,
+    @SerializedName("product")
+    val product: Product,
     @SerializedName("productId")
     val productId: String,
     @SerializedName("productName")

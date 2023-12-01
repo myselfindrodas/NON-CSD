@@ -133,4 +133,25 @@
         android:label="Return order"
         tools:layout="@layout/fragment_return_order" />
 
+
+    <fragment
+        android:id="@+id/nav_searchorder"
+        android:name="com.grocery.sainik_grocery.ui.fragment.SearchFragment"
+        android:label="Search order"
+        tools:layout="@layout/fragment_search" />
+
+
+    <fragment
+        android:id="@+id/nav_partycategory"
+        android:name="com.grocery.sainik_grocery.ui.fragment.PartyProduct"
+        android:label="Party Category"
+        tools:layout="@layout/fragment_party_product" />
+
+
+    <fragment
+        android:id="@+id/nav_partyproductlist"
+        android:name="com.grocery.sainik_grocery.ui.fragment.PartyProductListFragment"
+        android:label="Party Productlist"
+        tools:layout="@layout/fragment_party_product_list" />
+
 </navigation>

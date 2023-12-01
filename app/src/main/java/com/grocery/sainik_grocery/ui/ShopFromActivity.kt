@@ -47,7 +47,11 @@ class ShopFromActivity : BaseActivity() {
             }
 
             btnNonCSD.setOnClickListener {
-                val intent = Intent(this@ShopFromActivity, URCListActivity::class.java)
+//                val intent = Intent(this@ShopFromActivity, URCListActivity::class.java)
+//                startActivity(intent)
+
+
+                val intent = Intent(this@ShopFromActivity, MainActivity::class.java)
                 startActivity(intent)
             }
 //            btnCsd.setOnClickListener {

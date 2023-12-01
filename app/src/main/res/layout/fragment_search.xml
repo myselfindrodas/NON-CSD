@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.SearchFragment">
+
+    <include
+        android:id="@+id/topnav"
+        layout="@layout/topnavbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topnav">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/rlBtnSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/lltopnav"
+            android:background="@drawable/rounded_white_bg_edit_text">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:focusedByDefault="false"
+                android:layout_weight="0.2"
+                android:imeOptions="actionSearch"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_20sdp"
+                android:hint="Search your groceries"
+                android:textColorHint="@color/grey_light"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/grey_text"
+                android:background="@null"/>
+
+            <ImageView
+                android:id="@+id/ivMic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/ic_mic"
+                app:tint="@color/orange"
+                android:layout_centerInParent="true"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSearchList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etSearchProduct"
+            android:background="@drawable/white_box_grey_border"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"/>
+
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
+</layout>

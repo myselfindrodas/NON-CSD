@@ -249,9 +249,16 @@ class GetLocationActivity : BaseActivity() {
 
             Shared_Preferences.setLat(lati)
             Shared_Preferences.setLong(longi)
+//            val intent = Intent(
+//                this@GetLocationActivity,
+//                URCListActivity::class.java
+//            )
+//            startActivity(intent)
+
+
             val intent = Intent(
                 this@GetLocationActivity,
-                URCListActivity::class.java
+                MainActivity::class.java
             )
             startActivity(intent)
             /*activityRegistrationDetailsBinding.etLocation.setText(address)*/
@@ -298,10 +305,18 @@ class GetLocationActivity : BaseActivity() {
                             val resultsobj = responseArray.getJSONObject(4)
                             val formatted_address = resultsobj.getString("formatted_address")
                             LocationActivity.locationAddress =formatted_address
+//
+//                            val intent = Intent(
+//                                this@GetLocationActivity,
+//                                URCListActivity::class.java
+//                            )
+//                            startActivity(intent)
+
+
 
                             val intent = Intent(
                                 this@GetLocationActivity,
-                                URCListActivity::class.java
+                                MainActivity::class.java
                             )
                             startActivity(intent)
 

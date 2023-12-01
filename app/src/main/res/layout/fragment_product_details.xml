@@ -79,16 +79,6 @@
                         android:textSize="@dimen/_9ssp"
                         android:fontFamily="@font/poppins_medium" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text=""
-                        android:visibility="gone"
-                        android:id="@+id/tvPriceOld"
-                        android:textColor="@color/grey_text"
-                        android:textSize="@dimen/_9ssp" />
-
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -99,6 +89,32 @@
                         android:layout_marginStart="@dimen/_2sdp"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/_9ssp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="₹ 0"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:id="@+id/tvPriceOld"
+                        android:textColor="@color/grey_text"
+                        android:textSize="@dimen/_9ssp" />
+
+
+
+                    <TextView
+                        android:id="@+id/tvSaveAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Save ₹ 0"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_9ssp" />
+
+
+
                 </LinearLayout>
 
                 <TextView

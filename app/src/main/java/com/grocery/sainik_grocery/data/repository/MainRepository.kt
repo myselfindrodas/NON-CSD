@@ -5,6 +5,7 @@ import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressAddRequest
 import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressEditRequest
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
+import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.deletewishlistmodel.DeletewishlistRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.getwishlistmodel.WishlistRequest
@@ -32,6 +33,7 @@ class MainRepository(private val apiHelper: ApiHelper) {
     suspend fun login(requestBody: LoginRequest) = apiHelper.login(requestBody)
     suspend fun otpverify(requestBody: OtpverifyRequest) = apiHelper.otpverify(requestBody)
     suspend fun getnonCSDlist() = apiHelper.getnonCSDlist()
+    suspend fun GetNewOrderNumber() = apiHelper.GetNewOrderNumber()
     suspend fun categorylist() = apiHelper.categorylist()
     suspend fun addresslist(customerid:String) = apiHelper.addresslist(customerid)
     suspend fun notificationlist(customerid:String) = apiHelper.notificationlist(customerid)
@@ -50,6 +52,8 @@ class MainRepository(private val apiHelper: ApiHelper) {
     suspend fun updateprofile(requestBody: UpdateProfileRequest) = apiHelper.updateprofile(requestBody)
     suspend fun updatecart(requestBody: CartUpdateRequest) = apiHelper.updatecart(requestBody)
     suspend fun deletecart(requestBody: DeleteCartRequest) = apiHelper.deletecart(requestBody)
+    suspend fun DeleteCustomerCart(requestBody: DeleteCustomerCartRequest) = apiHelper.DeleteCustomerCart(requestBody)
+
     suspend fun deletewishlist(requestBody: DeletewishlistRequest) = apiHelper.deletewishlist(requestBody)
     suspend fun ordersummery(requestBody: OrdersummeryRequest) = apiHelper.ordersummery(requestBody)
     suspend fun deleteaddress(id:String) = apiHelper.deleteaddress(id)

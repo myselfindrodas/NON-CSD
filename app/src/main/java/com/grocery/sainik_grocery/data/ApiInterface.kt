@@ -10,6 +10,7 @@ import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartResponse
 import com.grocery.sainik_grocery.data.model.categorymodel.CategoryListResponse
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartResponse
+import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.deletewishlistmodel.DeletewishlistRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListResponse
@@ -17,6 +18,7 @@ import com.grocery.sainik_grocery.data.model.getwishlistmodel.WishlistRequest
 import com.grocery.sainik_grocery.data.model.getwishlistmodel.WishlistResponse
 import com.grocery.sainik_grocery.data.model.loginmodel.LoginRequest
 import com.grocery.sainik_grocery.data.model.loginmodel.LoginResponse
+import com.grocery.sainik_grocery.data.model.newordernumbermodel.NewOrderNumberResponse
 import com.grocery.sainik_grocery.data.model.noncsdmodel.NoncsdResponse
 import com.grocery.sainik_grocery.data.model.notificationmodel.NotificationListResponse
 import com.grocery.sainik_grocery.data.model.orderdetailsmodel.OrderdetailsRequest
@@ -101,6 +103,13 @@ interface ApiInterface {
 
 
 
+    @HTTP(method = "DELETE", path = "DeleteCustomerCart", hasBody = true)
+    suspend fun DeleteCustomerCart(
+        @Body requestBody: DeleteCustomerCartRequest
+    ): DeleteCartResponse
+
+
+
     @HTTP(method = "DELETE", path = "DeleteToCart", hasBody = true)
     suspend fun deletecart(
         @Body requestBody: DeleteCartRequest
@@ -122,6 +131,12 @@ interface ApiInterface {
     @GET("GetNonCSDlist")
     suspend fun getnonCSDlist(
     ): NoncsdResponse
+
+
+
+    @GET("GetNewOrderNumber")
+    suspend fun GetNewOrderNumber(
+    ): NewOrderNumberResponse
 
 
 

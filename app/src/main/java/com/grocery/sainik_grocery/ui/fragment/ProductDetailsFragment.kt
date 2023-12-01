@@ -52,6 +52,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
     private var unitid = ""
     private var unitname = ""
     private var unitprice = ""
+    private var partyadd = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +73,10 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
         val intent = arguments
         if (intent != null && intent.containsKey("productid")) {
             productId = intent.getString("productid", "")
+        }
+
+        if (intent != null && intent.containsKey("type")) {
+            partyadd = intent.getString("type", "")
         }
 
         val vm: CommonViewModel by viewModels {
@@ -495,21 +500,19 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                                             tvDiscount.text = "${itProfileInfo.data.discount}% Off"
                                             discount = itProfileInfo.data.discount.toString()
                                             llDiscount.visibility = View.VISIBLE
-                                            tvPriceOld.visibility = View.VISIBLE
+//                                            tvPriceOld.visibility = View.VISIBLE
                                         } else {
                                             llDiscount.visibility = View.GONE
-                                            tvPriceOld.visibility = View.GONE
+//                                            tvPriceOld.visibility = View.GONE
                                             discount = "0"
                                         }
 
 
-                                        tvPrice.text =
-                                            " ₹ ${itProfileInfo.data.salesPrice.toString()}/${itProfileInfo.data.unitName ?: ""}"
-                                        tvPriceOld.text =
-                                            "₹ ${itProfileInfo.data.mrp.toString()}/${itProfileInfo.data.unitName ?: ""}"
+                                        tvPrice.text = " ₹ ${itProfileInfo.data.salesPrice.toString()}/${itProfileInfo.data.unitName ?: ""}"
+                                        tvPriceOld.text = "₹ " +itProfileInfo.data.mrp
+                                        tvSaveAmount.text = "Save ₹ "+ itProfileInfo.data.mrp.toDouble().minus(itProfileInfo.data.salesPrice.toDouble())
 
-                                        tvPriceOld.paintFlags =
-                                            tvPriceOld.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                                        tvPriceOld.paintFlags = tvPriceOld.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                                         urc_productId = itProfileInfo.data.id
                                         wishlistId = itProfileInfo.data.id
                                         price = itProfileInfo.data.salesPrice.toString()
@@ -627,10 +630,18 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
     }
 
     private fun productaddtoCart() {
+
+        var isPartyOrder=false
+        if (partyadd.equals("partyadd")){
+            isPartyOrder = true
+        }else{
+            isPartyOrder = false
+        }
         if (Utilities.isNetworkAvailable(mainActivity)) {
             viewModel.AddToCart(
                 AddtocartRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    isAdvanceOrderRequest = isPartyOrder,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,
                     discountPercentage = discount,

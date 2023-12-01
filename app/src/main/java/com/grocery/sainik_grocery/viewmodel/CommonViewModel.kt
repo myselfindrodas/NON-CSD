@@ -8,6 +8,7 @@ import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressAddRequest
 import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressEditRequest
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
+import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.deletewishlistmodel.DeletewishlistRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.getwishlistmodel.WishlistRequest
@@ -87,6 +88,22 @@ class CommonViewModel(private val mainRepository: MainRepository) : ViewModel() 
             emit(
                 Resource.success(
                     data = mainRepository.getnonCSDlist()
+                )
+            )
+        } catch (e: Exception) {
+            emit(Resource.error(data = null, message = e.message ?: "Error Occurred!"))
+        }
+    }
+
+
+
+
+    fun GetNewOrderNumber() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(
+                Resource.success(
+                    data = mainRepository.GetNewOrderNumber()
                 )
             )
         } catch (e: Exception) {
@@ -405,6 +422,22 @@ class CommonViewModel(private val mainRepository: MainRepository) : ViewModel() 
             emit(
                 Resource.success(
                     data = mainRepository.deletecart(requestBody)
+                )
+            )
+        } catch (e: Exception) {
+            emit(Resource.error(data = null, message = e.message ?: "Error Occurred!"))
+        }
+    }
+
+
+
+
+    fun DeleteCustomerCart(requestBody: DeleteCustomerCartRequest) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(
+                Resource.success(
+                    data = mainRepository.DeleteCustomerCart(requestBody)
                 )
             )
         } catch (e: Exception) {

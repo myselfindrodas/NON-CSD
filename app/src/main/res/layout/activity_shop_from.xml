@@ -100,6 +100,7 @@
                 android:fontFamily="@font/poppins_bold"
                 android:paddingStart="@dimen/_20sdp"
                 android:text="CSD"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:gravity="center"/>
 
@@ -107,6 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="horizontal">
 
@@ -136,12 +138,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:background="@drawable/rounded_blue_bg_btn"
                 android:fontFamily="@font/poppins_bold"
                 android:paddingStart="@dimen/_20sdp"
-                android:text="Non-CSD"
+                android:text="Needs \u0026 Bakery"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:gravity="center"/>
 

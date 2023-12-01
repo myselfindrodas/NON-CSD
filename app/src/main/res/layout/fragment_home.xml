@@ -95,30 +95,32 @@
                             android:layout_marginLeft="@dimen/_20sdp"
                             android:layout_marginRight="@dimen/_20sdp" />
 
-                        <RelativeLayout
+
+
+
+                        <LinearLayout
+                            android:id="@+id/btnPartyorder"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/white_box_grey_border"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_20sdp"
+                            android:layout_marginTop="@dimen/_20sdp">
 
-                            <androidx.viewpager2.widget.ViewPager2
-                                android:id="@+id/slidingBannerViewPager"
+                            <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="200dp"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:layout_marginEnd="@dimen/_15sdp"
-                                android:layout_marginBottom="@dimen/_15sdp" />
-
-                            <LinearLayout
-                                android:id="@+id/sliderDotsOfBanner"
-                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/slidingBannerViewPager"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginBottom="12dp"
-                                android:orientation="horizontal" />
+                                android:text="Party Order"
+                                android:textSize="@dimen/_14ssp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textAlignment="center"
+                                android:textColor="@color/blue"/>
 
-                        </RelativeLayout>
+                        </LinearLayout>
+
 
                         <!--                        <androidx.cardview.widget.CardView-->
 <!--                            android:layout_width="match_parent"-->
@@ -138,6 +140,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_marginTop="@dimen/_20sdp"
                             android:id="@+id/llCategoryName"
                             android:layout_marginLeft="@dimen/_20sdp"
                             android:layout_marginRight="@dimen/_20sdp"
@@ -177,6 +180,33 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_20sdp"
                             android:layout_marginRight="@dimen/_20sdp" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.viewpager2.widget.ViewPager2
+                                android:id="@+id/slidingBannerViewPager"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_marginStart="@dimen/_15sdp"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_marginEnd="@dimen/_15sdp"
+                                android:layout_marginBottom="@dimen/_15sdp" />
+
+                            <LinearLayout
+                                android:id="@+id/sliderDotsOfBanner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/slidingBannerViewPager"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:orientation="horizontal" />
+
+                        </RelativeLayout>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"

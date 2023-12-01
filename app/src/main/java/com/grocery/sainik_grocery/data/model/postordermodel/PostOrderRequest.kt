@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class PostOrderRequest(
     @SerializedName("customerId")
     val customerId: String,
+    @SerializedName("isAppOrderRequest")
+    val isAppOrderRequest: Boolean,
     @SerializedName("customerName")
     val customerName: String?,
     @SerializedName("deliveryAddress")

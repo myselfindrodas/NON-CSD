@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.grocery.sainik_grocery.R
@@ -18,7 +19,7 @@ class CartListAdapter(
     var onItemClickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<CartListAdapter.MyViewHolder>() {
-    private var imageURL: String="https://sainik.shyamfuture.in/ProductImages/Thumbnail/"
+    private var imageURL: String="https://sainik.shyamfuture.in/ProductImages/"
     private val inflater: LayoutInflater
     private var cartModelArrayList: ArrayList<CartData> = arrayListOf()
     var ctx: Context
@@ -52,7 +53,7 @@ class CartListAdapter(
 
             try {
                 Picasso.get()
-                    .load(R.drawable.login_img)
+                    .load(imageURL+cartModelArrayList[position].product.productUrl)
                     .error(R.drawable.login_img)
 //                    .placeholder(R.drawable.loader_gif)
                     .into(holder.ivImg)
@@ -71,6 +72,10 @@ class CartListAdapter(
             }
 
             btnAdd.setOnClickListener {
+                if (cartModelArrayList[position].product.stock==count){
+                    Toast.makeText(ctx,"Product Out of stock", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
                 count++
                 onItemClickListener.onClick(position, it, 1, cartModelArrayList[position],count, tvCounter)
 

@@ -21,11 +21,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ProductAdapter(
+class PartyProductAdapter(
     ctx: Context,
     var onItemClickListener: OnItemClickListener
 ) :
-    RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
+    RecyclerView.Adapter<PartyProductAdapter.MyViewHolder>() {
     private var imageURL: String="https://sainik.shyamfuture.in/"
     private val inflater: LayoutInflater
     private var productModelArrayList: ArrayList<Data> = arrayListOf()
@@ -117,10 +117,6 @@ class ProductAdapter(
 
 
             holder.btnGo.setOnClickListener {
-                if (productModelArrayList[position].stock.toInt()==count){
-                    Toast.makeText(ctx,"Product Out of stock",Toast.LENGTH_SHORT).show();
-                    return@setOnClickListener
-                }
                 holder.btnGo.visibility = View.GONE
                 holder.llcounter.visibility = View.VISIBLE
                 count++
@@ -165,10 +161,6 @@ class ProductAdapter(
             }
 
             holder.btnAdd.setOnClickListener {
-                if (productModelArrayList[position].stock.toInt()==count){
-                    Toast.makeText(ctx,"Product Out of stock",Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
                 count++
                 holder.tvCounterProduct.text = count.toString()
                 onItemClickListener.onUpdate(position, it, count, holder.tvPrice,  productModelArrayList[position].id, cartid, productModelArrayList[position], "update", 1)

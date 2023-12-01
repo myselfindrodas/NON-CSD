@@ -3,7 +3,9 @@ package com.grocery.sainik_grocery.ui.fragment
 import android.app.Activity
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.text.Editable
@@ -28,6 +30,7 @@ import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
+import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartData
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.productlistmodel.Data
@@ -165,11 +168,10 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 //            fragmentProductListBinding.tvsubtitle.text = "Category List"
             fragmentProductListBinding.tvsubtitle.visibility = View.GONE
             fragmentProductListBinding.llfilersort.visibility = View.GONE
-            fragmentProductListBinding.topnav.btnSearch.visibility = View.VISIBLE
+//            fragmentProductListBinding.topnav.btnSearch.visibility = View.VISIBLE
             categoryListAdapter = CategoryListAdapter(mainActivity, this@ProductListFragment)
             fragmentProductListBinding.rvProductList.adapter = categoryListAdapter
-            fragmentProductListBinding.rvProductList.layoutManager =
-                GridLayoutManager(mainActivity, 1)
+            fragmentProductListBinding.rvProductList.layoutManager = GridLayoutManager(mainActivity, 1)
             val itemDecoration = ItemOffsetDecoration(mainActivity, R.dimen.photos_list_spacing1)
             fragmentProductListBinding.rvProductList.addItemDecoration(itemDecoration)
             categorylist()
@@ -185,7 +187,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             mainActivity.setBottomNavigationVisibility(true)
             fragmentProductListBinding.topnav.tvNavtitle.text = categoryName
             fragmentProductListBinding.llfilersort.visibility = View.VISIBLE
-            fragmentProductListBinding.topnav.btnSearch.visibility = View.VISIBLE
+//            fragmentProductListBinding.topnav.btnSearch.visibility = View.VISIBLE
 
             productAdapter = ProductAdapter(mainActivity, this@ProductListFragment)
             fragmentProductListBinding.rvProductList.adapter = productAdapter
@@ -204,35 +206,35 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 //            }
 //            productAdapter!!.updateData(productList, "R.drawable.item")
 
-            fragmentProductListBinding.topnav.ivMicProductList.setOnClickListener {
+//            fragmentProductListBinding.topnav.ivMicProductList.setOnClickListener {
+//
+//                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+//
+//                intent.putExtra(
+//                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+//                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+//                )
+//
+//                intent.putExtra(
+//                    RecognizerIntent.EXTRA_LANGUAGE,
+//                    Locale.getDefault()
+//                )
+//
+//                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say Something...")
+//
+//                try {
+//                    startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+//                } catch (e: Exception) {
+//                    Toast
+//                        .makeText(
+//                            mainActivity, " " + e.message,
+//                            Toast.LENGTH_SHORT
+//                        )
+//                        .show()
+//                }
+//            }
 
-                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-
-                intent.putExtra(
-                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-                )
-
-                intent.putExtra(
-                    RecognizerIntent.EXTRA_LANGUAGE,
-                    Locale.getDefault()
-                )
-
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say Something...")
-
-                try {
-                    startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
-                } catch (e: Exception) {
-                    Toast
-                        .makeText(
-                            mainActivity, " " + e.message,
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
-                }
-            }
-
-            fragmentProductListBinding.topnav.etSearchProductList.addTextChangedListener(object :
+            fragmentProductListBinding.topnav.etSearch.addTextChangedListener(object :
                 TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
@@ -311,21 +313,21 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
         categorylist()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-
-                val res: ArrayList<String> =
-                    data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) as ArrayList<String>
-
-                fragmentProductListBinding.topnav.etSearchProductList.setText(
-                    Objects.requireNonNull(res)[0]
-                )
-            }
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
+//            if (resultCode == Activity.RESULT_OK && data != null) {
+//
+//                val res: ArrayList<String> =
+//                    data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) as ArrayList<String>
+//
+//                fragmentProductListBinding.topnav.etSearchProductList.setText(
+//                    Objects.requireNonNull(res)[0]
+//                )
+//            }
+//        }
+//    }
 
     private fun getAllProductList(isFirstPage: Boolean) {
         if (Utilities.isNetworkAvailable(mainActivity)) {
@@ -908,6 +910,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             viewModel.AddToCart(
                 AddtocartRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    isAdvanceOrderRequest = false,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,
                     discountPercentage = discount,
@@ -930,23 +933,23 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 
 
                                     CartList(true)
-                                    val builder = android.app.AlertDialog.Builder(mainActivity)
-                                    builder.setMessage(resource.data.message)
-                                    builder.setPositiveButton(
-                                        "Ok"
-                                    ) { dialog, which ->
-
-                                        Toast.makeText(mainActivity, resource.data.message, Toast.LENGTH_SHORT).show()
-//                                        val navController = Navigation.findNavController(fragmentProductListBinding.root)
-//                                        navController.navigate(R.id.nav_cart)
-                                        dialog.dismiss()
-                                    }
-                                    val alert = builder.create()
-                                    alert.setOnShowListener { arg0 ->
-                                        alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
-                                            .setTextColor(resources.getColor(R.color.orange))
-                                    }
-                                    alert.show()
+//                                    val builder = android.app.AlertDialog.Builder(mainActivity)
+//                                    builder.setMessage(resource.data.message)
+//                                    builder.setPositiveButton(
+//                                        "Ok"
+//                                    ) { dialog, which ->
+//
+//                                        Toast.makeText(mainActivity, resource.data.message, Toast.LENGTH_SHORT).show()
+////                                        val navController = Navigation.findNavController(fragmentProductListBinding.root)
+////                                        navController.navigate(R.id.nav_cart)
+//                                        dialog.dismiss()
+//                                    }
+//                                    val alert = builder.create()
+//                                    alert.setOnShowListener { arg0 ->
+//                                        alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
+//                                            .setTextColor(resources.getColor(R.color.orange))
+//                                    }
+//                                    alert.show()
 
                                 } else {
 
@@ -1077,34 +1080,96 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 
                                     if (itResponse?.status == true) {
 
-                                        cartArrayList.clear()
-                                        cartArrayList.addAll(itResponse.data)
-//                                        itResponse.let {itItem->
-//                                            if (itItem.data.isNullOrEmpty()) {
-////                                                viewModel.cartListItem.value = 0
-////                                                cartAdapter?.updateData(arrayListOf(), "")
-//                                                fragmentCartBinding.nodata.root.visibility=View.VISIBLE
-//                                            }else{
-//                                                fragmentCartBinding.nodata.root.visibility=View.GONE
-//                                                fragmentCartBinding.btnGo.visibility=View.VISIBLE
-//                                                fragmentCartBinding.llTotalPice.visibility=View.VISIBLE
-//                                                cartAdapter?.updateData(itItem.data)
-//                                            }
+
+                                        if (itResponse.data[0].isAdvanceOrderRequest) {
+
+                                            val builder = AlertDialog.Builder(mainActivity)
+                                            builder.setMessage(
+                                                "You Have Some of party product already added inside cart!" +
+                                                        "Please Delete previous cart items for regular product add"
+                                            )
+                                            builder.setPositiveButton(
+                                                "Ok"
+                                            ) { dialog, which ->
+
+                                                DeleteCustomerCart()
+                                                dialog.cancel()
+                                            }
+
+                                            builder.setNegativeButton("Cancel") { dialog, which ->
+                                                val intent =
+                                                    Intent(mainActivity, MainActivity::class.java)
+                                                startActivity(intent)
+                                                mainActivity.finish()
+                                                dialog.cancel()
+                                            }
+                                            val alert = builder.create()
+                                            alert.setOnShowListener { arg0: DialogInterface? ->
+                                                alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+                                                    .setTextColor(
+                                                        resources.getColor(
+                                                            R.color.blue,
+                                                            resources.newTheme()
+                                                        )
+                                                    )
+                                                alert.getButton(AlertDialog.BUTTON_POSITIVE)
+                                                    .setTextColor(
+                                                        resources.getColor(
+                                                            R.color.blue,
+                                                            resources.newTheme()
+                                                        )
+                                                    )
+                                            }
+                                            alert.show()
+
+
+                                        }else{
+
+
+                                            cartArrayList.clear()
+                                            cartArrayList.addAll(itResponse.data)
+
+                                            if (itResponse.totalCount == 0) {
+                                                mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible =
+                                                    false
+                                            } else {
+                                                mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible =
+                                                    true
+                                                mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number =
+                                                    itResponse.totalCount
+                                                mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor =
+                                                    Color.parseColor("#E63425")
+
+                                            }
+
+                                        }
+
+//                                        cartArrayList.clear()
+//                                        cartArrayList.addAll(itResponse.data)
 //
-//                                            var totalPrice= 0
-//                                            itItem.data.forEach { item->
-//                                                totalPrice += item.total.roundToInt()
-//                                            }
+//                                        if (itResponse.totalCount==0){
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+//                                        }else{
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
 //
-//                                            fragmentCartBinding.tvItemprice.text= "₹ $totalPrice"
-//                                            fragmentCartBinding.tvItemQty.text= "${itItem.data.size} Items"
 //                                        }
-//                                        viewModel.cartListItem.value= itResponse.data.cart.size
+
+
 
 
                                     } else {
                                         cartArrayList.clear()
                                         viewModel.cartListItem.value = 0
+                                        if (itResponse!!.totalCount==0){
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+                                        }else{
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+
+                                        }
 //                                        cartAdapter?.updateData(arrayListOf())
 ////                                        Toast.makeText(
 ////                                            mainActivity,
@@ -1157,6 +1222,68 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
                 .show()
         }
 
+    }
+
+
+
+    private fun DeleteCustomerCart() {
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+            viewModel.DeleteCustomerCart(
+                DeleteCustomerCartRequest(
+                    customerId = Shared_Preferences.getUserId()
+                )
+            )
+                .observe(mainActivity) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                if (resource.data?.status == true) {
+                                    getAllProductList(true)
+
+
+                                } else {
+
+                                    Toast.makeText(
+                                        mainActivity,
+                                        resource.data?.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                }
+
+
+                            }
+
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package com.grocery.sainik_grocery.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import com.grocery.sainik_grocery.data.model.postordermodel.SalesOrderItem
 import com.grocery.sainik_grocery.data.model.postordermodel.UnitConversation
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentOrderSummaryBinding
+import com.grocery.sainik_grocery.ui.LocationActivity
 import com.grocery.sainik_grocery.ui.MainActivity
 import com.grocery.sainik_grocery.ui.MainActivity.Companion.payment
 import com.grocery.sainik_grocery.ui.adapter.OrderDetailsListAdapter
@@ -75,7 +77,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
         if (payment.equals("success")){
 
-            postOrder()
+            ordernumbergeneration()
         }
     }
 
@@ -439,9 +441,78 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
 
 
+    private fun ordernumbergeneration(){
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
 
 
-    private fun postOrder() {
+            viewModel.GetNewOrderNumber()
+                .observe(mainActivity) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                resource.data?.let { itResponse ->
+
+                                    if (itResponse.status) {
+
+
+                                        postOrder(itResponse.orderNumber)
+
+
+
+
+//                                        println("PRICE SUMMERY $total")
+                                        // addressAdapter?.updateData(itResponse.data.address)
+
+                                    } else {
+
+                                        Toast.makeText(
+                                            mainActivity,
+                                            resource.data?.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+                                    }
+                                }
+
+
+                            }
+
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+
+
+
+    private fun postOrder(number:String) {
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
@@ -450,6 +521,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
             viewModel.postorder(
                 PostOrderRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    isAppOrderRequest = true,
                     customerName = Shared_Preferences.getName(),
                     deliveryAddress = fragmentOrderSummaryBinding.tvAddress.text.toString(),
                     deliveryAddressId = addressId,
@@ -458,7 +530,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                     deliveryStatus = "0",
                     isSalesOrderRequest = false,
                     note = "",
-                    orderNumber = "SOM" + generateUniqueNumber(),
+                    orderNumber = number,
                     paymentStatus = "1",
                     salesOrderItem,
                     soCreatedDate = orderDate,
@@ -479,8 +551,11 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                 if (itResponse.status) {
 
                                     Toast.makeText(mainActivity, resource.data.message, Toast.LENGTH_SHORT).show()
-                                    val navController = Navigation.findNavController(fragmentOrderSummaryBinding.root)
-                                    navController.navigate(R.id.nav_home)
+                                    val intent = Intent(mainActivity, MainActivity::class.java)
+                                    startActivity(intent)
+                                    mainActivity.finish()
+//                                    val navController = Navigation.findNavController(fragmentOrderSummaryBinding.root)
+//                                    navController.navigate(R.id.nav_home)
                                     // addressAdapter?.updateData(itResponse.data.address)
 
                                 } else {
