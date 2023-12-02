@@ -135,6 +135,13 @@ class HomeFragment : Fragment(),
 
         }
 
+
+        fragmentHomeBinding.topnav.etSearch.setOnClickListener {
+
+            val navController = Navigation.findNavController(it)
+            navController.navigate(R.id.nav_searchorder)
+        }
+
         slidingDotsCount = bannerImageArray.size
 
         slidingImageDots = arrayOfNulls(slidingDotsCount)

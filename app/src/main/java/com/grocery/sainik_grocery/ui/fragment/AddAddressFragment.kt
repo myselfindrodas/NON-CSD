@@ -1,20 +1,53 @@
 package com.grocery.sainik_grocery.ui.fragment
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.ContentValues
+import android.content.Context
+import android.content.IntentSender
+import android.location.Location
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.example.sainikgrocerycustomer.data.model.Addres
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.PendingResult
+import com.google.android.gms.common.api.ResultCallback
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.LocationSettingsResult
+import com.google.android.gms.location.LocationSettingsStatusCodes
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.OnTokenCanceledListener
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
@@ -28,6 +61,8 @@ import com.grocery.sainik_grocery.utils.Shared_Preferences
 import com.grocery.sainik_grocery.utils.Status
 import com.grocery.sainik_grocery.utils.Utilities
 import com.grocery.sainik_grocery.viewmodel.CommonViewModel
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.Serializable
 
 class AddAddressFragment : Fragment() {
@@ -36,6 +71,16 @@ class AddAddressFragment : Fragment() {
     lateinit var fragmentAddAddressBinding: FragmentAddAddressBinding
     private lateinit var viewModel: CommonViewModel
     private var addressType = ""
+
+    private var mLastLocation: Location? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    var locationRequest: LocationRequest? = null
+    var locationManager: LocationManager? = null
+    var latitude: String? = ""
+    var longitude: String? = ""
+    private val AUTOCOMPLETE_REQUEST_CODE = 1
+    var placesClient: PlacesClient? = null
+
     var addressData: Data? = null
     var isEdited = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,9 +121,23 @@ class AddAddressFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(mainActivity)
+
+        if (!Places.isInitialized()) {
+            Places.initialize(mainActivity, getString(R.string.api_key))
+        }
+        placesClient = Places.createClient(mainActivity)
+
+
+        locationManager = mainActivity.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
+
         with(fragmentAddAddressBinding) {
 
             topnav.tvNavtitle.text = "Add address"
+
+            btnSearchLocation.setOnClickListener {
+                openSearchBar()
+            }
 
             if (addressData != null) {
                 addressData?.let { itAddressData ->
@@ -230,6 +289,271 @@ class AddAddressFragment : Fragment() {
         }
     }
 
+
+    private fun openSearchBar() {
+
+        val fields = listOf(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+            .build(mainActivity)
+        resolutionForPlaceResult.launch(intent)
+        //startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+    }
+
+
+    private fun displayLocationSettingsRequest(context: Context) {
+        val googleApiClient = GoogleApiClient.Builder(context)
+            .addApi(LocationServices.API).build()
+        googleApiClient.connect()
+        locationRequest = LocationRequest.create()
+        locationRequest!!.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest!!.interval = 10000
+        locationRequest!!.fastestInterval = 10000 / 2
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest!!)
+        builder.setAlwaysShow(true)
+        val resultPending: PendingResult<LocationSettingsResult> =
+            LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+        resultPending.setResultCallback(object : ResultCallback<LocationSettingsResult?> {
+            @SuppressLint("MissingPermission")
+            override fun onResult(result: LocationSettingsResult) {
+                val status: com.google.android.gms.common.api.Status = result.status
+                when (status.statusCode) {
+                    LocationSettingsStatusCodes.SUCCESS -> {
+                        Log.i(
+                            "TAG",
+                            "All location settings are satisfied."
+                        )
+
+                        fusedLocationClient.getCurrentLocation(
+                            Priority.PRIORITY_HIGH_ACCURACY,
+                            object : CancellationToken() {
+                                override fun onCanceledRequested(p0: OnTokenCanceledListener) =
+                                    CancellationTokenSource().token
+
+                                override fun isCancellationRequested() = false
+                            })
+                            .addOnSuccessListener { location: Location? ->
+                                if (location == null)
+                                    Toast.makeText(
+                                        mainActivity,
+                                        "Cannot get location.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                else {
+                                    mLastLocation = location
+                                    val lat = location.latitude
+                                    val lon = location.longitude
+                                    latitude = location.latitude.toString()
+                                    longitude = location.longitude.toString()
+                                    reverseGeocoding(latitude!!, longitude!!)
+//                                    Toast.makeText(
+//                                        mainActivity,
+//                                        "Lat: $lat  Long: $lon",
+//                                        Toast.LENGTH_SHORT
+//                                    ).show()
+//
+//                                    Shared_Preferences.setLat(lat.toString())
+//                                    Shared_Preferences.setLong(lon.toString())
+                                    mainActivity.hideProgressDialog()
+
+
+//                                    reverseGeocoding(
+//                                        location.latitude.toString(),
+//                                        location.longitude.toString()
+//                                    )
+
+                                    //fusedLocationClient.removeLocationUpdates(location)
+                                    Log.i(
+                                        "TAG",
+                                        "Lat: $lat  Long: $lon"
+                                    )
+                                }
+
+                            }
+                    }
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                        Log.i(
+                            "TAG",
+                            "Location settings are not satisfied. Show the user a dialog to upgrade location settings "
+                        )
+                        try {
+                            // Show the dialog by calling startResolutionForResult(), and check the result
+                            // in onActivityResult().
+                            val intentSenderRequest = IntentSenderRequest
+                                .Builder(status.resolution!!).build()
+                            resolutionForResult.launch(intentSenderRequest)
+                            /*status.startResolutionForResult(
+                                this@LocationActivity,
+                                11
+                            )*/
+                        } catch (e: IntentSender.SendIntentException) {
+                            Log.i("TAG", "PendingIntent unable to execute request.")
+                        }
+                    }
+                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> Log.i(
+                        "TAG",
+                        "Location settings are inadequate, and cannot be fixed here. Dialog not created."
+                    )
+                }
+            }
+        })
+    }
+
+
+    private val resolutionForResult = registerForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult()
+    ) { activityResult ->
+
+        if (activityResult.resultCode == Activity.RESULT_OK)
+            displayLocationSettingsRequest(mainActivity)
+    }
+
+
+    private val resolutionForPlaceResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+
+        if (activityResult.resultCode == Activity.RESULT_OK) {
+
+            val place = Autocomplete.getPlaceFromIntent(activityResult.data!!)
+            val address = place.address
+
+            fragmentAddAddressBinding.btnSearchLocation.text = address
+            val lati = place.latLng!!.latitude.toString() + ""
+            val longi = place.latLng!!.longitude.toString() + ""
+            latitude = lati
+            longitude = longi
+
+            reverseGeocoding(latitude!!, longitude!!)
+
+            /*  val lat = location.latitude
+              val lon = location.longitude*/
+//            Toast.makeText(
+//                mainActivity,
+//                "Lat: $lati  Long: $longi",
+//                Toast.LENGTH_SHORT
+//            ).show()
+
+//            Shared_Preferences.setLat(lati)
+//            Shared_Preferences.setLong(longi)
+            /*activityRegistrationDetailsBinding.etLocation.setText(address)*/
+
+        } else if (activityResult.resultCode == AutocompleteActivity.RESULT_ERROR) {
+
+            val status = Autocomplete.getStatusFromIntent(activityResult.data!!)
+        } else if (activityResult.resultCode == Activity.RESULT_CANCELED) {
+// The user canceled the operation.
+        }
+    }
+
+
+    @SuppressLint("MissingPermission")
+    val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val granted = permissions.entries.all {
+            it.value
+        }
+        if (granted) {
+            displayLocationSettingsRequest(mainActivity)
+
+        } else {
+            // PERMISSION NOT GRANTED
+        }
+    }
+
+
+    private fun reverseGeocoding(lat: String, long: String) {
+        var formatted_address = ""
+        if (formatted_address.isNotEmpty()) {
+            return
+        }
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+            mainActivity.showProgressDialog()
+            val jsonRequest: JsonObjectRequest = object : JsonObjectRequest(
+                Method.GET,
+                "https://maps.googleapis.com/maps/api/geocode/json?" +
+                        "latlng=" + lat + "," + long + "&key=AIzaSyA2mtyhq14pKHoTX0JMCqyTd1oxVrnr3fE",
+                null,
+                Response.Listener { response: JSONObject ->
+                    Log.i("reverseGeoResponse-->", response.toString())
+                    try {
+                        val result = JSONObject(response.toString())
+                        val status = result.getString("status")
+                        val responseArray = result.getJSONArray("results")
+
+                        val maxLogSize = 1000
+                        for (i in 0..responseArray.toString().length / maxLogSize) {
+                            val start = i * maxLogSize
+                            var end = (i + 1) * maxLogSize
+                            end =
+                                if (end > responseArray.toString().length) responseArray.toString().length else end
+                            // Log.v("TAG", responseArray.toString().substring(start, end))
+                            Log.i(
+                                "reverseGeoResponse11-->",
+                                responseArray.toString().substring(start, end)
+                            )
+                        }
+                        if (status == "OK") {
+                            //for (i in 0 until responseArray.length()) {
+                            val resultsobj = responseArray.getJSONObject(0)
+                            formatted_address = resultsobj.getString("formatted_address")
+                            val address_components = resultsobj.getJSONArray("address_components")
+                            val buildingNoJson = address_components.getJSONObject(0)
+                            val buildingNo1Json = address_components.getJSONObject(1)
+                            val streetJson = address_components.getJSONObject(2)
+                            val areaJson = address_components.getJSONObject(3)
+                            val cityJson = address_components.getJSONObject(4)
+                            val districtJson = address_components.getJSONObject(5)
+                            val stateJson = address_components.getJSONObject(7)
+                            val zipcodeJson = address_components.getJSONObject(address_components.length()-1)
+
+
+                            val buildingNo=buildingNoJson.getString("long_name")+" "+buildingNo1Json.getString("long_name")
+                            val street=streetJson.getString("long_name")
+                            val area=areaJson.getString("long_name")
+                            val city=cityJson.getString("long_name")
+                            val district=districtJson.getString("long_name")
+                            val state=stateJson.getString("long_name")
+                            val zipcode=zipcodeJson.getString("long_name")
+
+                            println("$buildingNo -  $street - $area - $city - $district - $state - $zipcode")
+
+
+                            fragmentAddAddressBinding.etStreeDetails.setText(street+" , "+district)
+
+
+
+                        } else {
+                            mainActivity.hideProgressDialog()
+                            Toast.makeText(mainActivity, "invalid", Toast.LENGTH_SHORT).show()
+                        }
+
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                    mainActivity.hideProgressDialog()
+                },
+                Response.ErrorListener { error ->
+                    try {
+
+                        val statusCode = error.networkResponse.statusCode
+                        Log.e(ContentValues.TAG, "statuscode-->$statusCode")
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+                    mainActivity.hideProgressDialog()
+
+                }) {
+            }
+            Volley.newRequestQueue(mainActivity).add(jsonRequest)
+        } else {
+            Toast.makeText(
+                mainActivity,
+                "Ooops! Internet Connection Error",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+
     private fun changeTypeBackground(
         mFragmentAddAddressBinding: FragmentAddAddressBinding,
         button: AppCompatButton
@@ -268,7 +592,12 @@ class AddAddressFragment : Fragment() {
 
     private fun validate(mFragmentAddAddressBinding: FragmentAddAddressBinding): Boolean {
         with(mFragmentAddAddressBinding) {
-            if (etHouseNo.text.toString().isEmpty()) {
+
+            if (latitude.toString().isEmpty() && latitude.toString().isEmpty()){
+                Toast.makeText(mainActivity, "Select Address for latitude and longitude", Toast.LENGTH_SHORT).show()
+                btnSearchLocation.requestFocus()
+                return false
+            }else if (etHouseNo.text.toString().isEmpty()) {
                 Toast.makeText(mainActivity, "Enter House no.", Toast.LENGTH_SHORT).show()
                 etHouseNo.requestFocus()
                 return false
@@ -313,7 +642,9 @@ class AddAddressFragment : Fragment() {
                     false,
                     fragmentAddAddressBinding.etLandmark.text.toString().trim(),
                     fragmentAddAddressBinding.etStreeDetails.text.toString().trim(),
-                    addressType
+                    addressType,
+                    latitude.toString(),
+                    longitude.toString()
                 )
             )
                 .observe(mainActivity) {
@@ -400,7 +731,9 @@ class AddAddressFragment : Fragment() {
                     false,
                     fragmentAddAddressBinding.etLandmark.text.toString().trim(),
                     fragmentAddAddressBinding.etStreeDetails.text.toString().trim(),
-                    addressType
+                    addressType,
+                    latitude.toString(),
+                    longitude.toString()
                 ))
                 .observe(mainActivity) {
                     it?.let { resource ->

@@ -24,6 +24,21 @@
         android:orientation="vertical">
 
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSearchLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/rounded_white_bg_edit_text"
+            android:drawableEnd="@drawable/ic_search_orange"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingEnd="@dimen/_20sdp"
+            android:text="Enter Your Address"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/black" />
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +63,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/blue"
                     android:id="@+id/etHouseNo"
                     android:backgroundTint="@android:color/darker_gray"
@@ -78,7 +93,7 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:id="@+id/etLandmark"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
             </LinearLayout>
 
@@ -107,7 +122,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 android:textColor="@color/blue"
                 android:id="@+id/etStreeDetails"
                 android:backgroundTint="@android:color/darker_gray"

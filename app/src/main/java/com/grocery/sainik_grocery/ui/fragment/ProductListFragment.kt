@@ -150,6 +150,15 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             }
             mainActivity.onBackPressedDispatcher.onBackPressed()
         }
+
+
+        fragmentProductListBinding.topnav.etSearch.setOnClickListener {
+
+            val navController = Navigation.findNavController(it)
+            navController.navigate(R.id.nav_searchorder)
+        }
+
+
         if (HomeFragment.cartCount > 0) {
             fragmentProductListBinding.topnav.tvCartCount.text = HomeFragment.cartCount.toString()
             fragmentProductListBinding.topnav.cvCartCount.visibility = View.VISIBLE
@@ -1085,8 +1094,8 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 
                                             val builder = AlertDialog.Builder(mainActivity)
                                             builder.setMessage(
-                                                "You Have Some of party product already added inside cart!" +
-                                                        "Please Delete previous cart items for regular product add"
+                                                "You Have Some of advance order already added inside cart!" +
+                                                        " Please Delete previous cart items for regular product add"
                                             )
                                             builder.setPositiveButton(
                                                 "Ok"
@@ -1304,6 +1313,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             viewModel.updatecart(
                 CartUpdateRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    isAdvanceOrderRequest = false,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,
                     discountPercentage = discount,

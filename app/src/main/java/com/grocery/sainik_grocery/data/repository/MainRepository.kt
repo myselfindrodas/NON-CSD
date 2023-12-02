@@ -18,6 +18,7 @@ import com.grocery.sainik_grocery.data.model.postordermodel.PostOrderRequest
 import com.grocery.sainik_grocery.data.model.productdetailsmodel.ProductDetailsRequest
 import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListRequest
 import com.grocery.sainik_grocery.data.model.profilemodel.GetProfileRequest
+import com.grocery.sainik_grocery.data.model.searchmodel.SearchRequest
 import com.grocery.sainik_grocery.data.model.setprimaryaddressmodel.PrimaryAddressRequest
 import com.grocery.sainik_grocery.data.model.tokenmodel.TokenRequest
 import com.grocery.sainik_grocery.data.model.updatecartmodel.CartUpdateRequest
@@ -48,6 +49,9 @@ class MainRepository(private val apiHelper: ApiHelper) {
     suspend fun editaddress(id: String, requestBody: AddressEditRequest) = apiHelper.editaddress(id, requestBody)
     suspend fun wishlist(requestBody: WishlistRequest) = apiHelper.wishlist(requestBody)
     suspend fun postorder(requestBody: PostOrderRequest) = apiHelper.postorder(requestBody)
+
+    suspend fun search(requestBody: SearchRequest) = apiHelper.search(requestBody)
+
     suspend fun getProfile(requestBody: GetProfileRequest) = apiHelper.getProfile(requestBody)
     suspend fun updateprofile(requestBody: UpdateProfileRequest) = apiHelper.updateprofile(requestBody)
     suspend fun updatecart(requestBody: CartUpdateRequest) = apiHelper.updatecart(requestBody)

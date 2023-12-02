@@ -21,6 +21,7 @@ import com.grocery.sainik_grocery.data.model.postordermodel.PostOrderRequest
 import com.grocery.sainik_grocery.data.model.productdetailsmodel.ProductDetailsRequest
 import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListRequest
 import com.grocery.sainik_grocery.data.model.profilemodel.GetProfileRequest
+import com.grocery.sainik_grocery.data.model.searchmodel.SearchRequest
 import com.grocery.sainik_grocery.data.model.setprimaryaddressmodel.PrimaryAddressRequest
 import com.grocery.sainik_grocery.data.model.tokenmodel.TokenRequest
 import com.grocery.sainik_grocery.data.model.updatecartmodel.CartUpdateRequest
@@ -352,6 +353,25 @@ class CommonViewModel(private val mainRepository: MainRepository) : ViewModel() 
             emit(
                 Resource.success(
                     data = mainRepository.postorder(requestBody)
+                )
+            )
+        } catch (e: Exception) {
+            emit(Resource.error(data = null, message = e.message ?: "Error Occurred!"))
+        }
+    }
+
+
+
+
+
+
+
+    fun search(requestBody: SearchRequest) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(
+                Resource.success(
+                    data = mainRepository.search(requestBody)
                 )
             )
         } catch (e: Exception) {

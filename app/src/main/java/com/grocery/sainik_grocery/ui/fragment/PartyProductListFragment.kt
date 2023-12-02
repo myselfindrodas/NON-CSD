@@ -235,7 +235,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
                                             val builder = AlertDialog.Builder(mainActivity)
                                             builder.setMessage(
                                                 "You Have Some of regular product already added inside cart!" +
-                                                        "Please Delete previous cart items for party product add"
+                                                        " Please Delete previous cart items for party product add"
                                             )
                                             builder.setPositiveButton(
                                                 "Ok"
@@ -790,6 +790,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
             viewModel.updatecart(
                 CartUpdateRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    isAdvanceOrderRequest = true,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,
                     discountPercentage = discount,

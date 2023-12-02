@@ -37,6 +37,7 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
     lateinit var fragmentCartBinding: FragmentCartBinding
     private var cartAdapter: CartListAdapter? = null
     private lateinit var viewModel: CommonViewModel
+    var AdvanceOrder = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -318,6 +319,11 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
 
                                     if (itResponse?.status == true) {
 
+                                        if (itResponse.data[0].isAdvanceOrderRequest) {
+                                            AdvanceOrder = true
+                                        }else{
+                                            AdvanceOrder = false
+                                        }
 
                                         itResponse.let {itItem->
                                             if (itItem.data.isNullOrEmpty()) {
@@ -465,6 +471,7 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
             viewModel.updatecart(
                 CartUpdateRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    isAdvanceOrderRequest = AdvanceOrder,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,
                     discountPercentage = discount,

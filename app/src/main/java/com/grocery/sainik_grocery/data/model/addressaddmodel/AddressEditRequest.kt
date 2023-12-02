@@ -18,5 +18,9 @@ data class AddressEditRequest(
     @SerializedName("streetDetails")
     val streetDetails: String,
     @SerializedName("type")
-    val type: String
+    val type: String,
+    @SerializedName("Latitude")
+    val Latitude: String,
+    @SerializedName("Longitutde")
+    val Longitutde: String
 ):Serializable

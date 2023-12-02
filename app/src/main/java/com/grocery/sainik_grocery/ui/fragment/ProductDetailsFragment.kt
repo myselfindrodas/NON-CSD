@@ -1,6 +1,10 @@
 package com.grocery.sainik_grocery.ui.fragment
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
+import android.content.DialogInterface
+import android.content.Intent
+import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +23,8 @@ import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
+import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
+import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.productdetailsmodel.ProductDetailsRequest
 import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListRequest
 import com.grocery.sainik_grocery.data.model.wishlistaddmodel.WishListAddRequest
@@ -53,6 +59,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
     private var unitname = ""
     private var unitprice = ""
     private var partyadd = ""
+    var advanceisadded=false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -193,9 +200,109 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                 fragmentProductDetailsBinding.ivPackArrow.rotation = 270f
             }
         }
+
+
         fragmentProductDetailsBinding.btnAddtoproduct.setOnClickListener {
 
-            productaddtoCart()
+//            CartList(true)
+
+            Log.d(TAG, "party-->"+partyadd)
+            Log.d(TAG, "advanceisadded-->"+advanceisadded)
+
+            if (partyadd.equals("partyadd")){
+
+                if (advanceisadded==true){
+                    productaddtoCart()
+
+                }else{
+
+                    val builder = AlertDialog.Builder(mainActivity)
+                    builder.setMessage(
+                        "You Have Some of regular order already added inside cart!" +
+                                " Please Delete previous cart items for regular product add"
+                    )
+                    builder.setPositiveButton(
+                        "Ok"
+                    ) { dialog, which ->
+
+                        DeleteCustomerCart()
+                        dialog.cancel()
+                    }
+
+                    builder.setNegativeButton("Cancel") { dialog, which ->
+                        val intent = Intent(mainActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        mainActivity.finish()
+                        dialog.cancel()
+                    }
+                    val alert = builder.create()
+                    alert.setOnShowListener { arg0: DialogInterface? ->
+                        alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+                            .setTextColor(
+                                resources.getColor(
+                                    R.color.blue,
+                                    resources.newTheme()
+                                )
+                            )
+                        alert.getButton(AlertDialog.BUTTON_POSITIVE)
+                            .setTextColor(
+                                resources.getColor(
+                                    R.color.blue,
+                                    resources.newTheme()
+                                )
+                            )
+                    }
+                    alert.show()
+                }
+            }else{
+
+                if (advanceisadded==false){
+                    productaddtoCart()
+
+                }else{
+
+                    val builder = AlertDialog.Builder(mainActivity)
+                    builder.setMessage(
+                        "You Have Some of party order already added inside cart!" +
+                                " Please Delete previous cart items for regular product add"
+                    )
+                    builder.setPositiveButton(
+                        "Ok"
+                    ) { dialog, which ->
+
+                        DeleteCustomerCart()
+                        dialog.cancel()
+                    }
+
+                    builder.setNegativeButton("Cancel") { dialog, which ->
+                        val intent = Intent(mainActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        mainActivity.finish()
+                        dialog.cancel()
+                    }
+                    val alert = builder.create()
+                    alert.setOnShowListener { arg0: DialogInterface? ->
+                        alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+                            .setTextColor(
+                                resources.getColor(
+                                    R.color.blue,
+                                    resources.newTheme()
+                                )
+                            )
+                        alert.getButton(AlertDialog.BUTTON_POSITIVE)
+                            .setTextColor(
+                                resources.getColor(
+                                    R.color.blue,
+                                    resources.newTheme()
+                                )
+                            )
+                    }
+                    alert.show()
+                }
+
+
+            }
+
 
         }
 
@@ -210,11 +317,6 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
         }
 
         getProductDetails()
-
-//        setProductDetailsView(fragmentProductDetailsBinding)
-
-//        productCartList()
-
         getAddressList()
     }
 
@@ -522,6 +624,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                                         rateProduct.rating = 5.0F
                                     }
                                     getSimilarproduct()
+                                    CartList(true)
 
                                     // categoryListAdapter?.updateData(itProfileInfo.data.category as ArrayList<Category>)
 
@@ -725,7 +828,156 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
     }
 
+
+
+    private fun CartList(isFirstPage: Boolean) {
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+
+            viewModel.CartList(
+                CartListRequest(
+                    customerId = Shared_Preferences.getUserId(),
+                    pageSize = 10,
+                    skip = 0
+                )
+            )
+                .observe(mainActivity) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                resource.data.let { itResponse ->
+
+                                    if (itResponse?.status == true) {
+
+                                        advanceisadded = itResponse.data[0].isAdvanceOrderRequest
+
+
+
+
+                                    } else {
+                                        viewModel.cartListItem.value = 0
+                                        advanceisadded= false
+//                                        if (itResponse!!.totalCount==0){
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+//                                        }else{
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
 //
+//                                        }
+////                                        cartAdapter?.updateData(arrayListOf())
+//////                                        Toast.makeText(
+//////                                            mainActivity,
+//////                                            resource.data?.message,
+//////                                            Toast.LENGTH_SHORT
+//////                                        ).show()
+////
+////                                        fragmentCartBinding.nodata.root.visibility=View.VISIBLE
+////                                        fragmentCartBinding.btnGo.visibility=View.GONE
+////                                        fragmentCartBinding.llTotalPice.visibility=View.GONE
+                                    }
+
+                                }
+
+                            }
+
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
+
+    }
+
+
+    private fun DeleteCustomerCart() {
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+            viewModel.DeleteCustomerCart(
+                DeleteCustomerCartRequest(
+                    customerId = Shared_Preferences.getUserId()
+                )
+            )
+                .observe(mainActivity) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                if (resource.data?.status == true) {
+                                    getProductDetails()
+                                    getAddressList()
+
+
+                                } else {
+
+                                    Toast.makeText(
+                                        mainActivity,
+                                        resource.data?.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                }
+
+
+                            }
+
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+
+
+    //
 //    private fun productaddtoCart(view: View, packSizeId: String, mIsAdded: Boolean) {
 //
 //

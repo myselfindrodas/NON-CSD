@@ -573,17 +573,17 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
                         Status.ERROR -> {
                             mainActivity.hideProgressDialog()
-                            val builder = AlertDialog.Builder(mainActivity)
-                            builder.setMessage(it.message)
-                            builder.setPositiveButton(
-                                "Ok"
-                            ) { dialog, which ->
-
-                                dialog.cancel()
-
-                            }
-                            val alert = builder.create()
-                            alert.show()
+//                            val builder = AlertDialog.Builder(mainActivity)
+//                            builder.setMessage(it.message)
+//                            builder.setPositiveButton(
+//                                "Ok"
+//                            ) { dialog, which ->
+//
+//                                dialog.cancel()
+//
+//                            }
+//                            val alert = builder.create()
+//                            alert.show()
                         }
 
                         Status.LOADING -> {

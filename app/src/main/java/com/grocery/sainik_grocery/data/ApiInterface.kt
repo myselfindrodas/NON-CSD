@@ -37,6 +37,7 @@ import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListRequest
 import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListResponse
 import com.grocery.sainik_grocery.data.model.profilemodel.GetProfileRequest
 import com.grocery.sainik_grocery.data.model.profilemodel.ProfileResponse
+import com.grocery.sainik_grocery.data.model.searchmodel.SearchRequest
 import com.grocery.sainik_grocery.data.model.setprimaryaddressmodel.PrimaryAddressRequest
 import com.grocery.sainik_grocery.data.model.setprimaryaddressmodel.PrimaryaddressResponse
 import com.grocery.sainik_grocery.data.model.tokenmodel.TokenRequest
@@ -270,6 +271,15 @@ interface ApiInterface {
     suspend fun postorder(
         @Body requestBody: PostOrderRequest
     ): PostorderResponse
+
+
+
+
+
+    @POST("GetProductsList")
+    suspend fun search(
+        @Body requestBody: SearchRequest
+    ): ProductListResponse
 
 
 
