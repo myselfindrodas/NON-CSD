@@ -5,15 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
+import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartData
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.ordersummerymodel.OrdersummeryRequest
 import com.grocery.sainik_grocery.data.model.postordermodel.PostOrderRequest
@@ -24,6 +27,8 @@ import com.grocery.sainik_grocery.databinding.FragmentOrderSummaryBinding
 import com.grocery.sainik_grocery.ui.LocationActivity
 import com.grocery.sainik_grocery.ui.MainActivity
 import com.grocery.sainik_grocery.ui.MainActivity.Companion.payment
+import com.grocery.sainik_grocery.ui.adapter.CartCountAdapter
+import com.grocery.sainik_grocery.ui.adapter.CartListAdapter
 import com.grocery.sainik_grocery.ui.adapter.OrderDetailsListAdapter
 import com.grocery.sainik_grocery.utils.Shared_Preferences
 import com.grocery.sainik_grocery.utils.Status
@@ -34,7 +39,8 @@ import java.util.Date
 import kotlin.random.Random
 
 
-class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickListener {
+class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickListener,
+    CartCountAdapter.OnItemClickListener{
 
     lateinit var mainActivity: MainActivity
     lateinit var fragmentOrderSummaryBinding: FragmentOrderSummaryBinding
@@ -46,6 +52,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
     var total = ""
     var totalAmount = ""
     var discount = ""
+    var cartCountAdapter:CartCountAdapter?=null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,6 +95,9 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
         with(fragmentOrderSummaryBinding) {
 
+            cartCountAdapter = CartCountAdapter(mainActivity, this@OrderSummaryFragment)
+            rvOrderdetails.adapter = cartCountAdapter
+            rvOrderdetails.layoutManager = GridLayoutManager(mainActivity, 1)
 
             topnav.btnBack.setOnClickListener {
                 if (Utilities.isClickRecently()) {
@@ -281,6 +291,8 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                 resource.data.let { itResponse ->
 
                                     if (itResponse?.status == true) {
+
+                                        cartCountAdapter?.updateData(itResponse.data)
 
                                         for (i in 0 until itResponse.data.size) {
                                             val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -551,11 +563,14 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                 if (itResponse.status) {
 
                                     Toast.makeText(mainActivity, resource.data.message, Toast.LENGTH_SHORT).show()
-                                    val intent = Intent(mainActivity, MainActivity::class.java)
-                                    startActivity(intent)
-                                    mainActivity.finish()
-//                                    val navController = Navigation.findNavController(fragmentOrderSummaryBinding.root)
-//                                    navController.navigate(R.id.nav_home)
+//                                    val intent = Intent(mainActivity, MainActivity::class.java)
+//                                    startActivity(intent)
+//                                    mainActivity.finish()
+                                    val bundle = Bundle()
+                                    bundle.putString("address", fragmentOrderSummaryBinding.tvAddress.text.toString())
+                                    bundle.putString("amount", total)
+                                    val navController = Navigation.findNavController(fragmentOrderSummaryBinding.root)
+                                    navController.navigate(R.id.nav_succeess, bundle)
                                     // addressAdapter?.updateData(itResponse.data.address)
 
                                 } else {
@@ -703,7 +718,18 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
     }
 
+    override fun onClick(
+        position: Int,
+        view: View,
+        clickType: Int,
+        cartData: CartData,
+        count: Int,
+        textView: TextView
+    ) {
 
+
+
+    }
 
 
 }

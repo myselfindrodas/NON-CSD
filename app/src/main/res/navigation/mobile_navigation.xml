@@ -154,4 +154,12 @@
         android:label="Party Productlist"
         tools:layout="@layout/fragment_party_product_list" />
 
+
+
+    <fragment
+        android:id="@+id/nav_succeess"
+        android:name="com.grocery.sainik_grocery.ui.fragment.SuccessFragment"
+        android:label="Order Success"
+        tools:layout="@layout/fragment_success" />
+
 </navigation>

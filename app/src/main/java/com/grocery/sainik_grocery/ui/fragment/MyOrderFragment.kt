@@ -1,10 +1,14 @@
 package com.grocery.sainik_grocery.ui.fragment
 
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,6 +20,7 @@ import com.example.sainikgrocerycustomer.data.model.Order
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
+import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.orderlistmodel.Data
 import com.grocery.sainik_grocery.data.model.orderlistmodel.OrderlistRequest
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
@@ -62,6 +67,7 @@ class MyOrderFragment : Fragment(),MyOrderListAdapter.OnItemClickListener {
         super.onResume()
 
         mainActivity.setBottomNavigationVisibility(true)
+        productCartList()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -118,7 +124,8 @@ class MyOrderFragment : Fragment(),MyOrderListAdapter.OnItemClickListener {
                 if (Utilities.isClickRecently()){
                     return@setOnClickListener
                 }
-                mainActivity.onBackPressedDispatcher.onBackPressed()
+                val navController = Navigation.findNavController(it)
+                navController.navigate(R.id.nav_home)
             }
 
 //        viewModel.cartListItem.observe(viewLifecycleOwner, Observer {count->
@@ -273,4 +280,104 @@ class MyOrderFragment : Fragment(),MyOrderListAdapter.OnItemClickListener {
         navController.navigate(R.id.nav_order_details,bundle)
     }
 
+
+
+    private fun productCartList() {
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+
+            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), pageSize = 10, skip = 0))
+                .observe(this) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                resource.data.let {itResponse->
+
+                                    if (itResponse?.status == true) {
+
+
+                                        if (itResponse.totalCount==0){
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+                                        }else{
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+
+                                        }
+
+
+
+
+
+
+                                    } else {
+//                                        viewModel.cartListItem.value=0
+                                        if (itResponse!!.totalCount==0){
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+                                        }else{
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+
+                                        }
+                                    }
+
+                                }
+
+                            }
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+
+                    val intent = Intent(mainActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    mainActivity.finish()
+//                    mainActivity.finishAffinity()
+//                    if (activity != null) {
+//                        activity?.finish()
+//                    }
+
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            callback
+        )
+    }
 }

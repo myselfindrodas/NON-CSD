@@ -64,12 +64,12 @@ class MyOrderListAdapter(
             val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 //            val input2 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
-            val output = SimpleDateFormat("dd-MM-yyyy")
+            val output = SimpleDateFormat("dd-MMM-yyyy")
             var d: Date? = null
             try {
                 d = input.parse(orderModelArrayList[position].soCreatedDate.toString())
                 val formatted: String = output.format(d)
-                holder.tvOrderDate.text = formatted
+                holder.tvOrderDate.text = "Ordered On "+formatted
             } catch (e: ParseException) {
                 e.printStackTrace()
             }

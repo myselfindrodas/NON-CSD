@@ -75,12 +75,7 @@
             android:layout_marginTop="15dp"/>
 
 
-        <include
-            android:id="@+id/nodata"
-            layout="@layout/nodatalayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+
 
 
 
@@ -88,6 +83,14 @@
 
     </ScrollView>
 
+
+    <include
+        android:id="@+id/nodata"
+        layout="@layout/nodatalayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>
 </layout>
