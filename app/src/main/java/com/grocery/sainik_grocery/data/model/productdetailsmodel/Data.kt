@@ -23,7 +23,7 @@ data class Data(
     @SerializedName("id")
     val id: String,
     @SerializedName("mrp")
-    val mrp: Double,
+    val mrp: String,
     @SerializedName("name")
     val name: String,
     @SerializedName("productTaxes")
@@ -35,7 +35,7 @@ data class Data(
     @SerializedName("qrCodeUrl")
     val qrCodeUrl: Any?,
     @SerializedName("salesPrice")
-    val salesPrice: Double,
+    val salesPrice: String,
     @SerializedName("skuCode")
     val skuCode: String,
     @SerializedName("skuName")

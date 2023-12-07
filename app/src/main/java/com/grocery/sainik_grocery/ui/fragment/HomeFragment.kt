@@ -35,6 +35,7 @@ import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentHomeBinding
 import com.grocery.sainik_grocery.ui.LocationActivity
 import com.grocery.sainik_grocery.ui.MainActivity
+import com.grocery.sainik_grocery.ui.adapter.BannerAdapter
 import com.grocery.sainik_grocery.ui.adapter.CategoryAdapter
 import com.grocery.sainik_grocery.ui.adapter.SlidingBannerAdapter
 import com.grocery.sainik_grocery.ui.adapter.TopsellingAdapter
@@ -59,6 +60,7 @@ class HomeFragment : Fragment(),
     private var dailyproductAdapter: TopsellingAdapter? = null
     private var slidingBannerAdapter: SlidingBannerAdapter? = null
     private var slidingBannerAdapter1: SlidingBannerAdapter? = null
+    private var bannerAdapter:BannerAdapter?=null
     var btnNavlogout: LinearLayout? = null
     var btnExpandaccount: LinearLayout? = null
     private lateinit var viewModel: CommonViewModel
@@ -127,13 +129,10 @@ class HomeFragment : Fragment(),
         bannerImageArray.add(R.drawable.banner3)
 
         slidingBannerAdapter= SlidingBannerAdapter(mainActivity, this@HomeFragment)
+        bannerAdapter= BannerAdapter(mainActivity)
 
-        slidingBannerAdapter!!.updateBannerImage(bannerImageArray)
-        fragmentHomeBinding.slidingBanner.apply {
-            adapter = slidingBannerAdapter
-            registerOnPageChangeCallback(slidingCallback)
-
-        }
+        fragmentHomeBinding.slidingBanner.setAdapter(bannerAdapter)
+        fragmentHomeBinding.dotsIndicatorTop.attachTo(fragmentHomeBinding.slidingBanner)
 
 
         fragmentHomeBinding.topnav.etSearch.setOnClickListener {
@@ -142,80 +141,20 @@ class HomeFragment : Fragment(),
             navController.navigate(R.id.nav_searchorder)
         }
 
-        slidingDotsCount = bannerImageArray.size
-
-        slidingImageDots = arrayOfNulls(slidingDotsCount)
-        fragmentHomeBinding.sliderDots.removeAllViews()
-        for (i in 0 until slidingDotsCount) {
-            slidingImageDots[i] = ImageView(mainActivity)
-            slidingImageDots[i]?.setImageDrawable(
-                ContextCompat.getDrawable(
-                    mainActivity,
-                    R.drawable.non_active_dot
-                )
-            )
-            val params =
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-
-            params.setMargins(8, 0, 8, 0)
-            fragmentHomeBinding.sliderDots.addView(slidingImageDots[i], params)
-        }
-
-
-        slidingImageDots[0]?.setImageDrawable(
-            ContextCompat.getDrawable(
-                mainActivity,
-                R.drawable.active_dot
-            )
-        )
 
         bannerImageArray2 = arrayListOf()
         bannerImageArray2.add(R.drawable.bgbanner4)
         bannerImageArray2.add(R.drawable.bgbanner1)
         bannerImageArray2.add(R.drawable.bgbanner2)
         bannerImageArray2.add(R.drawable.bgbanner3)
-
+//
         slidingBannerAdapter1= SlidingBannerAdapter(mainActivity, this@HomeFragment)
-
+//
         slidingBannerAdapter1!!.updateBannerImage(bannerImageArray)
-        fragmentHomeBinding.slidingBannerViewPager.apply {
-            adapter = slidingBannerAdapter1
-            registerOnPageChangeCallback(slidingCallback1)
-
-        }
-
-        slidingDotsCount1 = bannerImageArray2.size
-
-        slidingImageDots1 = arrayOfNulls(slidingDotsCount1)
-        fragmentHomeBinding.sliderDotsOfBanner.removeAllViews()
-        for (i in 0 until slidingDotsCount1) {
-            slidingImageDots1[i] = ImageView(mainActivity)
-            slidingImageDots1[i]?.setImageDrawable(
-                ContextCompat.getDrawable(
-                    mainActivity,
-                    R.drawable.non_active_dot
-                )
-            )
-            val params =
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-
-            params.setMargins(8, 0, 8, 0)
-            fragmentHomeBinding.sliderDotsOfBanner.addView(slidingImageDots1[i], params)
-        }
 
 
-        slidingImageDots1[0]?.setImageDrawable(
-            ContextCompat.getDrawable(
-                mainActivity,
-                R.drawable.active_dot
-            )
-        )
+        fragmentHomeBinding.slidingBannerViewPager.setAdapter(slidingBannerAdapter1)
+        fragmentHomeBinding.dotsIndicatorTop2.attachTo(fragmentHomeBinding.slidingBannerViewPager)
 
 
         topsellingAdapter = TopsellingAdapter(mainActivity, this@HomeFragment)
@@ -257,55 +196,14 @@ class HomeFragment : Fragment(),
         fragmentHomeBinding.rvGroup.setLayoutManager(GridLayoutManager(mainActivity, 3))
         val itemDecoration1 = ItemOffsetDecoration(mainActivity, R.dimen.photos_list_spacing)
         fragmentHomeBinding.rvGroup.addItemDecoration(itemDecoration1)
-//        val groupList = ArrayList<Category>()
-//        for (i in 1..5){
-//            groupList.add(Category(2, R.drawable.item, "Cleaning"))
-//        }
-//        groupAdapter!!.updateData(groupList, "R.drawable.item")
+
 
         categoryAdapter = CategoryAdapter(mainActivity, this@HomeFragment)
         fragmentHomeBinding.idGVcourses.setAdapter(categoryAdapter)
         fragmentHomeBinding.idGVcourses.setLayoutManager(GridLayoutManager(mainActivity, 3))
         val itemDecoration = ItemOffsetDecoration(mainActivity, R.dimen.photos_list_spacing)
         fragmentHomeBinding.idGVcourses.addItemDecoration(itemDecoration)
-//        val categoryList = ArrayList<Category>()
-//        for (i in 1..3){
-//            categoryList.add(Category(2, R.drawable.item, "Cleaning"))
-//        }
-//        categoryAdapter!!.updateData(categoryList, "R.drawable.item")
 
-//        viewModel.cartListItem.observe(viewLifecycleOwner, Observer { count ->
-//            if (count > 0) {
-//                fragmentHomeBinding.topnav.tvCartCount.text = count.toString()
-//                fragmentHomeBinding.topnav.cvCartCount.visibility = View.VISIBLE
-//            } else {
-//                fragmentHomeBinding.topnav.cvCartCount.visibility = View.GONE
-//            }
-//            cartCount = count
-//        })
-
-//        dashboard(Shared_Preferences.getUrcid().toString())
-
-//        productCartList()
-
-      /*
-      fragmentHomeBinding.topnav.btnWishlist.setOnClickListener {
-            if (Utilities.isClickRecently()) {
-                return@setOnClickListener
-            }
-            val navController = Navigation.findNavController(it)
-            navController.navigate(R.id.nav_wishlist)
-
-       }
-
-      fragmentHomeBinding.topnav.clCart.setOnClickListener {
-            if (Utilities.isClickRecently()) {
-                return@setOnClickListener
-            }
-            val navController = Navigation.findNavController(it)
-            navController.navigate(R.id.nav_cart)
-        }
-*/
 
         fragmentHomeBinding.topnav.ivProfile.setOnClickListener {
             if (Utilities.isClickRecently()) {
@@ -364,15 +262,6 @@ class HomeFragment : Fragment(),
 
         }
 
-
-//        fragmentHomeBinding.shopbycategoryViewall.setOnClickListener {
-//
-//            val bundle = Bundle()
-//            bundle.putString("viewalltype", "category")
-//            val navController = Navigation.findNavController(it)
-//            navController.navigate(R.id.nav_productlist, bundle)
-//
-//        }
 
         fragmentHomeBinding.topnav.ivMic.setOnClickListener {
 
@@ -447,25 +336,7 @@ class HomeFragment : Fragment(),
         }
     }
 
-    private val slidingCallback1 = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            for (i in 0 until slidingDotsCount) {
-                slidingImageDots1[i]?.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        mainActivity,
-                        R.drawable.non_active_dot
-                    )
-                )
-            }
 
-            slidingImageDots1[position]?.setImageDrawable(
-                ContextCompat.getDrawable(
-                    mainActivity,
-                    R.drawable.active_dot
-                )
-            )
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -498,6 +369,7 @@ class HomeFragment : Fragment(),
 
                                         categoryAdapter?.updateData(itResponse.data)
                                         groupAdapter?.updateData(itResponse.data)
+                                        BannerTop()
 
                                     }
 
@@ -613,180 +485,66 @@ class HomeFragment : Fragment(),
     }
 
 
+    private fun BannerTop() {
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+            viewModel.banners().observe(mainActivity) {
+                it?.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            mainActivity.hideProgressDialog()
+
+                            if (resource.data?.status == true) {
+
+
+                                bannerAdapter?.updateList(resource.data.data)
 
 
 
-//    private fun dashboard(urcid: String, keyword: String = "") {
-//
-//
-//        if (Utilities.isNetworkAvailable(mainActivity)) {
-//
-//            viewModel.dashboard(
-//                DashboardRequestModel(urc_id = urcid, keywords = keyword)
-//            ).observe(mainActivity) {
-//                it?.let { resource ->
-//                    when (resource.status) {
-//                        Status.SUCCESS -> {
-//                            resource.data?.let { itProfileInfo ->
-//
-//                                with(fragmentHomeBinding) {
-//
-//                                    if (itProfileInfo.data.topSellingProducts.isNullOrEmpty()) {
-//                                        llTopSellingName.visibility = View.GONE
-//                                    } else {
-//                                        llTopSellingName.visibility = View.VISIBLE
-//                                    }
-//                                    topsellingAdapter?.updateData(
-//                                        itProfileInfo.data.topSellingProducts as ArrayList<DataProductList>,
-//                                        itProfileInfo.productImageUrl
-//                                    )
-//
-//                                    if (itProfileInfo.data.featuredProducts.isNullOrEmpty()) {
-//                                        llFeatureProductName.visibility = View.GONE
-//                                    } else {
-//                                        llFeatureProductName.visibility = View.VISIBLE
-//                                    }
-//                                    featuredproductAdapter?.updateData(
-//                                        itProfileInfo.data.featuredProducts as ArrayList<DataProductList>,
-//                                        itProfileInfo.productImageUrl
-//                                    )
-//
-//                                    if (itProfileInfo.data.essentialProducts.isNullOrEmpty()) {
-//                                        llEssentialName.visibility = View.GONE
-//                                    } else {
-//                                        llEssentialName.visibility = View.VISIBLE
-//                                    }
-//                                    dailyproductAdapter?.updateData(
-//                                        itProfileInfo.data.essentialProducts as ArrayList<DataProductList>,
-//                                        itProfileInfo.productImageUrl
-//                                    )
-//
-//                                    if (itProfileInfo.data.category.isNullOrEmpty()) {
-//                                        llCategoryName.visibility = View.GONE
-//                                    } else {
-//                                        llCategoryName.visibility = View.VISIBLE
-//                                    }
-//                                    categoryAdapter?.updateData(
-//                                        itProfileInfo.data.category as ArrayList<Category>,
-//                                        itProfileInfo.categoryImageUrl
-//                                    )
-//
-//                                    groupAdapter?.updateData(
-//                                        itProfileInfo.data.category as ArrayList<Category>,
-//                                        itProfileInfo.categoryImageUrl
-//                                    )
-//
-//
-//                                }
-//
-//                            }
-//
-//                            mainActivity.hideProgressDialog()
-//                        }
-//                        Status.ERROR -> {
-//                            mainActivity.hideProgressDialog()
-//                            Log.d(ContentValues.TAG, "print-->" + resource.data?.status)
-//
-////                            if (it.message!!.contains("401", true)) {
-////                                val builder = AlertDialog.Builder(this@LoginemailActivity)
-////                                builder.setMessage("Invalid Employee Id / Password")
-////                                builder.setPositiveButton(
-////                                    "Ok"
-////                                ) { dialog, which ->
-////
-////                                    dialog.cancel()
-////
-////                                }
-////                                val alert = builder.create()
-////                                alert.show()
-////                            } else
-////                                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-//
-//                        }
-//
-//                        Status.LOADING -> {
-//                            mainActivity.showProgressDialog()
-//                        }
-//
-//                    }
-//
-//                }
-//            }
-//
-//        } else {
-//
-//            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//
-//        }
-//
-//    }
-//
-//
-//    private fun productCartList() {
-//
-//        if (Utilities.isNetworkAvailable(mainActivity)) {
-//
-//            viewModel.cartList()
-//                .observe(mainActivity) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                resource.data.let { itResponse ->
-//
-//                                    if (itResponse?.status == true) {
-//
-//                                        //cartCount=itResponse.data.cart.size
-//                                        if (itResponse.data.cart.isNullOrEmpty()) {
-//                                            viewModel.cartListItem.value = 0
-//                                        } else
-//                                            viewModel.cartListItem.value = itResponse.data.cart.size
-//
-//                                    } else {
-//
-//                                        viewModel.cartListItem.value = 0
-//                                        /*Toast.makeText(
-//                                            mainActivity,
-//                                            resource.data?.message,
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()*/
-//
-//                                    }
-//
-//                                }
-//
-//                                mainActivity.hideProgressDialog()
-//                            }
-//                            Status.ERROR -> {
-//                                mainActivity.hideProgressDialog()
-//                                val builder = AlertDialog.Builder(mainActivity)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.show()
-//                            }
-//
-//                            Status.LOADING -> {
-//                                mainActivity.showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-//
-//    }
+                            } else {
+                                Toast.makeText(
+                                    mainActivity,
+                                    resource.data?.message,
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }
+
+                        }
+                        Status.ERROR -> {
+                            mainActivity.hideProgressDialog()
+                            val builder = android.app.AlertDialog.Builder(mainActivity)
+                            builder.setMessage(it.data?.message)
+                            builder.setPositiveButton(
+                                "Ok"
+                            ) { dialog, which ->
+
+                                dialog.cancel()
+
+                            }
+                            val alert = builder.create()
+                            alert.setOnShowListener { arg0 ->
+                                alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
+                                    .setTextColor(resources.getColor(R.color.blue))
+                            }
+                            alert.show()
+
+
+                        }
+
+                        Status.LOADING -> {
+                            mainActivity.showProgressDialog()
+                        }
+                    }
+                }
+            }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
 
     override fun onClickCategory(position: Int, view: View, catId: String, catName: String) {
 
@@ -807,15 +565,11 @@ class HomeFragment : Fragment(),
 
         headerHandler.postDelayed(Runnable {
             headerHandler.postDelayed(runnable!!, delay.toLong())
-            if (currentPage === slidingBannerAdapter!!.itemCount + 1 - 1) {
+            if (currentPage === bannerAdapter!!.itemCount + 1 - 1) {
                 currentPage = 0
             }
-//
-//            if (currentPage === slidingBannerAdapter1!!.itemCount + 1 - 1) {
-//                currentPage = 0
-//            }
+
             fragmentHomeBinding.slidingBanner.setCurrentItem(currentPage++, true)
-//            fragmentHomeBinding.slidingBannerViewPager.setCurrentItem(currentPage++, true)
 
         }.also { runnable = it }, delay.toLong())
         super.onResume()

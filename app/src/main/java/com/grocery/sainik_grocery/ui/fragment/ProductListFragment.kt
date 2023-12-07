@@ -1,13 +1,11 @@
 package com.grocery.sainik_grocery.ui.fragment
 
-import android.app.Activity
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -49,8 +47,6 @@ import com.grocery.sainik_grocery.utils.Shared_Preferences
 import com.grocery.sainik_grocery.utils.Status
 import com.grocery.sainik_grocery.utils.Utilities
 import com.grocery.sainik_grocery.viewmodel.CommonViewModel
-import java.util.Locale
-import java.util.Objects
 
 class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
     CategoryListAdapter.OnItemClickListener, SubCategoryListAdapter.SubCategoryOnItemClickListener,
@@ -349,7 +345,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 
 
             viewModel.productList(
-                ProductListRequest("25", "0", categoryId)
+                ProductListRequest("50", "0", categoryId)
             ).observe(mainActivity) {
                 it?.let { resource ->
                     when (resource.status) {

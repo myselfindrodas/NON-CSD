@@ -72,21 +72,34 @@
                         android:text="URC Baranagar, West Bengal"
                         android:layout_weight="0.1"
                         android:id="@+id/tvUrcName"
+                        android:visibility="gone"
                         android:textSize="@dimen/_12ssp"
                         android:fontFamily="@font/poppins_regular"
                         android:textColor="@android:color/white"/>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvMyAddress"
+                        android:textSize="@dimen/_11ssp"
+                        android:maxLines="1"
+                        android:layout_weight="0.1"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@android:color/white"/>
+
+
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvMyAddress"
-                    android:textSize="@dimen/_11ssp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@android:color/white"/>
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/tvMyAddress"-->
+<!--                    android:textSize="@dimen/_11ssp"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:ellipsize="end"-->
+<!--                    android:fontFamily="@font/poppins_regular"-->
+<!--                    android:textColor="@android:color/white"/>-->
 
             </LinearLayout>
 

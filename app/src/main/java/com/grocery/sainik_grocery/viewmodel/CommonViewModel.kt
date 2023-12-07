@@ -114,6 +114,23 @@ class CommonViewModel(private val mainRepository: MainRepository) : ViewModel() 
 
 
 
+
+
+    fun LoginPageBanners() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(
+                Resource.success(
+                    data = mainRepository.LoginPageBanners()
+                )
+            )
+        } catch (e: Exception) {
+            emit(Resource.error(data = null, message = e.message ?: "Error Occurred!"))
+        }
+    }
+
+
+
     fun categorylist() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
@@ -153,6 +170,23 @@ class CommonViewModel(private val mainRepository: MainRepository) : ViewModel() 
             emit(
                 Resource.success(
                     data = mainRepository.notificationlist(customerid)
+                )
+            )
+        } catch (e: Exception) {
+            emit(Resource.error(data = null, message = e.message ?: "Error Occurred!"))
+        }
+    }
+
+
+
+
+
+    fun banners() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(
+                Resource.success(
+                    data = mainRepository.banners()
                 )
             )
         } catch (e: Exception) {

@@ -82,7 +82,40 @@ class OrderDetailsFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
         fragmentOrderDetailsBinding.topnav.tvNavtitle.text = "Order details"
 
+
         with(fragmentOrderDetailsBinding) {
+
+            btnSummary.setTextColor(resources.getColor(R.color.blue))
+            btnItems.setTextColor(resources.getColor(R.color.grey_text))
+            viewSummary.visibility = View.VISIBLE
+            viewItems.visibility = View.INVISIBLE
+            llSummary.visibility = View.VISIBLE
+            llItems.visibility = View.GONE
+
+            btnSummary.setOnClickListener {
+
+                btnSummary.setTextColor(resources.getColor(R.color.blue))
+                btnItems.setTextColor(resources.getColor(R.color.grey_text))
+                viewSummary.visibility = View.VISIBLE
+                viewItems.visibility = View.INVISIBLE
+                llSummary.visibility = View.VISIBLE
+                llItems.visibility = View.GONE
+
+
+            }
+
+
+            btnItems.setOnClickListener {
+
+                btnSummary.setTextColor(resources.getColor(R.color.grey_text))
+                btnItems.setTextColor(resources.getColor(R.color.blue))
+                viewSummary.visibility = View.INVISIBLE
+                viewItems.visibility = View.VISIBLE
+                llSummary.visibility = View.GONE
+                llItems.visibility = View.VISIBLE
+
+            }
+
             productAdapter =
                 OrderDetailsListAdapter(
                     mainActivity,
@@ -239,12 +272,12 @@ class OrderDetailsFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                             tvItemQtyTxt.text =
                                                 if (itResponse.data.salesOrderItems.size > 1) "Price (${itResponse.data.salesOrderItems.size} Items)" else "Price (${itResponse.data.salesOrderItems.size} Item)"
                                             tvPrice.text = "₹ ${itResponse.data.totalAmount}"
-                                            tvDeliveryCharge.text =
-                                                "₹ ${itResponse.data.deliveryCharges}"
+                                            tvDeliveryCharge.text = "₹ ${itResponse.data.deliveryCharges}"
                                             tvDiscount.text = "₹ ${itResponse.data.totalDiscount}"
 //                                            val total =
 //                                                (itResponse.data.order.amount - itResponse.data.order.discount) + itResponse.data.order.deliveryCharges
-                                            val total = itResponse.data.totalAmount + itResponse.data.deliveryCharges
+//                                            val total = itResponse.data.totalAmount + itResponse.data.deliveryCharges
+                                            val total = String.format("%.2f", (itResponse.data.totalAmount.toDouble() + itResponse.data.deliveryCharges.toDouble()))
                                             tvTotalPrice.text = "₹ $total"
 
 //                                            tvAddress.text =

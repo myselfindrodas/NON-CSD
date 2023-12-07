@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.grocery.sainik_grocery.R
@@ -223,7 +222,7 @@ class PartyProductAdapter(
             }
 
 
-            holder.tvItemname.text = productModelArrayList[position].name
+            holder.tvItemname.text = convertToCamelCase(productModelArrayList[position].name)
 
 
             if (productModelArrayList[position].discount?.toInt()!! > 0) {
@@ -329,6 +328,19 @@ class PartyProductAdapter(
 
     }
 
+
+    fun convertToCamelCase(input: String): String {
+        val words = input.split(" ").toMutableList()
+//        if (words.size == 1) {
+//            return words[0].toLowerCase()
+//        }
+
+        for (i in 1 until words.size) {
+            words[i] = words[i].replaceFirstChar { char -> char.uppercase() }
+        }
+
+        return words.joinToString(" ").toLowerCase().replaceFirstChar { char -> char.uppercase() }
+    }
 
     fun updateData(mProductModelArrayList: List<Data>, mCartModelArrayList: List<CartData>) {
         productModelArrayList = mProductModelArrayList as ArrayList<Data>

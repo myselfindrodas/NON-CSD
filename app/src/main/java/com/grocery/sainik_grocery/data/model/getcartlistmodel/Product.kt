@@ -15,7 +15,7 @@ data class Product(
     @SerializedName("categoryId")
     val categoryId: String,
     @SerializedName("categoryName")
-    val categoryName: Any?,
+    val categoryName: String,
     @SerializedName("code")
     val code: String,
     @SerializedName("createdDate")
@@ -24,6 +24,8 @@ data class Product(
     val description: String,
     @SerializedName("discount")
     val discount: Any?,
+    @SerializedName("hsnCode")
+    val hsnCode: String,
     @SerializedName("id")
     val id: String,
     @SerializedName("inventory")
@@ -35,11 +37,11 @@ data class Product(
     @SerializedName("name")
     val name: String,
     @SerializedName("orderEndTime")
-    val orderEndTime: Any?,
+    val orderEndTime: String,
     @SerializedName("orderStartTime")
-    val orderStartTime: Any?,
+    val orderStartTime: String,
     @SerializedName("productCategory")
-    val productCategory: Any?,
+    val productCategory: ProductCategory,
     @SerializedName("productTaxes")
     val productTaxes: List<Any>,
     @SerializedName("productUrl")
@@ -49,7 +51,7 @@ data class Product(
     @SerializedName("qrCodeUrl")
     val qrCodeUrl: Any?,
     @SerializedName("rackNo")
-    val rackNo: Any?,
+    val rackNo: String,
     @SerializedName("salesPrice")
     val salesPrice: Double,
     @SerializedName("skuCode")
@@ -65,7 +67,7 @@ data class Product(
     @SerializedName("unitName")
     val unitName: Any?,
     @SerializedName("warehouseId")
-    val warehouseId: String,
+    val warehouseId: Any?,
     @SerializedName("warehouseName")
     val warehouseName: Any?
 )

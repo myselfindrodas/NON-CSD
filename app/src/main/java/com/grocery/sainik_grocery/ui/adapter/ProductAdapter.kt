@@ -80,35 +80,30 @@ class ProductAdapter(
                     && sdf.format(currentTime).toString()<= productModelArrayList[position].orderEndTime.toString()){
                     holder.btnGo.visibility = View.VISIBLE
                     holder.llcounter.visibility = View.GONE
+                    holder.itemView.setOnClickListener {
+                        onItemClickListener.onClick(position, it, holder.tvQty, holder.tvPrice, "ivImg", productModelArrayList[position].id, productModelArrayList[position])
+
+                    }
                 }else{
                     holder.btnGo.visibility = View.GONE
                     holder.llcounter.visibility = View.GONE
                     holder.tvAvailable.visibility = View.VISIBLE
                     holder.tvAvailable.text = "ORDER TIME EXPRIED"
+                    holder.itemView.setOnClickListener {
+                        Toast.makeText(ctx,"Product Not Availabe at this time",Toast.LENGTH_SHORT).show()
+
+                    }
                 }
 
             }else{
                 holder.tvAvailable.visibility = View.GONE
+                holder.itemView.setOnClickListener {
+                    onItemClickListener.onClick(position, it, holder.tvQty, holder.tvPrice, "ivImg", productModelArrayList[position].id, productModelArrayList[position])
+
+                }
 
             }
 
-//        cartModelArrayList.forEach { data->
-//            if (data.productId==productModelArrayList[position].id){
-//                count=data.quantity
-//                cartid = data.id
-//                holder.tvCounterProduct.text = count.toString()
-////                println(count)
-////                println(data.productName)
-////                holder.btnGo.visibility = View.GONE
-////                holder.llAddProduct.visibility = View.VISIBLE
-//                return
-//            }else{
-//                count=0
-//                holder.tvCounterProduct.text = count.toString()
-////                holder.btnGo.visibility = View.VISIBLE
-////                holder.llAddProduct.visibility = View.GONE
-//            }
-//        }
 
 
             holder.tvCounterProduct.text = count.toString()
@@ -176,47 +171,6 @@ class ProductAdapter(
                 /*tvCounter.text = count.toString()*/
             }
 
-//
-//        holder.btnAddProduct.setOnClickListener {
-//            try {
-//                count++
-//                holder.tvCounterProduct.text = count.toString()
-//                onItemClickListener.onUpdate(position, it, holder.tvCounterProduct.text.toString(), holder.tvPrice,  productModelArrayList[position].id, cartModelArrayList[position], productModelArrayList[position], "update")
-//
-//            }catch (e:Exception){
-//
-//            }
-//
-//        }
-//
-//        holder.btnSubProduct.setOnClickListener {
-//            try {
-//
-//                    if (count > 0) {
-//                    holder.btnGo.visibility = View.VISIBLE
-//                    holder.llAddProduct.visibility = View.GONE
-////                    count=0
-//                    onItemClickListener.onUpdate(position, it, holder.tvCounterProduct.text.toString(), holder.tvPrice, productModelArrayList[position].id, cartModelArrayList[position], productModelArrayList[position], "update")
-//
-//
-//                } else {
-//                    count--
-//                    holder.tvCounterProduct.text = count.toString()
-//                    if (count<1){
-//                        onItemClickListener.onUpdate(position, it, holder.tvCounterProduct.text.toString(), holder.tvPrice, productModelArrayList[position].id, cartModelArrayList[position], productModelArrayList[position], "remove")
-//
-//                    }
-//                    onItemClickListener.onUpdate(position, it, holder.tvCounterProduct.text.toString(), holder.tvPrice, productModelArrayList[position].id, cartModelArrayList[position], productModelArrayList[position], "update")
-//
-//                }
-//
-//                Log.d(TAG, "count-->"+count)
-//            }catch (e:Exception){
-//
-//
-//            }
-//
-//        }
 
 
             try {
@@ -231,7 +185,7 @@ class ProductAdapter(
             }
 
 
-            holder.tvItemname.text = productModelArrayList[position].name
+            holder.tvItemname.text = convertToCamelCase(productModelArrayList[position].name?:"")
 
 
             if (productModelArrayList[position].discount?.toInt()!! > 0) {
@@ -250,9 +204,7 @@ class ProductAdapter(
             holder.tvPriceOld.visibility = View.GONE
 
 
-            holder.ivImg.setOnClickListener {
-                onItemClickListener.onClick(position, it, holder.tvQty, holder.tvPrice, "ivImg", productModelArrayList[position].id, productModelArrayList[position])
-            }
+
 
 
 
@@ -315,24 +267,6 @@ class ProductAdapter(
             }
         }
 
-//        cartModelArrayList.forEach { cartData->
-//            if (cartData.productId==productModelArrayList[position].id){
-//                count=cartData.quantity
-//                cartid = cartData.id
-//                println(count)
-//                println(cartData.productName)
-//                holder.tvCounterProduct.text = count.toString()
-////                holder.btnGo.visibility = View.GONE
-////                holder.llAddProduct.visibility = View.VISIBLE
-//                return
-//            }else{
-//                count=0
-//                holder.tvCounterProduct.text = count.toString()
-////                holder.btnGo.visibility = View.VISIBLE
-////                holder.llAddProduct.visibility = View.GONE
-//            }
-//
-//        }
 
 
     }
@@ -353,6 +287,18 @@ class ProductAdapter(
 
     }
 
+    fun convertToCamelCase(input: String): String {
+        val words = input.split(" ").toMutableList()
+//        if (words.size == 1) {
+//            return words[0].toLowerCase()
+//        }
+
+        for (i in 1 until words.size) {
+            words[i] = words[i].replaceFirstChar { char -> char.uppercase() }
+        }
+
+        return words.joinToString(" ").toLowerCase().replaceFirstChar { char -> char.uppercase() }
+    }
 
     override fun getItemCount(): Int {
         return productModelArrayList.size

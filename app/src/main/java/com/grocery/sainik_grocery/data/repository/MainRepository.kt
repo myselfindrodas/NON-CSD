@@ -35,9 +35,13 @@ class MainRepository(private val apiHelper: ApiHelper) {
     suspend fun otpverify(requestBody: OtpverifyRequest) = apiHelper.otpverify(requestBody)
     suspend fun getnonCSDlist() = apiHelper.getnonCSDlist()
     suspend fun GetNewOrderNumber() = apiHelper.GetNewOrderNumber()
+
+    suspend fun LoginPageBanners() = apiHelper.LoginPageBanners()
+
     suspend fun categorylist() = apiHelper.categorylist()
     suspend fun addresslist(customerid:String) = apiHelper.addresslist(customerid)
     suspend fun notificationlist(customerid:String) = apiHelper.notificationlist(customerid)
+    suspend fun banners() = apiHelper.banners()
     suspend fun productList(requestBody: ProductListRequest) = apiHelper.productList(requestBody)
     suspend fun productDetails(requestBody: ProductDetailsRequest) = apiHelper.productDetails(requestBody)
     suspend fun AddToCart(requestBody: AddtocartRequest) = apiHelper.AddToCart(requestBody)

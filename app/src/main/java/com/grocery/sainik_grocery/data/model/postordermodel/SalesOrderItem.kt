@@ -38,7 +38,7 @@ data class SalesOrderItem(
     @SerializedName("unitName")
     val unitName: String?,
     @SerializedName("unitPrice")
-    val unitPrice: Double,
+    val unitPrice: String,
     @SerializedName("warehouseId")
     val warehouseId: String,
     @SerializedName("warehouseName")

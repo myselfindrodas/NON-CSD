@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
@@ -89,8 +90,8 @@ class AddressAdapter(
         var tvaddressTitle: TextView
         var tvaddressfull: TextView
         var rbCard: RadioButton
-        var btnhomeAddaddress: LinearLayout
-        var btnDelete: LinearLayout
+        var btnhomeAddaddress: ImageView
+        var btnDelete: ImageView
         var count = 0
 
         init {

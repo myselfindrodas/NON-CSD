@@ -4,14 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartData
-import com.squareup.picasso.Picasso
 
 
 class CartCountAdapter(
@@ -42,7 +38,7 @@ class CartCountAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         with(holder) {
 
-            tvOrderitemname.text = cartModelArrayList[position].productName
+            tvOrderitemname.text = convertToCamelCase(cartModelArrayList[position].productName)
             // holder.ivImg.setImageResource(productModelArrayList[position].productid)
             tvOrderitemqty.text = cartModelArrayList[position].quantity.toString()+" Item"
 
@@ -56,6 +52,19 @@ class CartCountAdapter(
         notifyDataSetChanged()
     }
 
+
+    fun convertToCamelCase(input: String): String {
+        val words = input.split(" ").toMutableList()
+//        if (words.size == 1) {
+//            return words[0].toLowerCase()
+//        }
+
+        for (i in 1 until words.size) {
+            words[i] = words[i].replaceFirstChar { char -> char.uppercase() }
+        }
+
+        return words.joinToString(" ").toLowerCase().replaceFirstChar { char -> char.uppercase() }
+    }
 
     override fun getItemCount(): Int {
         return cartModelArrayList.size

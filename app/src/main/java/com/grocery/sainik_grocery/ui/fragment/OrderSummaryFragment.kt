@@ -1,6 +1,5 @@
 package com.grocery.sainik_grocery.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,11 +23,9 @@ import com.grocery.sainik_grocery.data.model.postordermodel.SalesOrderItem
 import com.grocery.sainik_grocery.data.model.postordermodel.UnitConversation
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentOrderSummaryBinding
-import com.grocery.sainik_grocery.ui.LocationActivity
 import com.grocery.sainik_grocery.ui.MainActivity
 import com.grocery.sainik_grocery.ui.MainActivity.Companion.payment
 import com.grocery.sainik_grocery.ui.adapter.CartCountAdapter
-import com.grocery.sainik_grocery.ui.adapter.CartListAdapter
 import com.grocery.sainik_grocery.ui.adapter.OrderDetailsListAdapter
 import com.grocery.sainik_grocery.utils.Shared_Preferences
 import com.grocery.sainik_grocery.utils.Status
@@ -387,8 +384,8 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
 
                                         with(fragmentOrderSummaryBinding) {
-                                            tvItemQtyTxt.text =
-                                                if (itResponse.data.items > 1) "Price (${itResponse.data.items} Items)" else "Price (${itResponse.data.items} Item)"
+//                                            tvItemQtyTxt.text = if (itResponse.data.items > 1) "Price (${itResponse.data.items} Items)" else "Price (${itResponse.data.items} Item)"
+                                            tvItemQtyTxt.text = (if (itResponse.data.items.toFloat() > 1) "Basket Value(${itResponse.data.items} Items)" else "Basket Value(${itResponse.data.items} Items)").toString()
                                             tvPrice.text = "₹ ${itResponse.data.price}"
                                             totalAmount = itResponse.data.price.toString()
                                             tvDeliveryCharge.text =
@@ -397,7 +394,8 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                                 itResponse.data.deliveryCharges.toString()
                                             tvDiscount.text = "₹ ${itResponse.data.discount}"
                                             discount = itResponse.data.discount.toString()
-                                            total = ((itResponse.data.price - itResponse.data.discount) + itResponse.data.deliveryCharges).toString()
+//                                            total = ((itResponse.data.price.toDouble() - itResponse.data.discount.toDouble()) + itResponse.data.deliveryCharges.toDouble()).toString()
+                                            total = String.format("%.2f", ((itResponse.data.price.toDouble() - itResponse.data.discount.toDouble()) + itResponse.data.deliveryCharges.toDouble()))
                                             tvTotalPrice.text = "₹ $total"
                                         }
 
@@ -566,6 +564,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 //                                    val intent = Intent(mainActivity, MainActivity::class.java)
 //                                    startActivity(intent)
 //                                    mainActivity.finish()
+                                    payment = ""
                                     val bundle = Bundle()
                                     bundle.putString("address", fragmentOrderSummaryBinding.tvAddress.text.toString())
                                     bundle.putString("amount", total)
@@ -615,6 +614,13 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                 .show()
         }
 
+
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        payment = ""
 
     }
 

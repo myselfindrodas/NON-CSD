@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/ivBanner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_110sdp"
+        android:layout_height="@dimen/_150sdp"
         android:scaleType="fitXY"/>
 
 </androidx.cardview.widget.CardView>

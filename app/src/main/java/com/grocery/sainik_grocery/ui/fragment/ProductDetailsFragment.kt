@@ -23,10 +23,12 @@ import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
+import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
 import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.productdetailsmodel.ProductDetailsRequest
 import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListRequest
+import com.grocery.sainik_grocery.data.model.updatecartmodel.CartUpdateRequest
 import com.grocery.sainik_grocery.data.model.wishlistaddmodel.WishListAddRequest
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentProductDetailsBinding
@@ -60,6 +62,9 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
     private var unitprice = ""
     private var partyadd = ""
     var advanceisadded=false
+    var count=0
+    var cartid = ""
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +104,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
     override fun onResume() {
         super.onResume()
 
-        mainActivity.setBottomNavigationVisibility(false)
+        mainActivity.setBottomNavigationVisibility(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -107,32 +112,8 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
         productAdapter = RelatedProductAdapter(mainActivity, this@ProductDetailsFragment)
         fragmentProductDetailsBinding.rvSimilarproducts.adapter = productAdapter
-        fragmentProductDetailsBinding.rvSimilarproducts.layoutManager =
-            LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
-//        val productList = java.util.ArrayList<DataProductList>()
-//        for (i in 1..5){
-//            productList.add(DataProductList(60.6,60.5,1, 0, "salt", 25.4, "kg", 1))
-//        }
-//        productAdapter!!.updateData(productList, "R.drawable.item")
+        fragmentProductDetailsBinding.rvSimilarproducts.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
 
-//        productItemAdapter = ProductItemAdapter(mainActivity, this@ProductDetailsFragment)
-//        fragmentProductDetailsBinding.rvItemImg.adapter = productItemAdapter
-//        fragmentProductDetailsBinding.rvItemImg.layoutManager =
-//            LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
-//        val productItemList = java.util.ArrayList<ProductImage>()
-//        for (i in 1..5){
-//            productItemList.add(ProductImage(1,"wqe", 2))
-//        }
-//        productItemAdapter!!.updateData(productItemList, "R.drawable.item")
-
-//        packSizeAdapter = PackSizeAdapter(mainActivity, this@ProductDetailsFragment)
-//        fragmentProductDetailsBinding.rvPackSize.adapter = packSizeAdapter
-//        fragmentProductDetailsBinding.rvPackSize.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.VERTICAL, false)
-//        val packSizeList = java.util.ArrayList<ProductPackSize>()
-//        for (i in 1..5){
-//            packSizeList.add(ProductPackSize(1,45.5, 40.5, " 500gm", 2, 1))
-//        }
-//        packSizeAdapter!!.updateData(packSizeList)
 
         fragmentProductDetailsBinding.topnav.btnBack.setOnClickListener {
             if (Utilities.isClickRecently()) {
@@ -141,17 +122,6 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
             mainActivity.onBackPressedDispatcher.onBackPressed()
         }
 
-
-//        viewModel.cartListItem.observe(viewLifecycleOwner, Observer {count->
-//            if (count>0) {
-//                fragmentProductDetailsBinding.topnav.tvCartCount.text = count.toString()
-//                fragmentProductDetailsBinding.topnav.cvCartCount.visibility=View.VISIBLE
-//            }else{
-//                fragmentProductDetailsBinding.topnav.cvCartCount.visibility=View.GONE
-//            }
-//
-//            HomeFragment.cartCount=count
-//        })
 
         fragmentProductDetailsBinding.topnav.clCart.setOnClickListener {
             if (Utilities.isClickRecently()) {
@@ -316,6 +286,41 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
         }
 
+        fragmentProductDetailsBinding.tvCounter.text = count.toString()
+
+
+        fragmentProductDetailsBinding.btnSub.setOnClickListener {
+
+            if (count >= 1) {
+                count--
+                fragmentProductDetailsBinding.tvCounter.text = count.toString()
+                onUpdate(count, "update", 0)
+
+            }else{
+
+                count = 0
+                fragmentProductDetailsBinding.tvCounter.text = count.toString()
+                fragmentProductDetailsBinding.btnAddtoproduct.visibility = View.VISIBLE
+                fragmentProductDetailsBinding.llcounter.visibility = View.GONE
+
+            }
+
+            if (fragmentProductDetailsBinding.tvCounter.text.toString().equals("0")){
+                fragmentProductDetailsBinding.btnAddtoproduct.visibility = View.VISIBLE
+                fragmentProductDetailsBinding.llcounter.visibility = View.GONE
+            }
+            /*tvCounter.text = count.toString()*/
+        }
+
+        fragmentProductDetailsBinding.btnAdd.setOnClickListener {
+            count++
+            fragmentProductDetailsBinding.tvCounter.text = count.toString()
+            onUpdate(count, "update", 1)
+
+            /*tvCounter.text = count.toString()*/
+        }
+
+
         getProductDetails()
         getAddressList()
     }
@@ -404,162 +409,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
     }
 
 
-    //    private fun setProductDetailsView(binding: FragmentProductDetailsBinding) {
-//
-//        with(binding) {
-//
-//            btnaboutproductExpand.setOnClickListener {
-//
-//                btnaboutproductExpand.visibility = View.GONE
-//                btnaboutproductClose.visibility = View.VISIBLE
-//                llaboutproduct.visibility = View.VISIBLE
-//
-//                btnbenifitproductExpand.visibility = View.VISIBLE
-//                btnbenifitproductClose.visibility = View.GONE
-//                llbenifits.visibility = View.GONE
-//
-//
-//                btnusesExpand.visibility = View.VISIBLE
-//                btnusesClose.visibility = View.GONE
-//                llusages.visibility = View.GONE
-//            }
-//
-//
-//            btnaboutproductClose.setOnClickListener {
-//
-//                btnaboutproductExpand.visibility = View.VISIBLE
-//                btnaboutproductClose.visibility = View.GONE
-//                llaboutproduct.visibility = View.GONE
-//            }
-//
-//
-//
-//
-//            btnbenifitproductExpand.setOnClickListener {
-//
-//                btnbenifitproductExpand.visibility = View.GONE
-//                btnbenifitproductClose.visibility = View.VISIBLE
-//                llbenifits.visibility = View.VISIBLE
-//
-//                btnaboutproductExpand.visibility = View.VISIBLE
-//                btnaboutproductClose.visibility = View.GONE
-//                llaboutproduct.visibility = View.GONE
-//
-//                btnusesExpand.visibility = View.VISIBLE
-//                btnusesClose.visibility = View.GONE
-//                llusages.visibility = View.GONE
-//            }
-//
-//
-//            btnbenifitproductClose.setOnClickListener {
-//
-//                btnbenifitproductExpand.visibility = View.VISIBLE
-//                btnbenifitproductClose.visibility = View.GONE
-//                llbenifits.visibility = View.GONE
-//            }
-//
-//
-//
-//            btnusesExpand.setOnClickListener {
-//
-//                btnusesExpand.visibility = View.GONE
-//                btnusesClose.visibility = View.VISIBLE
-//                llusages.visibility = View.VISIBLE
-//
-//
-//                btnbenifitproductExpand.visibility = View.VISIBLE
-//                btnbenifitproductClose.visibility = View.GONE
-//                llbenifits.visibility = View.GONE
-//
-//
-//                btnaboutproductExpand.visibility = View.VISIBLE
-//                btnaboutproductClose.visibility = View.GONE
-//                llaboutproduct.visibility = View.GONE
-//
-//            }
-//
-//
-//            btnusesClose.setOnClickListener {
-//
-//                btnusesExpand.visibility = View.VISIBLE
-//                btnusesClose.visibility = View.GONE
-//                llusages.visibility = View.GONE
-//            }
-//        }
-//    }
 
-
-
-
-//
-//    private fun getAddressList() {
-//
-//
-//        if (Utilities.isNetworkAvailable(mainActivity)) {
-//
-//
-//            viewModel.addressList()
-//                .observe(mainActivity) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                mainActivity.hideProgressDialog()
-//                                resource.data?.let {itResponse->
-//
-//                                    if (itResponse.status) {
-//                                        itResponse.data.address.forEach {item->
-//                                            if (item.isPrimary==1){
-//                                                fragmentProductDetailsBinding.tvAddress.text= item.apartmentName + " " +item.houseNo +
-//                                                        " " + item.streetDetails + "\n" +
-//                                                        item.city + ", " + item.pincode
-//                                            }
-//                                        }
-//
-//                                       // addressAdapter?.updateData(itResponse.data.address)
-//
-//                                    } else {
-//
-//                                        Toast.makeText(
-//                                            mainActivity,
-//                                            resource.data?.message,
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()
-//
-//                                    }
-//                                }
-//
-//
-//                            }
-//                            Status.ERROR -> {
-//                                mainActivity.hideProgressDialog()
-//                                val builder = AlertDialog.Builder(mainActivity)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.show()
-//                            }
-//
-//                            Status.LOADING -> {
-//                                mainActivity.showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-//
-//    }
     private fun getProductDetails() {
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
@@ -588,16 +438,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 //                                productAdapter?.updateData(itProfileInfo.data.similarProducts as ArrayList<DataProductList>,itProfileInfo.productImageUrl)
                                     with(fragmentProductDetailsBinding) {
 
-//                                    if (itProfileInfo.data.productDetails.productPackSize.isNullOrEmpty()) {
-//                                        llPackTxt.visibility = View.GONE
-//                                    } else {
-//                                        llPackTxt.visibility = View.VISIBLE
-//                                    }
-                                        tvProductName.setText(itProfileInfo.data.name)
-                                        // tvProductPrice.setText("Price: ₹ ${itProfileInfo.data.productDetails.sellingPrice.toString()}")
-//                                    llaboutproduct.setText(itProfileInfo.data.productDetails.product.about)
-//                                    llbenifits.setText(itProfileInfo.data.productDetails.product.benifits)
-//                                    llusages.setText(itProfileInfo.data.productDetails.product.storageAndUses)
+                                        tvProductName.setText(convertToCamelCase(itProfileInfo.data.name))
                                         if (itProfileInfo.data.discount > 0) {
                                             tvDiscount.text = "${itProfileInfo.data.discount}% Off"
                                             discount = itProfileInfo.data.discount.toString()
@@ -612,7 +453,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
                                         tvPrice.text = " ₹ ${itProfileInfo.data.salesPrice.toString()}/${itProfileInfo.data.unitName ?: ""}"
                                         tvPriceOld.text = "₹ " +itProfileInfo.data.mrp
-                                        tvSaveAmount.text = "Save ₹ "+ itProfileInfo.data.mrp.toDouble().minus(itProfileInfo.data.salesPrice.toDouble())
+                                        tvSaveAmount.text = "Save ₹ "+ String.format("%.2f", itProfileInfo.data.mrp.toDouble().minus(itProfileInfo.data.salesPrice.toDouble()))
 
                                         tvPriceOld.paintFlags = tvPriceOld.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                                         urc_productId = itProfileInfo.data.id
@@ -669,6 +510,20 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
         }
 
+    }
+
+
+    fun convertToCamelCase(input: String): String {
+        val words = input.split(" ").toMutableList()
+//        if (words.size == 1) {
+//            return words[0].toLowerCase()
+//        }
+
+        for (i in 1 until words.size) {
+            words[i] = words[i].replaceFirstChar { char -> char.uppercase() }
+        }
+
+        return words.joinToString(" ").toLowerCase().replaceFirstChar { char -> char.uppercase() }
     }
 
     private fun getSimilarproduct() {
@@ -765,24 +620,30 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                                 mainActivity.hideProgressDialog()
                                 if (resource.data?.status == true) {
 
+                                    Toast.makeText(mainActivity, resource.data.message, Toast.LENGTH_SHORT).show()
+                                    fragmentProductDetailsBinding.btnAddtoproduct.visibility = View.GONE
+                                    fragmentProductDetailsBinding.llcounter.visibility = View.VISIBLE
+                                    count++
+                                    fragmentProductDetailsBinding.tvCounter.text = count.toString()
+                                    CartList(true)
 //                                    productCartList()
-                                    val builder = android.app.AlertDialog.Builder(mainActivity)
-                                    builder.setMessage(resource.data.message)
-                                    builder.setPositiveButton(
-                                        "Ok"
-                                    ) { dialog, which ->
-
-                                        Toast.makeText(mainActivity, resource.data.message, Toast.LENGTH_SHORT).show()
-                                        val navController = Navigation.findNavController(fragmentProductDetailsBinding.root)
-                                        navController.navigate(R.id.nav_cart)
-                                        dialog.dismiss()
-                                    }
-                                    val alert = builder.create()
-                                    alert.setOnShowListener { arg0 ->
-                                        alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
-                                            .setTextColor(resources.getColor(R.color.orange))
-                                    }
-                                    alert.show()
+//                                    val builder = android.app.AlertDialog.Builder(mainActivity)
+//                                    builder.setMessage(resource.data.message)
+//                                    builder.setPositiveButton(
+//                                        "Ok"
+//                                    ) { dialog, which ->
+//
+//                                        Toast.makeText(mainActivity, resource.data.message, Toast.LENGTH_SHORT).show()
+//                                        val navController = Navigation.findNavController(fragmentProductDetailsBinding.root)
+//                                        navController.navigate(R.id.nav_cart)
+//                                        dialog.dismiss()
+//                                    }
+//                                    val alert = builder.create()
+//                                    alert.setOnShowListener { arg0 ->
+//                                        alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
+//                                            .setTextColor(resources.getColor(R.color.orange))
+//                                    }
+//                                    alert.show()
 
                                 } else {
 
@@ -852,30 +713,56 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
                                         advanceisadded = itResponse.data[0].isAdvanceOrderRequest
 
+                                        if (itResponse.data.isNotEmpty()) {
+                                            for (i in 0 until itResponse.data.size) {
+                                                if (itResponse.data[i].productId == productId) {
+                                                    count = itResponse.data[i].quantity
+                                                    cartid = itResponse.data[i].id
 
+                                                        fragmentProductDetailsBinding.tvCounter.text = count.toString()
+                                                    if (count > 0) {
+                                                        fragmentProductDetailsBinding.btnAddtoproduct.visibility = View.GONE
+                                                        fragmentProductDetailsBinding.llcounter.visibility = View.VISIBLE
+                                                    }
+                                                    Log.d(TAG, "count-->" + count)
+                                                } else {
+                                                    count = 0
+                                                    Log.d(TAG, "count-->" + count)
+                                                    fragmentProductDetailsBinding.tvCounter.text = count.toString()
+                                                    fragmentProductDetailsBinding.btnAddtoproduct.visibility = View.VISIBLE
+                                                    fragmentProductDetailsBinding.llcounter.visibility = View.GONE
+
+                                                }
+                                            }
+                                        }else{
+                                            count = 0
+                                            fragmentProductDetailsBinding.tvCounter.text = count.toString()
+                                        }
+
+
+                                        if (itResponse.totalCount==0){
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+                                        }else{
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+
+                                        }
 
 
                                     } else {
                                         viewModel.cartListItem.value = 0
                                         advanceisadded= false
-//                                        if (itResponse!!.totalCount==0){
-//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
-//                                        }else{
-//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
-//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
-//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
-//
-//                                        }
-////                                        cartAdapter?.updateData(arrayListOf())
-//////                                        Toast.makeText(
-//////                                            mainActivity,
-//////                                            resource.data?.message,
-//////                                            Toast.LENGTH_SHORT
-//////                                        ).show()
-////
-////                                        fragmentCartBinding.nodata.root.visibility=View.VISIBLE
-////                                        fragmentCartBinding.btnGo.visibility=View.GONE
-////                                        fragmentCartBinding.llTotalPice.visibility=View.GONE
+
+                                        if (itResponse!!.totalCount==0){
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+                                        }else{
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+
+                                        }
+
                                     }
 
                                 }
@@ -976,95 +863,222 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
     }
 
 
+    private fun onUpdate(count:Int, type:String,  clickType:Int){
 
-    //
-//    private fun productaddtoCart(view: View, packSizeId: String, mIsAdded: Boolean) {
-//
-//
-//        if (Utilities.isNetworkAvailable(mainActivity)) {
-//
-//            val cartRequestModel = if (mIsAdded) {
-//                CartRequestModel(
-//                    urc_product_id = packSizeId,
-//                    is_added = "1"
-//                )
-//            } else {
-//                CartRequestModel(
-//                    urc_product_id = packSizeId,
-//                    is_added = "0"
-//                )
-//            }
-//            viewModel.cartadd(
-//                cartRequestModel
-//            )
-//                .observe(mainActivity) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                mainActivity.hideProgressDialog()
-//                                if (resource.data?.status == true) {
-//
-//                                    productCartList()
-//                                    val builder = android.app.AlertDialog.Builder(mainActivity)
-//                                    builder.setMessage(resource.data.message)
-//                                    builder.setPositiveButton(
-//                                        "Ok"
-//                                    ) { dialog, which ->
-//
-//                                        /*val navController = Navigation.findNavController(view)
-//                                        navController.navigate(R.id.nav_cart)*/
-//                                        dialog.dismiss()
-//                                    }
-//                                    val alert = builder.create()
-//                                    alert.setOnShowListener { arg0 ->
-//                                        alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
-//                                            .setTextColor(resources.getColor(R.color.orange))
-//                                    }
-//                                    alert.show()
-//
-//                                } else {
-//
-//                                    Toast.makeText(
-//                                        mainActivity,
-//                                        resource.data?.message,
-//                                        Toast.LENGTH_SHORT
-//                                    ).show()
-//
-//                                }
-//
-//
-//                            }
-//                            Status.ERROR -> {
-//                                mainActivity.hideProgressDialog()
-//                                val builder = AlertDialog.Builder(mainActivity)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.show()
-//                            }
-//
-//                            Status.LOADING -> {
-//                                mainActivity.showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-//
-//    }
-//
+        try {
+
+            when (clickType) {
+                0 -> {
+
+
+                    if (count<1) {
+                        productDeleteFromCart(cartid)
+//                        Toast.makeText(mainActivity, "Delete cart", Toast.LENGTH_SHORT).show()
+
+                    } else {
+
+//                        Toast.makeText(mainActivity, "Update Decrease", Toast.LENGTH_SHORT).show()
+
+                        updateCart(
+                            discount,
+                            productId,
+                            fragmentProductDetailsBinding.tvProductName.text.toString(),
+                            count.toString(),
+                            price,
+                            unitid,
+                            unitname,
+                            cartid
+                        )
+                    }
+//                productaddtoCart(cartData.urc_product_id.toString(),false)
+                }
+
+                1 -> {
+                    if (count==1) {
+//                    Toast.makeText(mainActivity, "Add to cart", Toast.LENGTH_SHORT).show()
+                        productaddtoCart()
+
+                    }else if (count>1){
+
+//                    Toast.makeText(mainActivity, "Update Increase", Toast.LENGTH_SHORT).show()
+
+                        updateCart(
+                            discount,
+                            productId,
+                            fragmentProductDetailsBinding.tvProductName.text.toString(),
+                            count.toString(),
+                            price,
+                            unitid,
+                            unitname,
+                            cartid
+                        )
+
+                    }
+
+//                productaddtoCart(cartData.urc_product_id.toString(),true)
+                }
+
+            }
+
+
+        }catch (e:Exception){
+
+        }
+
+
+    }
+
+
+    private fun productDeleteFromCart(id: String) {
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+            viewModel.deletecart(
+                DeleteCartRequest(
+                    id = id
+                )
+            )
+                .observe(mainActivity) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                if (resource.data?.status == true) {
+                                    CartList(true)
+                                    getProductDetails()
+                                    getAddressList()
+
+                                } else {
+
+                                    Toast.makeText(
+                                        mainActivity,
+                                        resource.data?.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                }
+
+
+                            }
+
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
+
+    }
+
+
+    private fun updateCart(
+        discount: String,
+        productid: String,
+        productname: String,
+        qty: String,
+        price: String,
+        unitid: String,
+        unitname: String,
+        cartid: String
+    ) {
+
+        Log.d(TAG, "count-->" + qty)
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+            viewModel.updatecart(
+                CartUpdateRequest(
+                    customerId = Shared_Preferences.getUserId(),
+                    isAdvanceOrderRequest = false,
+                    customerName = Shared_Preferences.getName().toString(),
+                    discount = discount,
+                    discountPercentage = discount,
+                    id = cartid,
+                    productId = productid,
+                    productName = productname,
+                    quantity = qty,
+                    taxValue = "0",
+                    total = (price.toDouble().times(qty.toDouble())).toString(),
+                    unitId = unitid,
+                    unitName = unitname,
+                    unitPrice = price
+                )
+            )
+                .observe(mainActivity) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                if (resource.data?.status == true) {
+                                    CartList(true)
+                                    getProductDetails()
+                                    getAddressList()
+
+
+                                } else {
+
+                                    Toast.makeText(
+                                        mainActivity,
+                                        resource.data?.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                }
+
+
+                            }
+
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+
     private fun addtoWishlist(customerid:String, productid:String, view: View){
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
@@ -1128,98 +1142,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
             Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT).show() }
 
     }
-//
-//
-//    private fun productCartList() {
-//
-//        if (Utilities.isNetworkAvailable(mainActivity)) {
-//
-//            viewModel.cartList()
-//                .observe(mainActivity) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                mainActivity.hideProgressDialog()
-//                                resource.data.let {itResponse->
-//
-//                                    if (itResponse?.status == true) {
-//
-//                                        if (itResponse.data.cart.isNullOrEmpty()) {
-//                                            viewModel.cartListItem.value = 0
-//                                        }else
-//                                        viewModel.cartListItem.value = itResponse.data.cart.size
-//
-//                                    } else {
-//
-//                                        viewModel.cartListItem.value=0
-//                                        /*Toast.makeText(
-//                                            mainActivity,
-//                                            resource.data?.message,
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()*/
-//
-//                                    }
-//
-//                                }
-//
-//                            }
-//                            Status.ERROR -> {
-//                                mainActivity.hideProgressDialog()
-//                                val builder = AlertDialog.Builder(mainActivity)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.show()
-//                            }
-//
-//                            Status.LOADING -> {
-//                                mainActivity.showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-//
-//    }
 
-
-//    override fun onImgItemClick(position: Int, view: View, imgUrl: String) {
-//
-//        try {
-//
-//            Picasso.get()
-//                .load(imgUrl)
-//                .error(R.drawable.login_img)
-////                .placeholder(R.drawable.loader_gif)
-//                .into(fragmentProductDetailsBinding.ivProductmain)
-//        }catch (e:Exception){
-//            e.printStackTrace()
-//        }
-//
-//    }
-//
-//    override fun onPackClick(position: Int, view: View) {
-//
-//
-//    }
-
-//    override fun onClick(position: Int, view: View, tvQty: TextView, tvPrice: TextView, str: String, id: Int){
-//
-//
-//
-//    }
 
 
     override fun onClick(position: Int, view: View, id: String) {

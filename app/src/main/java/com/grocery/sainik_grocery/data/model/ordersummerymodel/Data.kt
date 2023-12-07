@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 data class Data(
     @SerializedName("deliveryCharges")
-    val deliveryCharges: Double,
+    val deliveryCharges: String,
     @SerializedName("discount")
-    val discount: Double,
+    val discount: String,
     @SerializedName("items")
-    val items: Double,
+    val items: String,
     @SerializedName("price")
-    val price: Double
+    val price: String
 )

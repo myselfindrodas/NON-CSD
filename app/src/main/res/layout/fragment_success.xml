@@ -132,7 +132,7 @@
             android:layout_marginTop="@dimen/_25sdp"
             android:background="@drawable/rounded_blue_bg_btn"
             android:fontFamily="@font/poppins_regular"
-            android:text="Check Orders"
+            android:text="Track Orders"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_10ssp"

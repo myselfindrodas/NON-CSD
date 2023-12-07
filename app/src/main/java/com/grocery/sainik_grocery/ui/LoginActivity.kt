@@ -11,6 +11,7 @@ import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.os.Handler
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
@@ -45,6 +46,7 @@ import com.grocery.sainik_grocery.data.model.loginmodel.LoginRequest
 import com.grocery.sainik_grocery.data.model.tokenmodel.TokenRequest
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.ActivityLoginBinding
+import com.grocery.sainik_grocery.ui.adapter.LoginBannerAdapter
 import com.grocery.sainik_grocery.utils.Shared_Preferences
 import com.grocery.sainik_grocery.utils.Status
 import com.grocery.sainik_grocery.utils.Utilities
@@ -55,7 +57,12 @@ class LoginActivity : BaseActivity() {
     lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: CommonViewModel
     var isPasswordVisible = false
-//    private var mLastLocation: Location? = null
+    private var loginBannerAdapter: LoginBannerAdapter?=null
+    private val headerHandler = Handler()
+    var currentPage = 0
+    var delay = 2000
+    var runnable: Runnable? = null
+    //    private var mLastLocation: Location? = null
 //    private lateinit var fusedLocationClient: FusedLocationProviderClient
 //    var locationRequest: LocationRequest? = null
 //    var locationManager: LocationManager? = null
@@ -84,6 +91,11 @@ class LoginActivity : BaseActivity() {
             }
 
             viewModel = vm
+
+            loginBannerAdapter= LoginBannerAdapter(this@LoginActivity)
+            welcomeBanner.setAdapter(loginBannerAdapter)
+            dotsIndicatorTop.attachTo(welcomeBanner)
+
 
 
             btnLogin.setOnClickListener {
@@ -144,6 +156,7 @@ class LoginActivity : BaseActivity() {
 //        }
 
         generateToken()
+        Banners()
 
 
     }
@@ -331,6 +344,70 @@ class LoginActivity : BaseActivity() {
 
 
 
+    private fun Banners(){
+
+        if (Utilities.isNetworkAvailable(this)) {
+            viewModel.LoginPageBanners().observe(this) {
+                it?.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            hideProgressDialog()
+
+                            if (resource.data?.status == true) {
+
+
+                                loginBannerAdapter?.updateList(resource.data.data)
+
+
+
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    resource.data?.message,
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }
+
+                        }
+                        Status.ERROR -> {
+                            hideProgressDialog()
+                            val builder = android.app.AlertDialog.Builder(this)
+                            builder.setMessage(it.data?.message)
+                            builder.setPositiveButton(
+                                "Ok"
+                            ) { dialog, which ->
+
+                                dialog.cancel()
+
+                            }
+                            val alert = builder.create()
+                            alert.setOnShowListener { arg0 ->
+                                alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
+                                    .setTextColor(resources.getColor(R.color.blue))
+                            }
+                            alert.show()
+
+
+                        }
+
+                        Status.LOADING -> {
+                            showProgressDialog()
+                        }
+                    }
+                }
+            }
+
+        } else {
+            Toast.makeText(this, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
+
+    }
+
+
+
+
 
 
     private fun loginapi(){
@@ -430,6 +507,34 @@ class LoginActivity : BaseActivity() {
 
     }
 
+
+    override fun onResume() {
+        super.onResume()
+
+        headerHandler.postDelayed(Runnable {
+            headerHandler.postDelayed(runnable!!, delay.toLong())
+            if (currentPage === loginBannerAdapter!!.itemCount + 1 - 1) {
+                currentPage = 0
+            }
+
+            binding.welcomeBanner.setCurrentItem(currentPage++, true)
+
+        }.also { runnable = it }, delay.toLong())
+        super.onResume()
+
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        headerHandler.removeCallbacks(runnable!!)
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        headerHandler.removeCallbacks(runnable!!)
+    }
 
 
     fun showProgressDialog() {

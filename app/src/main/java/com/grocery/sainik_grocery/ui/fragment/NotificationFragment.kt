@@ -197,6 +197,10 @@ class NotificationFragment : Fragment(), NotificationAdapter.OnItemClickListener
 
 
 
+
+
+
+
     override fun onClick(
         position: Int,
         view: View,

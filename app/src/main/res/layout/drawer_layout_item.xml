@@ -112,6 +112,7 @@
                     android:text="URC Baranagar, West Bengal"
                     android:layout_weight="1"
                     android:id="@+id/tvUrcName1"
+                    android:maxLines="1"
                     android:textSize="@dimen/_9ssp"
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@android:color/white"/>
@@ -121,6 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Change"
+                    android:visibility="gone"
                     android:id="@+id/tvChangeURC"
                     android:gravity="center"
                     android:layout_marginLeft="-5dp"
@@ -164,9 +166,9 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:text="Home"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/orange"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
 
                     </LinearLayout>
@@ -176,7 +178,6 @@
                         android:id="@+id/btnNavaccount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:orientation="vertical"
                         android:padding="@dimen/_10sdp">
 
@@ -194,10 +195,10 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="@dimen/_10sdp"
                                 android:text="My Account"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/poppins_medium"
                                 android:layout_weight="0.2"
                                 android:textColor="@color/orange"
-                                android:textSize="@dimen/_14sdp" />
+                                android:textSize="@dimen/_13sdp" />
 
 
                             <ImageView
@@ -391,9 +392,9 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:text="Shop by Category"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/orange"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
 
                     </LinearLayout>
@@ -412,9 +413,9 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:text="Helps and Support"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/orange"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
 
                     </LinearLayout>
@@ -455,9 +456,9 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:text="Notifications"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/orange"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
 
                     </LinearLayout>
@@ -477,10 +478,9 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:text="FAQs"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/orange"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
 
                     </LinearLayout>
@@ -500,10 +500,9 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:text="Logout"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/orange"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
 
                     </LinearLayout>

@@ -7,6 +7,7 @@ import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressEditRequest
 import com.grocery.sainik_grocery.data.model.addresslistmodel.AddressListResponse
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartResponse
+import com.grocery.sainik_grocery.data.model.bannermodel.HomeBannerResponse
 import com.grocery.sainik_grocery.data.model.categorymodel.CategoryListResponse
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartResponse
@@ -16,6 +17,7 @@ import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListResponse
 import com.grocery.sainik_grocery.data.model.getwishlistmodel.WishlistRequest
 import com.grocery.sainik_grocery.data.model.getwishlistmodel.WishlistResponse
+import com.grocery.sainik_grocery.data.model.loginbannermodel.LoginBannerResponse
 import com.grocery.sainik_grocery.data.model.loginmodel.LoginRequest
 import com.grocery.sainik_grocery.data.model.loginmodel.LoginResponse
 import com.grocery.sainik_grocery.data.model.newordernumbermodel.NewOrderNumberResponse
@@ -141,6 +143,12 @@ interface ApiInterface {
 
 
 
+    @GET("GetLoginPageBanners")
+    suspend fun LoginPageBanners(
+    ): LoginBannerResponse
+
+
+
 
     @GET("ProductCategoriesList")
     suspend fun categorylist(
@@ -169,6 +177,16 @@ interface ApiInterface {
     suspend fun notificationlist(
         @Query("CustomerId") customerid: String?
     ): NotificationListResponse
+
+
+
+
+
+
+
+    @GET("GetBanners")
+    suspend fun banners(
+    ): HomeBannerResponse
 
 
 

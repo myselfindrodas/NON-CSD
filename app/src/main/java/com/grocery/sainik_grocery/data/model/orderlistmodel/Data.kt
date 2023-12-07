@@ -40,7 +40,7 @@ data class Data(
     @SerializedName("termAndCondition")
     val termAndCondition: Any?,
     @SerializedName("totalAmount")
-    val totalAmount: Double,
+    val totalAmount: String,
     @SerializedName("totalDiscount")
     val totalDiscount: Double,
     @SerializedName("totalPaidAmount")

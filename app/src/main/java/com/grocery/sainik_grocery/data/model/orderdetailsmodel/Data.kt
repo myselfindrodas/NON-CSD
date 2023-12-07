@@ -17,7 +17,7 @@ data class Data(
     @SerializedName("deliveryAddresses")
     val deliveryAddresses: List<Any>,
     @SerializedName("deliveryCharges")
-    val deliveryCharges: Double,
+    val deliveryCharges: String,
     @SerializedName("deliveryDate")
     val deliveryDate: String,
     @SerializedName("deliveryStatus")
@@ -43,11 +43,11 @@ data class Data(
     @SerializedName("termAndCondition")
     val termAndCondition: String,
     @SerializedName("totalAmount")
-    val totalAmount: Double,
+    val totalAmount: String,
     @SerializedName("totalDiscount")
-    val totalDiscount: Double,
+    val totalDiscount: String,
     @SerializedName("totalPaidAmount")
-    val totalPaidAmount: Double,
+    val totalPaidAmount: String,
     @SerializedName("totalTax")
-    val totalTax: Double
+    val totalTax: String
 )

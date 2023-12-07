@@ -54,7 +54,7 @@ class WishListAdapter(
 
 
 
-        holder.tvItemname.text = wishListModelArrayList[position].product.name?:""
+        holder.tvItemname.text = convertToCamelCase(wishListModelArrayList[position].product.name?:"")
         try {
 
             Picasso.get()
@@ -110,6 +110,19 @@ class WishListAdapter(
         notifyDataSetChanged()
     }
 
+
+    fun convertToCamelCase(input: String): String {
+        val words = input.split(" ").toMutableList()
+//        if (words.size == 1) {
+//            return words[0].toLowerCase()
+//        }
+
+        for (i in 1 until words.size) {
+            words[i] = words[i].replaceFirstChar { char -> char.uppercase() }
+        }
+
+        return words.joinToString(" ").toLowerCase().replaceFirstChar { char -> char.uppercase() }
+    }
 
 
     override fun getItemCount(): Int {

@@ -123,9 +123,11 @@ class MainActivity : BaseActivity(),
         btnNavfaq = findViewById(R.id.btnNavfaq)
         btnNavlogout = findViewById(R.id.btnNavlogout)
 
-        tvUrcName?.text = URCName.replaceFirstChar { char ->
-            char.uppercaseChar()
-        }
+//        tvUrcName?.text = URCName.replaceFirstChar { char ->
+//            char.uppercaseChar()
+//        }
+
+        tvUrcName?.text = LocationActivity.locationAddress
 
 //        profileget()
 

@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/topnav"
-        layout="@layout/topnavbar2" />
+        layout="@layout/topnavbar" />
 
 
     <include

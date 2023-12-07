@@ -4,17 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="7dp"
     app:cardBackgroundColor="@color/white_light"
     app:cardCornerRadius="@dimen/_10sdp"
     app:cardElevation="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="@dimen/_95sdp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:id="@+id/clCartDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -30,25 +29,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ivItemImg"
                 android:src="@drawable/delete_red"/>
+
             <ImageView
                 android:id="@+id/ivItemImg"
                 android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_height="@dimen/_70sdp"
                 android:layout_marginTop="@dimen/_14sdp"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:src="@drawable/item"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:src="@drawable/item" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="@dimen/_6sdp"
-                app:layout_constraintStart_toEndOf="@+id/ivItemImg"
-                app:layout_constraintBottom_toBottomOf="@+id/ivItemImg"
-                app:layout_constraintTop_toTopOf="@+id/ivItemImg">
+                android:layout_alignLeft="@+id/ivItemImg"
+                android:layout_marginStart="@dimen/_78sdp"
+                android:layout_marginTop="@dimen/_10sdp">
 
                 <TextView
                     android:id="@+id/tvItemname"
@@ -57,17 +53,17 @@
                     android:text="Daawat biryani rice"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/_12ssp"
                     android:fontFamily="@font/poppins_medium" />
 
                 <TextView
-                    android:id="@+id/tvPackSize"
+                    android:id="@+id/tvProductcategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/orange"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_10ssp"
-
+                    android:text=""
                     android:layout_marginEnd="@dimen/_8sdp"/>
 
                 <TextView
@@ -81,58 +77,61 @@
             </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/clCartDetails">
-
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_25sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:paddingBottom="@dimen/_2sdp"
-                android:gravity="end"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:background="@drawable/rounded_border_orange_bg_btn"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:orientation="horizontal">
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="match_parent"
-                    android:text="-"
-                    android:textSize="@dimen/_15ssp"
-                    android:id="@+id/btnSub"
-                    android:background="@color/white"
-                    android:textColor="@color/black"/>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="2"
-                    android:id="@+id/tvCounter"
-                    android:gravity="center_vertical"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:textSize="@dimen/_15ssp"
-                    android:fontFamily="@font/poppins_medium" />
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/rounded_border_orange_bg_btn"
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_2sdp">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="match_parent"
-                    android:text="+"
-                    android:textSize="@dimen/_15ssp"
-                    android:id="@+id/btnAdd"
-                    android:background="@color/white"
-                    android:textColor="@color/black"/>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnSub"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:text="-"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15ssp" />
+
+                    <TextView
+                        android:id="@+id/tvCounter"
+                        android:layout_width="35dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="2"
+                        android:background="@color/orange"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnAdd"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:text="+"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15ssp" />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

@@ -51,7 +51,7 @@ data class Data(
     @SerializedName("rackNo")
     val rackNo: String?,
     @SerializedName("salesPrice")
-    val salesPrice: Double?,
+    val salesPrice: String?,
     @SerializedName("skuCode")
     val skuCode: String,
     @SerializedName("skuName")

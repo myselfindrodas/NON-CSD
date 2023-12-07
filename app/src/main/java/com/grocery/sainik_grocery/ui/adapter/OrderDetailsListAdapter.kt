@@ -38,7 +38,7 @@ class OrderDetailsListAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         with(holder) {
 
-            tvItemname.text = orderHistoryModelArrayList[position].productName
+            tvItemname.text = convertToCamelCase(orderHistoryModelArrayList[position].productName)
             // holder.ivImg.setImageResource(productModelArrayList[position].productid)
             tvItemprice.text = "Price: ₹ " + orderHistoryModelArrayList[position].unitPrice.toString()
             tvItemAmtTxt.text = orderHistoryModelArrayList[position].unitConversation.name
@@ -58,6 +58,20 @@ class OrderDetailsListAdapter(
             }
 
         }
+    }
+
+
+    fun convertToCamelCase(input: String): String {
+        val words = input.split(" ").toMutableList()
+//        if (words.size == 1) {
+//            return words[0].toLowerCase()
+//        }
+
+        for (i in 1 until words.size) {
+            words[i] = words[i].replaceFirstChar { char -> char.uppercase() }
+        }
+
+        return words.joinToString(" ").toLowerCase().replaceFirstChar { char -> char.uppercase() }
     }
 
     fun updateData(mOrderHistoryModelArrayList: List<SalesOrderItem>){

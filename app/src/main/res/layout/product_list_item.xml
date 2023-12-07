@@ -121,6 +121,8 @@
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/blue"
                     android:textSize="@dimen/_11ssp"
+                    android:singleLine="false"
+                    android:maxLines="2"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:fontFamily="@font/poppins_medium" />
 
@@ -229,16 +231,28 @@
                             android:background="@color/white"
                             android:textColor="@color/black"/>
 
+
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="0"
                             android:id="@+id/tvCounter"
-                            android:gravity="center_vertical"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:textSize="@dimen/_15ssp"
-                            android:fontFamily="@font/poppins_medium" />
+                            android:layout_width="35dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="0"
+                            android:background="@color/orange"
+                            android:textColor="@color/white"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/_14ssp" />
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:text="0"-->
+<!--                            android:id="@+id/tvCounter"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:layout_marginEnd="@dimen/_10sdp"-->
+<!--                            android:layout_marginStart="@dimen/_10sdp"-->
+<!--                            android:textSize="@dimen/_15ssp"-->
+<!--                            android:fontFamily="@font/poppins_medium" />-->
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:layout_width="@dimen/_25sdp"
@@ -258,11 +272,11 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="@dimen/_7sdp"
                         android:layout_marginEnd="@dimen/_8sdp"
-
                         android:background="@drawable/rounded_blue_bg_btn"
                         android:clickable="false"
                         android:fontFamily="@font/poppins_regular"
                         android:text="Add"
+                        android:visibility="visible"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_10ssp"

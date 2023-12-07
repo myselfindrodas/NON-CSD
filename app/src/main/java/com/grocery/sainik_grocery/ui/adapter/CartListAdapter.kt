@@ -42,10 +42,10 @@ class CartListAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         with(holder) {
 
-            tvItemname.text = cartModelArrayList[position].productName
+            tvItemname.text = convertToCamelCase(cartModelArrayList[position].productName)
             // holder.ivImg.setImageResource(productModelArrayList[position].productid)
             tvItemprice.text = "₹ " + cartModelArrayList[position].unitPrice.toString()
-            tvPackSize.text = ""
+            tvProductcategory.text = cartModelArrayList[position].product.productCategory.name
             /* itemView.rootView.setOnClickListener {
                  onItemClickListener.onClick(position, it)
 
@@ -84,7 +84,7 @@ class CartListAdapter(
 
             ivDelete.setOnClickListener {
 
-                onItemClickListener.onClick(position, it, 2,cartModelArrayList[position], count, tvCounter)
+                onItemClickListener.onClick(position, it, 2, cartModelArrayList[position], count, tvCounter)
             }
 
         }
@@ -96,6 +96,18 @@ class CartListAdapter(
         notifyDataSetChanged()
     }
 
+    fun convertToCamelCase(input: String): String {
+        val words = input.split(" ").toMutableList()
+//        if (words.size == 1) {
+//            return words[0].toLowerCase()
+//        }
+
+        for (i in 1 until words.size) {
+            words[i] = words[i].replaceFirstChar { char -> char.uppercase() }
+        }
+
+        return words.joinToString(" ").toLowerCase().replaceFirstChar { char -> char.uppercase() }
+    }
 
     override fun getItemCount(): Int {
         return cartModelArrayList.size
@@ -106,7 +118,7 @@ class CartListAdapter(
         var ivImg: ImageView
         var tvItemprice: TextView
         var tvCounter: TextView
-        var tvPackSize: TextView
+        var tvProductcategory: TextView
         var ivDelete: ImageView
         var btnAdd: AppCompatButton
         var btnSub: AppCompatButton
@@ -118,7 +130,7 @@ class CartListAdapter(
             tvCounter = itemView.findViewById(R.id.tvCounter)
             ivDelete = itemView.findViewById(R.id.ivDelete)
             ivImg = itemView.findViewById(R.id.ivItemImg)
-            tvPackSize = itemView.findViewById(R.id.tvPackSize)
+            tvProductcategory = itemView.findViewById(R.id.tvProductcategory)
             tvCounter.text = count.toString()
             tvItemname = itemView.findViewById(R.id.tvItemname)
             tvItemprice = itemView.findViewById(R.id.tvItemprice)

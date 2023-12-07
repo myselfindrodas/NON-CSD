@@ -14,6 +14,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_45sdp"
         android:layout_below="@+id/topnav">
 
     <LinearLayout
@@ -53,6 +54,7 @@
                     android:isIndicator="true"
                     android:progressTint="@color/yellow"
                     android:id="@+id/rateProduct"
+                    android:visibility="gone"
                     android:numStars="5"
                     android:stepSize="0.1" />
 
@@ -137,6 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="vertical"
                 android:layout_weight="0.8">
 
@@ -462,6 +465,7 @@
                             android:textSize="@dimen/_12ssp" />
 
 
+
                     </LinearLayout>
 
 
@@ -505,7 +509,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
 
@@ -627,7 +630,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_30sdp"
@@ -636,11 +639,10 @@
 
             <LinearLayout
                 android:id="@+id/btnAddWishlist"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_orange_bg_btn"
+                android:background="@color/orange"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnAddtoproduct"
@@ -665,16 +667,16 @@
 
             <LinearLayout
                 android:id="@+id/btnAddtoproduct"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:visibility="visible"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnAddWishlist"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:background="@drawable/rounded_blue_bg_btn">
+                android:background="@color/blue">
 
 
                 <TextView
@@ -692,8 +694,58 @@
             </LinearLayout>
 
 
+            <LinearLayout
+                android:id="@+id/llcounter"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginStart="@dimen/_1sdp"
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:background="@drawable/grey_border"
+                android:orientation="horizontal">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="-"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_15ssp"
+                    android:id="@+id/btnSub"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:background="@color/white"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="0"
+                    android:layout_weight="1"
+                    android:id="@+id/tvCounter"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:background="@color/orange"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp"
+                    android:fontFamily="@font/poppins_medium" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:textSize="@dimen/_15ssp"
+                    android:id="@+id/btnAdd"
+                    android:background="@color/white"
+                    android:textColor="@color/black" />
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
 
 
         <TextView
