@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class AddtocartRequest(
     @SerializedName("customerId")
     val customerId: String,
+    @SerializedName("productMainCategoryId")
+    val productMainCategoryId: String,
     @SerializedName("isAdvanceOrderRequest")
     val isAdvanceOrderRequest: Boolean,
     @SerializedName("customerName")

@@ -30,6 +30,7 @@ import com.example.sainikgrocerycustomer.data.model.DataProductList
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
+import com.grocery.sainik_grocery.data.model.categorymodel.CategoryRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentHomeBinding
@@ -314,6 +315,8 @@ class HomeFragment : Fragment(),
 
 
         categorylist()
+        BannerTop()
+
     }
 
     private val slidingCallback = object : ViewPager2.OnPageChangeCallback() {
@@ -358,7 +361,7 @@ class HomeFragment : Fragment(),
     private fun categorylist(){
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
-            viewModel.categorylist()
+            viewModel.categorylist(CategoryRequest(productMainCategoryId = Shared_Preferences.getMaincatid().toString()))
                 .observe(mainActivity) {
                     it?.let { resource ->
                         when (resource.status) {
@@ -369,7 +372,6 @@ class HomeFragment : Fragment(),
 
                                         categoryAdapter?.updateData(itResponse.data)
                                         groupAdapter?.updateData(itResponse.data)
-                                        BannerTop()
 
                                     }
 
@@ -414,7 +416,7 @@ class HomeFragment : Fragment(),
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
-            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), pageSize = 10, skip = 0))
+            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), productMainCategoryId = Shared_Preferences.getMaincatid().toString(), pageSize = 10, skip = 0))
                 .observe(this) {
                     it?.let { resource ->
                         when (resource.status) {

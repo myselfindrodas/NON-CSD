@@ -309,7 +309,7 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
-            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), pageSize = 10, skip = 0))
+            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), productMainCategoryId = Shared_Preferences.getMaincatid().toString(), pageSize = 10, skip = 0))
                 .observe(mainActivity) {
                     it?.let { resource ->
                         when (resource.status) {
@@ -471,6 +471,7 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
             viewModel.updatecart(
                 CartUpdateRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAdvanceOrderRequest = AdvanceOrder,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,

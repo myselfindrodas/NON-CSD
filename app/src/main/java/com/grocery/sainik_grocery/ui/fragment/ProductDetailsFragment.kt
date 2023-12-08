@@ -599,6 +599,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
             viewModel.AddToCart(
                 AddtocartRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAdvanceOrderRequest = isPartyOrder,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,
@@ -698,6 +699,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
             viewModel.CartList(
                 CartListRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     pageSize = 10,
                     skip = 0
                 )
@@ -806,7 +808,8 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
         if (Utilities.isNetworkAvailable(mainActivity)) {
             viewModel.DeleteCustomerCart(
                 DeleteCustomerCartRequest(
-                    customerId = Shared_Preferences.getUserId()
+                    customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString()
                 )
             )
                 .observe(mainActivity) {
@@ -1009,6 +1012,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
             viewModel.updatecart(
                 CartUpdateRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAdvanceOrderRequest = false,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,

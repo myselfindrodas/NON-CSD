@@ -7,6 +7,7 @@ import com.grocery.sainik_grocery.data.Resource
 import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressAddRequest
 import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressEditRequest
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
+import com.grocery.sainik_grocery.data.model.categorymodel.CategoryRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
 import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.deletewishlistmodel.DeletewishlistRequest
@@ -131,12 +132,28 @@ class CommonViewModel(private val mainRepository: MainRepository) : ViewModel() 
 
 
 
-    fun categorylist() = liveData(Dispatchers.IO) {
+    fun categorylist(requestBody: CategoryRequest) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
             emit(
                 Resource.success(
-                    data = mainRepository.categorylist()
+                    data = mainRepository.categorylist(requestBody)
+                )
+            )
+        } catch (e: Exception) {
+            emit(Resource.error(data = null, message = e.message ?: "Error Occurred!"))
+        }
+    }
+
+
+
+
+    fun ProductMainCategoriesList() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(
+                Resource.success(
+                    data = mainRepository.ProductMainCategoriesList()
                 )
             )
         } catch (e: Exception) {

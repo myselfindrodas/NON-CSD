@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class CartListRequest(
     @SerializedName("CustomerId")
     val customerId: String,
+    @SerializedName("productMainCategoryId")
+    val productMainCategoryId: String,
     @SerializedName("pageSize")
     val pageSize: Int,
     @SerializedName("skip")

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/bgcurved_btn"
+    android:layout_height="@dimen/_150sdp"
+    android:layout_margin="@dimen/_10sdp">
+
+    <ImageView
+        android:id="@+id/rvItemImg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/rvproductimg"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="#0E7B12"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@drawable/bgcurved_btn">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/_8ssp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_regular"
+            android:text="50000+ Daily Products are available"/>
+
+
+        <TextView
+            android:id="@+id/tvCatname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:drawablePadding="@dimen/_10sdp"
+            android:textAlignment="textEnd"
+            android:drawableEnd="@drawable/ic_arrowforward"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Daily Needs"/>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

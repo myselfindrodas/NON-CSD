@@ -286,7 +286,7 @@ class MyOrderFragment : Fragment(),MyOrderListAdapter.OnItemClickListener {
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
-            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), pageSize = 10, skip = 0))
+            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), productMainCategoryId = Shared_Preferences.getMaincatid().toString(), pageSize = 10, skip = 0))
                 .observe(this) {
                     it?.let { resource ->
                         when (resource.status) {

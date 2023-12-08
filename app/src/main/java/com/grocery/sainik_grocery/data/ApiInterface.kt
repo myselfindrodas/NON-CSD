@@ -9,6 +9,7 @@ import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartResponse
 import com.grocery.sainik_grocery.data.model.bannermodel.HomeBannerResponse
 import com.grocery.sainik_grocery.data.model.categorymodel.CategoryListResponse
+import com.grocery.sainik_grocery.data.model.categorymodel.CategoryRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartResponse
 import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
@@ -37,6 +38,7 @@ import com.grocery.sainik_grocery.data.model.productdetailsmodel.ProductDetailsR
 import com.grocery.sainik_grocery.data.model.productdetailsmodel.ProductDetailsResponse
 import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListRequest
 import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListResponse
+import com.grocery.sainik_grocery.data.model.productmaincategorymodel.ProductmaincategoryResponse
 import com.grocery.sainik_grocery.data.model.profilemodel.GetProfileRequest
 import com.grocery.sainik_grocery.data.model.profilemodel.ProfileResponse
 import com.grocery.sainik_grocery.data.model.searchmodel.SearchRequest
@@ -150,9 +152,17 @@ interface ApiInterface {
 
 
 
-    @GET("ProductCategoriesList")
+    @POST("ProductCategoriesList")
     suspend fun categorylist(
+        @Body requestBody: CategoryRequest
     ): CategoryListResponse
+
+
+
+
+    @GET("ProductMainCategoriesList")
+    suspend fun ProductMainCategoriesList(
+    ): ProductmaincategoryResponse
 
 
 

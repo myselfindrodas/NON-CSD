@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
+import com.grocery.sainik_grocery.data.model.categorymodel.CategoryRequest
 import com.grocery.sainik_grocery.data.model.categorymodel.Data
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentPartyProductBinding
@@ -22,6 +23,7 @@ import com.grocery.sainik_grocery.ui.MainActivity
 import com.grocery.sainik_grocery.ui.adapter.CategoryListAdapter
 import com.grocery.sainik_grocery.ui.adapter.CategoryListAdapter2
 import com.grocery.sainik_grocery.utils.ItemOffsetDecoration
+import com.grocery.sainik_grocery.utils.Shared_Preferences
 import com.grocery.sainik_grocery.utils.Status
 import com.grocery.sainik_grocery.utils.Utilities
 import com.grocery.sainik_grocery.viewmodel.CommonViewModel
@@ -86,7 +88,7 @@ class PartyProduct : Fragment(), CategoryListAdapter2.OnItemClickListener {
     private fun categorylist() {
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
-            viewModel.categorylist()
+            viewModel.categorylist(CategoryRequest(productMainCategoryId = Shared_Preferences.getMaincatid().toString()))
                 .observe(mainActivity) {
                     it?.let { resource ->
                         when (resource.status) {

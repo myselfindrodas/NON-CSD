@@ -27,6 +27,7 @@ import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
+import com.grocery.sainik_grocery.data.model.categorymodel.CategoryRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
 import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartData
@@ -344,9 +345,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             mCurrentPage += 1
 
 
-            viewModel.productList(
-                ProductListRequest("50", "0", categoryId)
-            ).observe(mainActivity) {
+            viewModel.productList(ProductListRequest("50", "0", categoryId)).observe(mainActivity) {
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
@@ -374,6 +373,17 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
                                     }
                                 }
                             } else {
+                                if (resource.data!!.data.isEmpty()) {
+
+                                    fragmentProductListBinding.nodata.root.visibility =
+                                        View.VISIBLE
+                                } else {
+
+                                    fragmentProductListBinding.nodata.root.visibility =
+                                        View.GONE
+
+                                }
+
 //                                fragmentProductListBinding.nodata.root.visibility = View.VISIBLE
                             }
                             mainActivity.hideProgressDialog()
@@ -425,7 +435,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
     private fun categorylist() {
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
-            viewModel.categorylist()
+            viewModel.categorylist(CategoryRequest(productMainCategoryId = Shared_Preferences.getMaincatid().toString()))
                 .observe(mainActivity) {
                     it?.let { resource ->
                         when (resource.status) {
@@ -915,6 +925,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             viewModel.AddToCart(
                 AddtocartRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAdvanceOrderRequest = false,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,
@@ -1072,6 +1083,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             viewModel.CartList(
                 CartListRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     pageSize = 10,
                     skip = 0
                 )
@@ -1236,7 +1248,8 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
         if (Utilities.isNetworkAvailable(mainActivity)) {
             viewModel.DeleteCustomerCart(
                 DeleteCustomerCartRequest(
-                    customerId = Shared_Preferences.getUserId()
+                    customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString()
                 )
             )
                 .observe(mainActivity) {
@@ -1309,6 +1322,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             viewModel.updatecart(
                 CartUpdateRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAdvanceOrderRequest = false,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,

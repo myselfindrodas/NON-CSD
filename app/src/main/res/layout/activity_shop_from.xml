@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.ShopFromActivity">
+
+
 
         <RelativeLayout
             android:id="@+id/rlLoading"
@@ -30,95 +31,112 @@
         <LinearLayout
             android:id="@+id/llTopShopFrom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_8sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_10sdp"
             android:orientation="horizontal"
+            android:background="@drawable/white_box_grey_border"
+            android:gravity="center"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/ivBack"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_20sdp"
-                android:src="@drawable/arrow_back" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:src="@drawable/ic_loc" />
+
+            <TextView
+                android:id="@+id/tvCurrentaddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_regular"
+                android:maxLines="1"
+                android:text=""
+                android:textSize="@dimen/_10ssp" />
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/ivHello"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_65sdp"
-                android:fontFamily="@font/poppins_regular"
-                android:src="@drawable/login_img"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_20ssp" />
+            android:layout_below="@+id/llTopShopFrom"
+            android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/tvHello"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:fontFamily="@font/poppins_regular"
-                android:text="Hi Nice to meet you"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/_14ssp" />
+            <!--            <ImageView-->
+            <!--                android:id="@+id/ivHello"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="@dimen/_65sdp"-->
+            <!--                android:fontFamily="@font/poppins_regular"-->
+            <!--                android:src="@drawable/login_img"-->
+            <!--                android:textColor="@color/white"-->
+            <!--                android:textSize="@dimen/_20ssp" />-->
 
 
-            <TextView
-                android:id="@+id/tvText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Shop from"
-                android:textAlignment="center"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/_20ssp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvHello" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tvHello"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="@dimen/_20sdp"-->
+            <!--                android:layout_marginTop="@dimen/_10sdp"-->
+            <!--                android:layout_marginEnd="@dimen/_20sdp"-->
+            <!--                android:fontFamily="@font/poppins_regular"-->
+            <!--                android:text="Hi Nice to meet you"-->
+            <!--                android:textColor="@color/orange"-->
+            <!--                android:textSize="@dimen/_14ssp" />-->
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Maitri"
-                android:textAlignment="center"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/_16ssp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvHello" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tvText"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="@dimen/_20sdp"-->
+            <!--                android:layout_marginTop="@dimen/_10sdp"-->
+            <!--                android:layout_marginEnd="@dimen/_20sdp"-->
+            <!--                android:fontFamily="@font/poppins_semibold"-->
+            <!--                android:text="Shop from"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textColor="@color/blue"-->
+            <!--                android:textSize="@dimen/_20ssp"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/tvHello" />-->
 
 
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="@dimen/_20sdp"-->
+            <!--                android:layout_marginTop="@dimen/_10sdp"-->
+            <!--                android:layout_marginEnd="@dimen/_20sdp"-->
+            <!--                android:fontFamily="@font/poppins_semibold"-->
+            <!--                android:text="Maitri"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textColor="@color/blue"-->
+            <!--                android:textSize="@dimen/_16ssp"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/tvHello" />-->
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnCsd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:background="@drawable/rounded_orange_bg_btn"
-                android:fontFamily="@font/poppins_bold"
-                android:paddingStart="@dimen/_20sdp"
-                android:text="CSD"
-                android:visibility="gone"
-                android:textColor="@color/white"
-                android:gravity="center"/>
+
+            <!--            <androidx.appcompat.widget.AppCompatButton-->
+            <!--                android:id="@+id/btnCsd"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="@dimen/_20sdp"-->
+            <!--                android:layout_marginTop="@dimen/_10sdp"-->
+            <!--                android:layout_marginEnd="@dimen/_20sdp"-->
+            <!--                android:background="@drawable/rounded_orange_bg_btn"-->
+            <!--                android:fontFamily="@font/poppins_bold"-->
+            <!--                android:paddingStart="@dimen/_20sdp"-->
+            <!--                android:text="CSD"-->
+            <!--                android:visibility="gone"-->
+            <!--                android:textColor="@color/white"-->
+            <!--                android:gravity="center"/>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,8 +164,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1sdp"
                     android:background="@color/grey_light"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
             </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose your favourities"
+                android:textColor="#0E7B12"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_18ssp"
+                android:layout_margin="@dimen/_15sdp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChoosefavourites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnNonCSD"
@@ -156,16 +189,17 @@
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
+                android:visibility="gone"
                 android:background="@drawable/rounded_blue_bg_btn"
                 android:fontFamily="@font/poppins_bold"
                 android:paddingStart="@dimen/_20sdp"
                 android:text="Needs \u0026 Bakery"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:gravity="center"/>
+                android:gravity="center" />
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </layout>

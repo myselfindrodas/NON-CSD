@@ -4,6 +4,7 @@ import com.grocery.sainik_grocery.data.ApiHelper
 import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressAddRequest
 import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressEditRequest
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
+import com.grocery.sainik_grocery.data.model.categorymodel.CategoryRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
 import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.deletewishlistmodel.DeletewishlistRequest
@@ -38,7 +39,10 @@ class MainRepository(private val apiHelper: ApiHelper) {
 
     suspend fun LoginPageBanners() = apiHelper.LoginPageBanners()
 
-    suspend fun categorylist() = apiHelper.categorylist()
+    suspend fun categorylist(requestBody: CategoryRequest) = apiHelper.categorylist(requestBody)
+
+    suspend fun ProductMainCategoriesList() = apiHelper.ProductMainCategoriesList()
+
     suspend fun addresslist(customerid:String) = apiHelper.addresslist(customerid)
     suspend fun notificationlist(customerid:String) = apiHelper.notificationlist(customerid)
     suspend fun banners() = apiHelper.banners()

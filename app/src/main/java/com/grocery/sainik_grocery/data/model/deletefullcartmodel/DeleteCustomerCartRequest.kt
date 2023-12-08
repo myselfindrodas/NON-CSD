@@ -5,5 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DeleteCustomerCartRequest(
     @SerializedName("customerId")
-    val customerId: String
+    val customerId: String,
+    @SerializedName("productMainCategoryId")
+    val productMainCategoryId: String,
 )

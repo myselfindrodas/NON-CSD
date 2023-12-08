@@ -3,6 +3,7 @@ package com.grocery.sainik_grocery.data
 import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressAddRequest
 import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressEditRequest
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
+import com.grocery.sainik_grocery.data.model.categorymodel.CategoryRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
 import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.deletewishlistmodel.DeletewishlistRequest
@@ -33,7 +34,8 @@ class ApiHelper(private val apiInterface: ApiInterface) {
     suspend fun getnonCSDlist() = apiInterface.getnonCSDlist()
     suspend fun GetNewOrderNumber() = apiInterface.GetNewOrderNumber()
     suspend fun LoginPageBanners() = apiInterface.LoginPageBanners()
-    suspend fun categorylist() = apiInterface.categorylist()
+    suspend fun categorylist(requestBody: CategoryRequest) = apiInterface.categorylist(requestBody)
+    suspend fun ProductMainCategoriesList() = apiInterface.ProductMainCategoriesList()
     suspend fun addresslist(customerid:String) = apiInterface.addresslist(customerid)
     suspend fun notificationlist(customerid:String) = apiInterface.notificationlist(customerid)
     suspend fun banners() = apiInterface.banners()

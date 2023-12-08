@@ -276,6 +276,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
             viewModel.CartList(
                 CartListRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     pageSize = 10,
                     skip = 0
                 )

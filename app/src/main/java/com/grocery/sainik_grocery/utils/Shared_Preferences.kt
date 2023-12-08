@@ -166,6 +166,17 @@ object Shared_Preferences {
     }
 
 
+    fun getMaincatid(): String? {
+        return getSharedPreferences().getString("catid", "")
+    }
+
+    fun setMaincatid(catid: String?) {
+        val editor = getSharedPreferences().edit()
+        editor.putString("catid", catid)
+        editor.apply()
+    }
+
+
     fun getPassword(): String? {
         return getSharedPreferences().getString(PREF_PASSWORD, "")
     }

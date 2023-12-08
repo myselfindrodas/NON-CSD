@@ -214,6 +214,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
             viewModel.CartList(
                 CartListRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     pageSize = 10,
                     skip = 0
                 )
@@ -562,6 +563,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
             viewModel.AddToCart(
                 AddtocartRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAdvanceOrderRequest = true,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,
@@ -717,7 +719,9 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
         if (Utilities.isNetworkAvailable(mainActivity)) {
             viewModel.DeleteCustomerCart(
                 DeleteCustomerCartRequest(
-                    customerId = Shared_Preferences.getUserId()
+                    customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString()
+
                 )
             )
                 .observe(mainActivity) {
@@ -790,6 +794,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
             viewModel.updatecart(
                 CartUpdateRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAdvanceOrderRequest = true,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,
