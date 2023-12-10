@@ -41,7 +41,7 @@ class BannerAdapter(var context: Context) :
         Glide.with(context)
             .load(imageURL+modelList[position].imageUrl)
             .timeout(6000)
-            .error(R.drawable.bgbanner)
+            .error(R.drawable.rvproductimg)
 //            .placeholder(R.drawable.adbg1)
             .into(holder.ivBanner)
 

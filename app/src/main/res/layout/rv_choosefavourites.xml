@@ -9,10 +9,12 @@
         android:id="@+id/rvItemImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/llbottom"
         android:scaleType="fitXY"
         android:src="@drawable/rvproductimg"/>
 
     <LinearLayout
+        android:id="@+id/llbottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:layout_alignParentBottom="true"

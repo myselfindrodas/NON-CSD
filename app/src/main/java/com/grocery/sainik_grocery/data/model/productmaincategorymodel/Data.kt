@@ -7,5 +7,7 @@ data class Data(
     @SerializedName("id")
     val id: String,
     @SerializedName("name")
-    val name: String
+    val name: String,
+    @SerializedName("categoryImageUrl")
+    val categoryImageUrl: String
 )

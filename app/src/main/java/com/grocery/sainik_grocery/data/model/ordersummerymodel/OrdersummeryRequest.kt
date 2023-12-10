@@ -5,5 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class OrdersummeryRequest(
     @SerializedName("CustomerId")
-    val customerId: String
+    val customerId: String,
+    @SerializedName("productMainCategoryId")
+    val productMainCategoryId: String
 )

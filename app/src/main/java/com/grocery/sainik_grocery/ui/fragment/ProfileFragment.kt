@@ -297,9 +297,9 @@ class ProfileFragment : Fragment() {
 //                fragmentProfileBinding.etLastname.text.toString().length==0 -> {
 //                    Toast.makeText(mainActivity, "Please Enter last name", Toast.LENGTH_SHORT).show()
 //                }
-                fragmentProfileBinding.etPhone.text.toString().length<10 -> {
-                    Toast.makeText(mainActivity, "Please Enter valid number", Toast.LENGTH_SHORT).show()
-                }
+//                fragmentProfileBinding.etPhone.text.toString().length<10 -> {
+//                    Toast.makeText(mainActivity, "Please Enter valid number", Toast.LENGTH_SHORT).show()
+//                }
 //                fragmentProfileBinding.etDOB.text.toString().length==0 -> {
 //                    Toast.makeText(mainActivity, "Please Enter DOB", Toast.LENGTH_SHORT).show()
 //                }
@@ -380,18 +380,18 @@ class ProfileFragment : Fragment() {
         if (requestCode == 2404 && resultCode == Activity.RESULT_OK) {
             val fileUri = data!!.data
 
-            try {
-                Picasso.get()
-                    .load(fileUri)
-                    .error(R.drawable.login_img)
-//                    .placeholder(R.drawable.loader_gif)
-                    .into(fragmentProfileBinding.PrfImg)
-
-                pathFromUri = GetRealPathFromUri.getPathFromUri(mainActivity, fileUri!!)!!
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+//            try {
+//                Picasso.get()
+//                    .load(fileUri)
+//                    .error(R.drawable.login_img)
+////                    .placeholder(R.drawable.loader_gif)
+//                    .into(fragmentProfileBinding.PrfImg)
+//
+//                pathFromUri = GetRealPathFromUri.getPathFromUri(mainActivity, fileUri!!)!!
+//
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(mainActivity, ImagePicker.RESULT_ERROR, Toast.LENGTH_SHORT).show()
         } else {
@@ -611,6 +611,22 @@ class ProfileFragment : Fragment() {
                                 resource.data?.let {itResponse->
 
                                     if (itResponse.status) {
+
+
+                                        val inputString = itResponse.data.customerName?:""
+                                        val splitName = inputString.split(" ")
+                                        if (splitName.size >= 2) {
+                                            val firstLetter = splitName[0].first()
+                                            val lastLetter = splitName[1].first()
+                                            val result = "$firstLetter$lastLetter"
+                                            fragmentProfileBinding.tvlettersBuyer.text = result
+
+                                        } else if (splitName.size >= 1) {
+                                            val firstLetter = splitName[0].first()
+                                            val result = firstLetter
+                                            fragmentProfileBinding.tvlettersBuyer.text = result.toString()
+                                                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                                        }
 
                                         fragmentProfileBinding.etFirstname.setText(itResponse.data.customerName)
 //                                        fragmentProfileBinding.etLastname.setText(itResponse.data.user.lastName)

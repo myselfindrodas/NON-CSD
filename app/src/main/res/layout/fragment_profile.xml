@@ -51,11 +51,22 @@
                             android:layout_margin="@dimen/_3sdp"
                             app:cardCornerRadius="@dimen/_40sdp">
 
-                            <ImageView
-                                android:id="@+id/PrfImg"
+
+                            <TextView
+                                android:id="@+id/tvlettersBuyer"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="fitXY" />
+                                android:text=""
+                                android:textSize="20sp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:textColor="@color/blue"
+                                android:gravity="center"/>
+
+<!--                            <ImageView-->
+<!--                                android:id="@+id/PrfImg"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:scaleType="fitXY" />-->
 
 
                         </androidx.cardview.widget.CardView>
@@ -69,6 +80,7 @@
                     android:layout_width="@dimen/_77sdp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_55sdp"
+                    android:visibility="gone"
                     android:gravity="right|top">
 
                     <ImageView
@@ -137,7 +149,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:inputType="number"
-                android:text=""
+                android:focusable="false"
+                android:clickable="false"
                 android:maxLength="10"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="@color/blue"
@@ -150,6 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Gender*"
+                android:visibility="gone"
                 android:fontFamily="@font/poppins_regular"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:textSize="@dimen/_12ssp"/>
@@ -162,11 +176,13 @@
                 android:layout_height="@dimen/_40sdp"
                 android:inputType="number"
                 android:textColor="@color/blue"
+                android:visibility="gone"
                 android:fontFamily="@font/poppins_semibold"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.8dp"
+                android:visibility="gone"
                 android:background="@android:color/darker_gray" />
 
 

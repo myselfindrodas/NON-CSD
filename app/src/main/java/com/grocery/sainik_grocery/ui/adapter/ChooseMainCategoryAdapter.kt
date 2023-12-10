@@ -5,8 +5,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.model.productmaincategorymodel.Data
 
@@ -18,6 +20,7 @@ class ChooseMainCategoryAdapter(
     RecyclerView.Adapter<ChooseMainCategoryAdapter.MyViewHolder>() {
     private val inflater: LayoutInflater
     private var maincategotyModelArrayList: ArrayList<Data> = arrayListOf()
+    private var imageURL: String="https://maitricomplex.in/"
     var ctx: Context
 
     init {
@@ -47,6 +50,15 @@ class ChooseMainCategoryAdapter(
             }
 
 
+            Glide.with(ctx)
+                .load(imageURL+maincategotyModelArrayList[position].categoryImageUrl)
+                .timeout(6000)
+                .error(R.drawable.bgbanner)
+//            .placeholder(R.drawable.adbg1)
+                .into(holder.rvItemImg)
+
+
+
         }
     }
 
@@ -62,11 +74,13 @@ class ChooseMainCategoryAdapter(
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var tvCatname: TextView
+        var rvItemImg: ImageView
 
 
         init {
 
             tvCatname = itemView.findViewById(R.id.tvCatname)
+            rvItemImg = itemView.findViewById(R.id.rvItemImg)
 
         }
     }

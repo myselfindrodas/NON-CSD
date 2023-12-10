@@ -373,7 +373,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
 
-            viewModel.ordersummery(OrdersummeryRequest(customerId = Shared_Preferences.getUserId()))
+            viewModel.ordersummery(OrdersummeryRequest(customerId = Shared_Preferences.getUserId(), productMainCategoryId=Shared_Preferences.getMaincatid().toString()))
                 .observe(mainActivity) {
                     it?.let { resource ->
                         when (resource.status) {
@@ -532,6 +532,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
             viewModel.postorder(
                 PostOrderRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAppOrderRequest = true,
                     customerName = Shared_Preferences.getName(),
                     deliveryAddress = fragmentOrderSummaryBinding.tvAddress.text.toString(),

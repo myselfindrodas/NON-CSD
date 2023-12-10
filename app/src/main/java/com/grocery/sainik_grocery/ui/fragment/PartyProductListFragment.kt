@@ -121,7 +121,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
 
         mainActivity.setBottomNavigationVisibility(true)
 
-        binding.topnav.tvNavtitle.text = categoryName
+        binding.topnav.tvNavtitle.text = "Categorty List"
 
         partyProductAdapter = PartyProductAdapter(mainActivity, this@PartyProductListFragment)
         binding.rvProductList.adapter = partyProductAdapter
