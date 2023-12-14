@@ -185,6 +185,7 @@ class OtpActivity : BaseActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 binding.tvResendOtp.isEnabled = false
                 binding.tvResendOtp.setTextColor(Color.parseColor("#CCCCCC"))
+                binding.tvResendOtp.visibility = View.GONE
                 val minutes = millisUntilFinished / 1000 / 60
                 val seconds = (millisUntilFinished / 1000) % 60
                 val timeLeft = String.format("%02d:%02d", minutes, seconds)
@@ -194,6 +195,7 @@ class OtpActivity : BaseActivity() {
             override fun onFinish() {
                 binding.tvTimer.text = "00:00"
                 binding.tvResendOtp.isEnabled = true
+                binding.tvResendOtp.visibility = View.VISIBLE
                 binding.tvResendOtp.setTextColor(Color.parseColor("#E8AB03"))
 
             }

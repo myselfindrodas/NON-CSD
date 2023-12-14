@@ -26,7 +26,7 @@ class ProductAdapter(
     var onItemClickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
-    private var imageURL: String="https://sainik.shyamfuture.in/"
+    private var imageURL: String="https://maitricomplex.in/"
     private val inflater: LayoutInflater
     private var productModelArrayList: ArrayList<Data> = arrayListOf()
     private var cartModelArrayList: ArrayList<CartData> = arrayListOf()
@@ -96,11 +96,21 @@ class ProductAdapter(
                 }
 
             }else{
-                holder.tvAvailable.visibility = View.GONE
-                holder.itemView.setOnClickListener {
-                    onItemClickListener.onClick(position, it, holder.tvQty, holder.tvPrice, "ivImg", productModelArrayList[position].id, productModelArrayList[position])
 
+                if (productModelArrayList[position].stock.toInt()==count){
+                    holder.itemView.setOnClickListener {
+                        Toast.makeText(ctx,"Product Out of stock", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+
+                    holder.tvAvailable.visibility = View.GONE
+                    holder.itemView.setOnClickListener {
+                        onItemClickListener.onClick(position, it, holder.tvQty, holder.tvPrice, "ivImg", productModelArrayList[position].id, productModelArrayList[position])
+
+                    }
                 }
+
 
             }
 
@@ -177,7 +187,7 @@ class ProductAdapter(
 
                 Picasso.get()
                     .load(imageURL+productModelArrayList[position].productUrl)
-                    .error(R.drawable.login_img)
+                    .error(R.drawable.noimagefound)
                     .into(holder.ivImg)
 
             }catch (e:Exception){
@@ -195,7 +205,15 @@ class ProductAdapter(
                 holder.lldiscount.visibility = View.GONE
             }
 
-            holder.tvPrice.text = " ₹ ${productModelArrayList[position].salesPrice.toString()}/${productModelArrayList[position].unitName}"
+
+            if (productModelArrayList[position].salesPrice.toString()==null){
+                holder.tvPrice.text = " ₹ ${"0"}/${productModelArrayList[position].unitName}"
+
+            }else{
+                holder.tvPrice.text = " ₹ ${productModelArrayList[position].salesPrice.toString()}/${productModelArrayList[position].unitName}"
+
+            }
+
 
 
             holder.tvPriceOld.paintFlags = holder.tvPriceOld.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -273,6 +291,7 @@ class ProductAdapter(
 
 
     fun updateData(mProductModelArrayList: List<Data>, mCartModelArrayList: List<CartData>) {
+
         productModelArrayList = mProductModelArrayList as ArrayList<Data>
         cartModelArrayList = mCartModelArrayList as ArrayList<CartData>
         notifyDataSetChanged()

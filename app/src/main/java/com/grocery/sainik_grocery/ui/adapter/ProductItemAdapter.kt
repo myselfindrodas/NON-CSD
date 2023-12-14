@@ -48,7 +48,7 @@ class ProductItemAdapter(
             try {
                 Picasso.get()
                     .load(imageURL+ProductImageArrayList[position].image)
-                    .error(R.drawable.login_img)
+                    .error(R.drawable.noimagefound)
 //                    .placeholder(R.drawable.loader_gif)
                     .into(holder.ivItemImg)
 

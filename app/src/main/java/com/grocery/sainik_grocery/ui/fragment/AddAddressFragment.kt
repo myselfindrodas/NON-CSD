@@ -594,7 +594,7 @@ class AddAddressFragment : Fragment() {
         with(mFragmentAddAddressBinding) {
 
             if (latitude.toString().isEmpty() && latitude.toString().isEmpty()){
-                Toast.makeText(mainActivity, "Select Address for latitude and longitude", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mainActivity, "Enter your address", Toast.LENGTH_SHORT).show()
                 btnSearchLocation.requestFocus()
                 return false
             }else if (etHouseNo.text.toString().isEmpty()) {
@@ -602,7 +602,7 @@ class AddAddressFragment : Fragment() {
                 etHouseNo.requestFocus()
                 return false
             } else if (etLandmark.text.toString().isEmpty()) {
-                Toast.makeText(mainActivity, "Enter Apertment name.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mainActivity, "Enter Landmark name.", Toast.LENGTH_SHORT).show()
                 etLandmark.requestFocus()
                 return false
             } else if (etStreeDetails.text.toString().isEmpty()) {

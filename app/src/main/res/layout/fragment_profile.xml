@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="First Name*"
+                android:text="Full Name*"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/_12ssp"/>
 

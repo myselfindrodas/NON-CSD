@@ -57,7 +57,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
     var mIsLoading = false;
     var mIsLastPage = false;
     var mCurrentPage = 0;
-    var pageSize = 10;
+    var pageSize = 15;
 
     companion object {
         var sortType: String = "popularity"
@@ -65,7 +65,8 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
 
         var attribute_id = ArrayList<Int>()
         var filterPrice: String = ""
-        var categoryId = ""
+        var catId = ""
+        var catName = ""
 
     }
 
@@ -88,13 +89,23 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
         val root = binding.root
         mainActivity = activity as MainActivity
 
+//        val intent = arguments
+//        if (intent != null && intent.containsKey("viewalltype")) {
+//            category = intent.getString("viewalltype", "")
+//            if (category == "categoryProduct") {
+//                ProductListFragment.categoryId = intent.getString("catId", "")
+//                categoryName = intent.getString("catName", "")
+//            }
+//        }
+
+
         val intent = arguments
-        if (intent != null && intent.containsKey("viewalltype")) {
-            category = intent.getString("viewalltype", "")
-            if (category == "categoryProduct") {
-                ProductListFragment.categoryId = intent.getString("catId", "")
-                categoryName = intent.getString("catName", "")
-            }
+        if (intent != null && intent.containsKey("catName")) {
+            catName = intent.getString("catName","")
+        }
+
+        if (intent != null && intent.containsKey("catId")) {
+            catId = intent.getString("catId","")
         }
 
 
@@ -111,6 +122,9 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.topnav.tvNavtitle.text = catName
+
+
         binding.topnav.btnBack.setOnClickListener {
             if (Utilities.isClickRecently()) {
                 return@setOnClickListener
@@ -121,7 +135,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
 
         mainActivity.setBottomNavigationVisibility(true)
 
-        binding.topnav.tvNavtitle.text = "Categorty List"
+
 
         partyProductAdapter = PartyProductAdapter(mainActivity, this@PartyProductListFragment)
         binding.rvProductList.adapter = partyProductAdapter
@@ -130,6 +144,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
         binding.rvProductList.addOnScrollListener(recyclerOnScroll)
         val itemDecoration = ItemOffsetDecoration(mainActivity, R.dimen.photos_list_spacing1)
         binding.rvProductList.addItemDecoration(itemDecoration)
+        mCurrentPage=0
         getAllProductList(true)
 
 
@@ -147,7 +162,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
 
 
             viewModel.productList(
-                ProductListRequest("25", "0", ProductListFragment.categoryId)
+                ProductListRequest("25", mCurrentPage.toString(), catId)
             ).observe(mainActivity) {
                 it?.let { resource ->
                     when (resource.status) {
@@ -155,12 +170,13 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
                             if (resource.data?.status == true) {
                                 resource.data?.let { itProfileInfo ->
                                     productArrayList.clear()
+                                    partyProductAdapter?.notifyDataSetChanged()
                                     productArrayList.addAll(itProfileInfo.data)
+                                    partyProductAdapter?.notifyItemRangeInserted(0, itProfileInfo.totalCount)
 
                                     mIsLoading = false
-                                    mIsLastPage =
-                                        mCurrentPage == itProfileInfo.totalCount
-                                    pageSize = itProfileInfo.pageSize
+                                    mIsLastPage = mCurrentPage == itProfileInfo.totalPages
+                                    pageSize = itProfileInfo.totalPages
 
                                     if (itProfileInfo.data.isEmpty()) {
 
@@ -174,6 +190,15 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
                                     }
                                 }
                             } else {
+
+                                if (resource.data?.data!!.isEmpty()) {
+
+                                    binding.nodata.root.visibility = View.VISIBLE
+                                } else {
+
+                                    binding.nodata.root.visibility = View.GONE
+
+                                }
 //                                fragmentProductListBinding.nodata.root.visibility = View.VISIBLE
                             }
                             mainActivity.hideProgressDialog()
@@ -236,7 +261,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
                                             val builder = AlertDialog.Builder(mainActivity)
                                             builder.setMessage(
                                                 "You Have Some of regular product already added inside cart!" +
-                                                        " Please Delete previous cart items for party product add"
+                                                        " Please Delete previous cart items for advance product add"
                                             )
                                             builder.setPositiveButton(
                                                 "Ok"
@@ -451,6 +476,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
             bundle.putString("type", "partyadd")
             val navController = Navigation.findNavController(view)
             navController.navigate(R.id.nav_productdetails, bundle)
+
         } else if (str == "addtocart") {
 
             productaddtoCart(
@@ -730,7 +756,8 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
                             Status.SUCCESS -> {
                                 mainActivity.hideProgressDialog()
                                 if (resource.data?.status == true) {
-                                    getAllProductList(true)
+                                    CartList(true)
+//                                    getAllProductList(true)
 
 
                                 } else {

@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sainikgrocerycustomer.data.model.AppContent
 import com.grocery.sainik_grocery.R
+import com.grocery.sainik_grocery.data.model.faqmodel.Data
 
 class FAQ_Help_Adapter(
     ctx: Context,
@@ -17,7 +18,7 @@ class FAQ_Help_Adapter(
 ) :
     RecyclerView.Adapter<FAQ_Help_Adapter.MyViewHolder>() {
     private val inflater: LayoutInflater
-    private var contentModelArrayList: ArrayList<AppContent> = arrayListOf()
+    private var contentModelArrayList: ArrayList<Data> = arrayListOf()
     var ctx: Context
 
     init {
@@ -31,7 +32,7 @@ class FAQ_Help_Adapter(
             view: View,
             id: Int,
             s: String,
-            mNotificationListModelArrayList: ArrayList<AppContent>
+            mNotificationListModelArrayList: ArrayList<Data>
         )
     }
 
@@ -43,8 +44,8 @@ class FAQ_Help_Adapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
 
-        holder.tvTitle.text = if (isFAQ){"${position + 1}. ${contentModelArrayList[position].title}"} else contentModelArrayList[position].title
-        holder.tvDescriptions.text = contentModelArrayList[position].description
+        holder.tvTitle.text = if (isFAQ){"${position + 1}. ${contentModelArrayList[position].question}"} else contentModelArrayList[position].question
+        holder.tvDescriptions.text = contentModelArrayList[position].answer
 
         if (contentModelArrayList[position].isExpanded){
             holder.tvDescriptions.visibility=View.VISIBLE
@@ -74,8 +75,8 @@ class FAQ_Help_Adapter(
     }
 
 
-    fun updateData(mcontentModelArrayList: List<AppContent>) {
-        contentModelArrayList = mcontentModelArrayList as ArrayList<AppContent>
+    fun updateData(mcontentModelArrayList: List<Data>) {
+        contentModelArrayList = mcontentModelArrayList as ArrayList<Data>
         notifyDataSetChanged()
     }
 

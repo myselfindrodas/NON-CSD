@@ -32,16 +32,42 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    app:cardCornerRadius="@dimen/_65sdp"
-                    android:layout_marginStart="@dimen/_10sdp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ivImgProfile"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/user"
-                    android:contentDescription="profile" />
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_55sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/orange">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/_3sdp"
+                            app:cardCornerRadius="@dimen/_40sdp">
+
+
+                            <TextView
+                                android:id="@+id/tvlettersBuyer"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text=""
+                                android:textSize="20sp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:textColor="@color/blue"
+                                android:gravity="center"/>
+
+                            <!--                            <ImageView-->
+                            <!--                                android:id="@+id/PrfImg"-->
+                            <!--                                android:layout_width="match_parent"-->
+                            <!--                                android:layout_height="match_parent"-->
+                            <!--                                android:scaleType="fitXY" />-->
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
                 <LinearLayout
                     android:layout_width="0dp"
@@ -241,7 +267,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginStart="@dimen/_10sdp"
-                                    android:text="My profile"
+                                    android:text="My Profile"
                                     android:fontFamily="@font/poppins_regular"
                                     android:textSize="@dimen/_12sdp" />
 
@@ -399,6 +425,30 @@
 
                     </LinearLayout>
 
+
+                    <LinearLayout
+                        android:id="@+id/btnNavChangeOption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_10sdp">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:text="Choose Shop Type"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/_13sdp" />
+
+
+                    </LinearLayout>
+
+
                     <LinearLayout
                         android:id="@+id/btnNavsupport"
                         android:layout_width="match_parent"
@@ -412,7 +462,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/_10sdp"
-                            android:text="Helps and Support"
+                            android:text="Help and Support"
                             android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/orange"
                             android:textSize="@dimen/_13sdp" />

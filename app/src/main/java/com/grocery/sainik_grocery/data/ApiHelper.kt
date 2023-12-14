@@ -18,6 +18,7 @@ import com.grocery.sainik_grocery.data.model.postordermodel.PostOrderRequest
 import com.grocery.sainik_grocery.data.model.productdetailsmodel.ProductDetailsRequest
 import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListRequest
 import com.grocery.sainik_grocery.data.model.profilemodel.GetProfileRequest
+import com.grocery.sainik_grocery.data.model.salesordermodel.SalesOrderPaymentRequest
 import com.grocery.sainik_grocery.data.model.searchmodel.SearchRequest
 import com.grocery.sainik_grocery.data.model.setprimaryaddressmodel.PrimaryAddressRequest
 import com.grocery.sainik_grocery.data.model.tokenmodel.TokenRequest
@@ -35,6 +36,7 @@ class ApiHelper(private val apiInterface: ApiInterface) {
     suspend fun GetNewOrderNumber() = apiInterface.GetNewOrderNumber()
     suspend fun LoginPageBanners() = apiInterface.LoginPageBanners()
     suspend fun categorylist(requestBody: CategoryRequest) = apiInterface.categorylist(requestBody)
+    suspend fun SalesOrderPayment(requestBody: SalesOrderPaymentRequest) = apiInterface.SalesOrderPayment(requestBody)
     suspend fun ProductMainCategoriesList() = apiInterface.ProductMainCategoriesList()
     suspend fun addresslist(customerid:String) = apiInterface.addresslist(customerid)
     suspend fun notificationlist(customerid:String) = apiInterface.notificationlist(customerid)
@@ -53,6 +55,8 @@ class ApiHelper(private val apiInterface: ApiInterface) {
     suspend fun search(requestBody: SearchRequest) = apiInterface.search(requestBody)
     suspend fun getProfile(requestBody: GetProfileRequest) = apiInterface.getProfile(requestBody)
     suspend fun updateprofile(requestBody: UpdateProfileRequest) = apiInterface.updateprofile(requestBody)
+    suspend fun support() = apiInterface.support()
+    suspend fun faq() = apiInterface.faq()
     suspend fun updatecart(requestBody: CartUpdateRequest) = apiInterface.updatecart(requestBody)
     suspend fun deletecart(requestBody: DeleteCartRequest) = apiInterface.deletecart(requestBody)
     suspend fun DeleteCustomerCart(requestBody: DeleteCustomerCartRequest) = apiInterface.DeleteCustomerCart(requestBody)

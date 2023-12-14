@@ -73,6 +73,8 @@ class AddressAdapter(
             }
 
 
+
+
         }
     }
 
@@ -93,6 +95,7 @@ class AddressAdapter(
         var btnhomeAddaddress: ImageView
         var btnDelete: ImageView
         var count = 0
+        var rbHome:RadioButton
 
         init {
 
@@ -101,6 +104,7 @@ class AddressAdapter(
             tvaddressfull = itemView.findViewById(R.id.tvaddressfull)
             btnhomeAddaddress = itemView.findViewById(R.id.btnhomeAddaddress)
             btnDelete = itemView.findViewById(R.id.btnDelete)
+            rbHome = itemView.findViewById(R.id.rbHome)
         }
     }
 }

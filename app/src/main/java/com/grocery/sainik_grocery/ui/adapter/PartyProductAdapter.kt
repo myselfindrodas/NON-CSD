@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.grocery.sainik_grocery.R
@@ -25,7 +26,7 @@ class PartyProductAdapter(
     var onItemClickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<PartyProductAdapter.MyViewHolder>() {
-    private var imageURL: String="https://sainik.shyamfuture.in/"
+    private var imageURL: String="https://maitricomplex.in/"
     private val inflater: LayoutInflater
     private var productModelArrayList: ArrayList<Data> = arrayListOf()
     private var cartModelArrayList: ArrayList<CartData> = arrayListOf()
@@ -79,35 +80,25 @@ class PartyProductAdapter(
                     && sdf.format(currentTime).toString()<= productModelArrayList[position].orderEndTime.toString()){
                     holder.btnGo.visibility = View.VISIBLE
                     holder.llcounter.visibility = View.GONE
+                    holder.itemView.setOnClickListener {
+                        onItemClickListener.onClick(position, it, holder.tvQty, holder.tvPrice, "ivImg", productModelArrayList[position].id, productModelArrayList[position])
+                    }
                 }else{
                     holder.btnGo.visibility = View.GONE
                     holder.llcounter.visibility = View.GONE
                     holder.tvAvailable.visibility = View.VISIBLE
                     holder.tvAvailable.text = "ORDER TIME EXPRIED"
+                    holder.itemView.setOnClickListener {
+                        Toast.makeText(ctx,"Product Not Availabe at this time", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
             }else{
+
                 holder.tvAvailable.visibility = View.GONE
 
             }
 
-//        cartModelArrayList.forEach { data->
-//            if (data.productId==productModelArrayList[position].id){
-//                count=data.quantity
-//                cartid = data.id
-//                holder.tvCounterProduct.text = count.toString()
-////                println(count)
-////                println(data.productName)
-////                holder.btnGo.visibility = View.GONE
-////                holder.llAddProduct.visibility = View.VISIBLE
-//                return
-//            }else{
-//                count=0
-//                holder.tvCounterProduct.text = count.toString()
-////                holder.btnGo.visibility = View.VISIBLE
-////                holder.llAddProduct.visibility = View.GONE
-//            }
-//        }
 
 
             holder.tvCounterProduct.text = count.toString()
@@ -167,54 +158,14 @@ class PartyProductAdapter(
                 /*tvCounter.text = count.toString()*/
             }
 
-//
-//        holder.btnAddProduct.setOnClickListener {
-//            try {
-//                count++
-//                holder.tvCounterProduct.text = count.toString()
-//                onItemClickListener.onUpdate(position, it, holder.tvCounterProduct.text.toString(), holder.tvPrice,  productModelArrayList[position].id, cartModelArrayList[position], productModelArrayList[position], "update")
-//
-//            }catch (e:Exception){
-//
-//            }
-//
-//        }
-//
-//        holder.btnSubProduct.setOnClickListener {
-//            try {
-//
-//                    if (count > 0) {
-//                    holder.btnGo.visibility = View.VISIBLE
-//                    holder.llAddProduct.visibility = View.GONE
-////                    count=0
-//                    onItemClickListener.onUpdate(position, it, holder.tvCounterProduct.text.toString(), holder.tvPrice, productModelArrayList[position].id, cartModelArrayList[position], productModelArrayList[position], "update")
-//
-//
-//                } else {
-//                    count--
-//                    holder.tvCounterProduct.text = count.toString()
-//                    if (count<1){
-//                        onItemClickListener.onUpdate(position, it, holder.tvCounterProduct.text.toString(), holder.tvPrice, productModelArrayList[position].id, cartModelArrayList[position], productModelArrayList[position], "remove")
-//
-//                    }
-//                    onItemClickListener.onUpdate(position, it, holder.tvCounterProduct.text.toString(), holder.tvPrice, productModelArrayList[position].id, cartModelArrayList[position], productModelArrayList[position], "update")
-//
-//                }
-//
-//                Log.d(TAG, "count-->"+count)
-//            }catch (e:Exception){
-//
-//
-//            }
-//
-//        }
+
 
 
             try {
 
                 Picasso.get()
                     .load(imageURL+productModelArrayList[position].productUrl)
-                    .error(R.drawable.login_img)
+                    .error(R.drawable.noimagefound)
                     .into(holder.ivImg)
 
             }catch (e:Exception){
@@ -241,9 +192,7 @@ class PartyProductAdapter(
             holder.tvPriceOld.visibility = View.GONE
 
 
-            holder.ivImg.setOnClickListener {
-                onItemClickListener.onClick(position, it, holder.tvQty, holder.tvPrice, "ivImg", productModelArrayList[position].id, productModelArrayList[position])
-            }
+
 
 
 

@@ -521,7 +521,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="Benifits"
+                            android:text="Benefits"
                             android:textColor="@color/blue"
                             android:textSize="@dimen/_12ssp" />
 
@@ -562,6 +562,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:background="@android:color/darker_gray" />
@@ -573,6 +574,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
 

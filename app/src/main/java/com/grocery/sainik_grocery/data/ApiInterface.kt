@@ -14,6 +14,7 @@ import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartRequest
 import com.grocery.sainik_grocery.data.model.deletecartmodel.DeleteCartResponse
 import com.grocery.sainik_grocery.data.model.deletefullcartmodel.DeleteCustomerCartRequest
 import com.grocery.sainik_grocery.data.model.deletewishlistmodel.DeletewishlistRequest
+import com.grocery.sainik_grocery.data.model.faqmodel.FAQResponse
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListResponse
 import com.grocery.sainik_grocery.data.model.getwishlistmodel.WishlistRequest
@@ -41,9 +42,12 @@ import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListRespons
 import com.grocery.sainik_grocery.data.model.productmaincategorymodel.ProductmaincategoryResponse
 import com.grocery.sainik_grocery.data.model.profilemodel.GetProfileRequest
 import com.grocery.sainik_grocery.data.model.profilemodel.ProfileResponse
+import com.grocery.sainik_grocery.data.model.salesordermodel.SalesOrderPaymentRequest
+import com.grocery.sainik_grocery.data.model.salesordermodel.SalesOrderPaymentResponse
 import com.grocery.sainik_grocery.data.model.searchmodel.SearchRequest
 import com.grocery.sainik_grocery.data.model.setprimaryaddressmodel.PrimaryAddressRequest
 import com.grocery.sainik_grocery.data.model.setprimaryaddressmodel.PrimaryaddressResponse
+import com.grocery.sainik_grocery.data.model.supportmodel.SupportResponse
 import com.grocery.sainik_grocery.data.model.tokenmodel.TokenRequest
 import com.grocery.sainik_grocery.data.model.tokenmodel.TokenResponse
 import com.grocery.sainik_grocery.data.model.updatecartmodel.CartUpdateRequest
@@ -156,6 +160,14 @@ interface ApiInterface {
     suspend fun categorylist(
         @Body requestBody: CategoryRequest
     ): CategoryListResponse
+
+
+
+
+    @POST("SalesOrderPayment")
+    suspend fun SalesOrderPayment(
+        @Body requestBody: SalesOrderPaymentRequest
+    ): SalesOrderPaymentResponse
 
 
 
@@ -329,6 +341,24 @@ interface ApiInterface {
     suspend fun updateprofile(
         @Body requestBody: UpdateProfileRequest
     ): UpdateProfileResponse
+
+
+
+
+
+
+
+    @GET("HelpAndSupport")
+    suspend fun support(
+    ): SupportResponse
+
+
+
+
+
+    @GET("FAQlist")
+    suspend fun faq(
+    ): FAQResponse
 
 
 //

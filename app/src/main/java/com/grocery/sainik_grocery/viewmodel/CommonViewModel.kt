@@ -22,6 +22,7 @@ import com.grocery.sainik_grocery.data.model.postordermodel.PostOrderRequest
 import com.grocery.sainik_grocery.data.model.productdetailsmodel.ProductDetailsRequest
 import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListRequest
 import com.grocery.sainik_grocery.data.model.profilemodel.GetProfileRequest
+import com.grocery.sainik_grocery.data.model.salesordermodel.SalesOrderPaymentRequest
 import com.grocery.sainik_grocery.data.model.searchmodel.SearchRequest
 import com.grocery.sainik_grocery.data.model.setprimaryaddressmodel.PrimaryAddressRequest
 import com.grocery.sainik_grocery.data.model.tokenmodel.TokenRequest
@@ -138,6 +139,21 @@ class CommonViewModel(private val mainRepository: MainRepository) : ViewModel() 
             emit(
                 Resource.success(
                     data = mainRepository.categorylist(requestBody)
+                )
+            )
+        } catch (e: Exception) {
+            emit(Resource.error(data = null, message = e.message ?: "Error Occurred!"))
+        }
+    }
+
+
+
+    fun SalesOrderPayment(requestBody: SalesOrderPaymentRequest) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(
+                Resource.success(
+                    data = mainRepository.SalesOrderPayment(requestBody)
                 )
             )
         } catch (e: Exception) {
@@ -459,6 +475,40 @@ class CommonViewModel(private val mainRepository: MainRepository) : ViewModel() 
             emit(
                 Resource.success(
                     data = mainRepository.updateprofile(requestBody)
+                )
+            )
+        } catch (e: Exception) {
+            emit(Resource.error(data = null, message = e.message ?: "Error Occurred!"))
+        }
+    }
+
+
+
+
+
+    fun support() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(
+                Resource.success(
+                    data = mainRepository.support()
+                )
+            )
+        } catch (e: Exception) {
+            emit(Resource.error(data = null, message = e.message ?: "Error Occurred!"))
+        }
+    }
+
+
+
+
+
+    fun faq() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(
+                Resource.success(
+                    data = mainRepository.faq()
                 )
             )
         } catch (e: Exception) {

@@ -27,8 +27,8 @@ class ReturnItemAdapter(
     private var itemModelArrayList: ArrayList<SalesOrderItem> = arrayListOf()
     var ctx: Context
 
-    //    private var imageURL: String="https://sainik.shyamfuture.in/ProductImages/Thumbnail/""https://sainik.shyamfuture.in/api/"
-    private var imageURL: String = "https://sainik.shyamfuture.in/ProductImages/Thumbnail/"
+    //    private var imageURL: String="https://maitricomplex.in/ProductImages/Thumbnail/""https://maitricomplex.in/api/"
+    private var imageURL: String = "https://maitricomplex.in/ProductImages/Thumbnail/"
 
     init {
         inflater = LayoutInflater.from(ctx)
@@ -52,7 +52,7 @@ class ReturnItemAdapter(
             //tvitemSize.text = "12KG"
             Picasso.get()
                 .load(imageURL + itemModelArrayList[position].product.productUrl)
-                .error(R.drawable.login_img)
+                .error(R.drawable.noimagefound)
 //                .placeholder(R.drawable.loader_gif)
                 .into(holder.itemImg)
 //            if (itemModelArrayList[position].isReturnNoteShown) {

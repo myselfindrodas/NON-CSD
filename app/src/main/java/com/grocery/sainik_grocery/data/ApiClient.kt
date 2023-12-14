@@ -11,8 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
-//    const val BASE_URL = "https://sainik.shyamfuture.in/api/"  //Dev
-//    const val BASE_URL = "https://sainik.shyamfuture.in/api/"  //Dev
+//    const val BASE_URL = "https://maitricomplex.in/api/"  //Dev
+//    const val BASE_URL = "https://maitricomplex.in/api/"  //Dev
     const val BASE_URL = "https://maitricomplex.in/api/"  //Live
 //const val BASE_URL = "http://10.200.109.64:8060/"  //Dev
 

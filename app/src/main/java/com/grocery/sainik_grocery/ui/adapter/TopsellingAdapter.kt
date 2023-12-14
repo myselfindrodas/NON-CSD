@@ -24,7 +24,7 @@ class TopsellingAdapter(
     private val inflater: LayoutInflater
     private var topsellingModelArrayList: ArrayList<DataProductList> = arrayListOf()
     var ctx: Context
-    private var imageURL: String="https://sainik.shyamfuture.in/ProductImages/Thumbnail/"
+    private var imageURL: String="https://maitricomplex.in/ProductImages/Thumbnail/"
 
     init {
         inflater = LayoutInflater.from(ctx)
@@ -64,7 +64,7 @@ class TopsellingAdapter(
         try {
             Picasso.get()
                 .load(imageURL+topsellingModelArrayList[position].image)
-                .error(R.drawable.login_img)
+                .error(R.drawable.noimagefound)
 //                .placeholder(R.drawable.loader_gif)
                 .into(holder.ivImg)
 

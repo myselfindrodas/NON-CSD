@@ -74,6 +74,9 @@ class PartyProduct : Fragment(), CategoryListAdapter2.OnItemClickListener {
 
         mainActivity.setBottomNavigationVisibility(true)
 
+        binding.topnav.tvNavtitle.text = "Category"
+
+
         categoryListAdapter2 = CategoryListAdapter2(mainActivity, this@PartyProduct)
         binding.rvpartyProductList.adapter = categoryListAdapter2
         binding.rvpartyProductList.layoutManager = GridLayoutManager(mainActivity, 1)

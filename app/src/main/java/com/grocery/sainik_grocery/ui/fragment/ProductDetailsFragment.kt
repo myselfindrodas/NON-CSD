@@ -49,7 +49,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
     //    private var productItemAdapter: ProductItemAdapter? = null
     private var packSizeAdapter: PackSizeAdapter? = null
-    private var imageURL: String="https://sainik.shyamfuture.in/"
+    private var imageURL: String="https://maitricomplex.in/"
 
     private lateinit var viewModel: CommonViewModel
     private var productId = ""
@@ -64,6 +64,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
     var advanceisadded=false
     var count=0
     var cartid = ""
+    var productdetails = ""
 
 
 
@@ -114,6 +115,8 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
         fragmentProductDetailsBinding.rvSimilarproducts.adapter = productAdapter
         fragmentProductDetailsBinding.rvSimilarproducts.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
 
+
+        fragmentProductDetailsBinding.topnav.tvNavtitle.text = "About Item"
 
         fragmentProductDetailsBinding.topnav.btnBack.setOnClickListener {
             if (Utilities.isClickRecently()) {
@@ -182,7 +185,16 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
             if (partyadd.equals("partyadd")){
 
                 if (advanceisadded==true){
-                    productaddtoCart()
+
+                    if (price.isNullOrEmpty()){
+                        Toast.makeText(
+                            mainActivity,
+                            "Price Not Valid",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }else{
+                        productaddtoCart()
+                    }
 
                 }else{
 
@@ -227,7 +239,15 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
             }else{
 
                 if (advanceisadded==false){
-                    productaddtoCart()
+                    if (price.isNullOrEmpty()){
+                        Toast.makeText(
+                            mainActivity,
+                            "Price Not Valid",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }else{
+                        productaddtoCart()
+                    }
 
                 }else{
 
@@ -278,6 +298,9 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
 
 
+
+
+
         fragmentProductDetailsBinding.btnAddWishlist.setOnClickListener {
             if (Utilities.isClickRecently()) {
                 return@setOnClickListener
@@ -318,6 +341,41 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
             onUpdate(count, "update", 1)
 
             /*tvCounter.text = count.toString()*/
+        }
+
+
+        fragmentProductDetailsBinding.btnaboutproductExpand.setOnClickListener {
+
+            fragmentProductDetailsBinding.btnaboutproductExpand.visibility = View.GONE
+            fragmentProductDetailsBinding.btnaboutproductClose.visibility = View.VISIBLE
+            fragmentProductDetailsBinding.llaboutproduct.visibility = View.VISIBLE
+
+        }
+
+
+        fragmentProductDetailsBinding.btnaboutproductClose.setOnClickListener {
+
+
+            fragmentProductDetailsBinding.btnaboutproductExpand.visibility = View.VISIBLE
+            fragmentProductDetailsBinding.btnaboutproductClose.visibility = View.GONE
+            fragmentProductDetailsBinding.llaboutproduct.visibility = View.GONE
+        }
+
+
+        fragmentProductDetailsBinding.btnbenifitproductExpand.setOnClickListener {
+
+            fragmentProductDetailsBinding.btnbenifitproductExpand.visibility = View.GONE
+            fragmentProductDetailsBinding.btnbenifitproductClose.visibility = View.VISIBLE
+            fragmentProductDetailsBinding.llbenifits.visibility = View.VISIBLE
+        }
+
+
+
+        fragmentProductDetailsBinding.btnbenifitproductClose.setOnClickListener {
+
+            fragmentProductDetailsBinding.btnbenifitproductExpand.visibility = View.VISIBLE
+            fragmentProductDetailsBinding.btnbenifitproductClose.visibility = View.GONE
+            fragmentProductDetailsBinding.llbenifits.visibility = View.GONE
         }
 
 
@@ -426,7 +484,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                                     try {
                                         Picasso.get()
                                             .load(imageURL +itProfileInfo.data.productUrl)
-                                            .error(R.drawable.login_img)
+                                            .error(R.drawable.noimagefound)
 //                                        .placeholder(R.drawable.loader_gif)
                                             .into(fragmentProductDetailsBinding.ivProductmain)
                                     } catch (e: Exception) {
@@ -451,14 +509,21 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                                         }
 
 
+
                                         tvPrice.text = " ₹ ${itProfileInfo.data.salesPrice.toString()}/${itProfileInfo.data.unitName ?: ""}"
+                                        llaboutproduct.text = itProfileInfo.data.description?:""
                                         tvPriceOld.text = "₹ " +itProfileInfo.data.mrp
                                         tvSaveAmount.text = "Save ₹ "+ String.format("%.2f", itProfileInfo.data.mrp.toDouble().minus(itProfileInfo.data.salesPrice.toDouble()))
-
+                                        llbenifits.text = "Save ₹ "+ String.format("%.2f", itProfileInfo.data.mrp.toDouble().minus(itProfileInfo.data.salesPrice.toDouble()))
                                         tvPriceOld.paintFlags = tvPriceOld.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                                         urc_productId = itProfileInfo.data.id
                                         wishlistId = itProfileInfo.data.id
-                                        price = itProfileInfo.data.salesPrice.toString()
+                                        if (itProfileInfo.data.salesPrice==null){
+                                            price = ""
+                                        }else{
+                                            price = itProfileInfo.data.salesPrice
+
+                                        }
                                         unitid = itProfileInfo.data.unitId.toString()
                                         unitname = itProfileInfo.data.unitName.toString()
 //                                    rateProduct.rating = itProfileInfo.data.productDetails.avgRating.toFloat()
@@ -587,17 +652,17 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
     }
 
+
     private fun productaddtoCart() {
 
-        var isPartyOrder=false
+        var isPartyOrder = false
         if (partyadd.equals("partyadd")){
             isPartyOrder = true
         }else{
             isPartyOrder = false
         }
         if (Utilities.isNetworkAvailable(mainActivity)) {
-            viewModel.AddToCart(
-                AddtocartRequest(
+            viewModel.AddToCart(AddtocartRequest(
                     customerId = Shared_Preferences.getUserId(),
                     productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAdvanceOrderRequest = isPartyOrder,
@@ -612,9 +677,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                     unitId = unitid,
                     unitName = unitname,
                     unitPrice = price
-                )
-            )
-                .observe(mainActivity) {
+                )).observe(mainActivity) {
                     it?.let { resource ->
                         when (resource.status) {
                             Status.SUCCESS -> {

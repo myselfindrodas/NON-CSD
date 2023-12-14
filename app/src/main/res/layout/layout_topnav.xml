@@ -204,7 +204,7 @@
             android:fontFamily="@font/poppins_regular"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_20sdp"
-            android:hint="Search your groceries"
+            android:hint="Search your product"
             android:textColorHint="@color/grey_light"
             android:textAlignment="textStart"
             android:textAllCaps="false"

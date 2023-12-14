@@ -22,7 +22,7 @@ class CategoryListAdapter2(
     var onItemClickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<CategoryListAdapter2.MyViewHolder>() {
-    private var imageURL: String="https://sainik.shyamfuture.in/"
+    private var imageURL: String="https://maitricomplex.in/"
     private val inflater: LayoutInflater
     private var productModelArrayList: ArrayList<Data> = arrayListOf()
     var ctx: Context
@@ -52,7 +52,7 @@ class CategoryListAdapter2(
 
                 Picasso.get()
                     .load(imageURL+productModelArrayList[position].productCategoryUrl)
-                    .error(R.drawable.login_img)
+                    .error(R.drawable.noimagefound)
 //                    .placeholder(R.drawable.loader_gif)
                     .into(holder.ivCategory)
             }catch (e:Exception){

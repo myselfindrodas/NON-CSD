@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/white_upper_round_box"
+    android:paddingBottom="30dp">
+
+    <View
+        android:id="@+id/dashAddress"
+        android:layout_width="40dp"
+        android:layout_height="3dp"
+        android:background="@color/grey_light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tvSelectAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Payment Mode"
+        android:textSize="@dimen/_12ssp"
+        android:textAlignment="center"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dashAddress"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"/>
+
+
+
+    <LinearLayout
+        android:id="@+id/llButtonsInProductDetails"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tvSelectAddress">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCOD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_blue_bg_btn"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Cash On Delivery"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnOnline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_orange_bg_btn"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Pay Online"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
+    </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

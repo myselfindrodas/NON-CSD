@@ -22,7 +22,7 @@ class WishListAdapter(
     var onItemClickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<WishListAdapter.MyViewHolder>() {
-    private var imageURL: String="https://sainik.shyamfuture.in/ProductImages/Thumbnail/"
+    private var imageURL: String="https://maitricomplex.in/ProductImages/Thumbnail/"
     private val inflater: LayoutInflater
     private var wishListModelArrayList: ArrayList<Data> = arrayListOf()
     var ctx: Context
@@ -59,7 +59,7 @@ class WishListAdapter(
 
             Picasso.get()
                 .load(imageURL+wishListModelArrayList[position].product.productUrl)
-                .error(R.drawable.login_img)
+                .error(R.drawable.noimagefound)
 //                .placeholder(R.drawable.loader_gif)
                 .into(holder.ivImg)
         }catch (e:Exception){

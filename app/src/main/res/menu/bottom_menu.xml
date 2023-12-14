@@ -15,7 +15,7 @@
         android:icon="@drawable/ic_canteen"/>
     <item
         android:id="@+id/nav_myorder"
-        android:title="Order Again"
+        android:title="My Order"
         android:icon="@drawable/ic_order_again"/>
     <item
         android:id="@+id/nav_basket"

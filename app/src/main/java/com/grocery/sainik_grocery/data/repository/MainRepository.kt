@@ -19,6 +19,7 @@ import com.grocery.sainik_grocery.data.model.postordermodel.PostOrderRequest
 import com.grocery.sainik_grocery.data.model.productdetailsmodel.ProductDetailsRequest
 import com.grocery.sainik_grocery.data.model.productlistmodel.ProductListRequest
 import com.grocery.sainik_grocery.data.model.profilemodel.GetProfileRequest
+import com.grocery.sainik_grocery.data.model.salesordermodel.SalesOrderPaymentRequest
 import com.grocery.sainik_grocery.data.model.searchmodel.SearchRequest
 import com.grocery.sainik_grocery.data.model.setprimaryaddressmodel.PrimaryAddressRequest
 import com.grocery.sainik_grocery.data.model.tokenmodel.TokenRequest
@@ -40,6 +41,8 @@ class MainRepository(private val apiHelper: ApiHelper) {
     suspend fun LoginPageBanners() = apiHelper.LoginPageBanners()
 
     suspend fun categorylist(requestBody: CategoryRequest) = apiHelper.categorylist(requestBody)
+    suspend fun SalesOrderPayment(requestBody: SalesOrderPaymentRequest) = apiHelper.SalesOrderPayment(requestBody)
+
 
     suspend fun ProductMainCategoriesList() = apiHelper.ProductMainCategoriesList()
 
@@ -62,6 +65,10 @@ class MainRepository(private val apiHelper: ApiHelper) {
 
     suspend fun getProfile(requestBody: GetProfileRequest) = apiHelper.getProfile(requestBody)
     suspend fun updateprofile(requestBody: UpdateProfileRequest) = apiHelper.updateprofile(requestBody)
+
+    suspend fun support() = apiHelper.support()
+    suspend fun faq() = apiHelper.faq()
+
     suspend fun updatecart(requestBody: CartUpdateRequest) = apiHelper.updatecart(requestBody)
     suspend fun deletecart(requestBody: DeleteCartRequest) = apiHelper.deletecart(requestBody)
     suspend fun DeleteCustomerCart(requestBody: DeleteCustomerCartRequest) = apiHelper.DeleteCustomerCart(requestBody)

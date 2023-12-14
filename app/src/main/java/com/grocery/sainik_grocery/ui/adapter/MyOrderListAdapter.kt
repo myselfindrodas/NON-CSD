@@ -24,7 +24,7 @@ class MyOrderListAdapter(
     RecyclerView.Adapter<MyOrderListAdapter.MyViewHolder>() {
     private val inflater: LayoutInflater
     private var orderModelArrayList: ArrayList<Data> = arrayListOf()
-    private var imageURL: String="https://sainik.shyamfuture.in/ProductImages/Thumbnail/"
+    private var imageURL: String="https://maitricomplex.in/ProductImages/Thumbnail/"
     var ctx: Context
 
     init {
@@ -45,6 +45,17 @@ class MyOrderListAdapter(
         with(holder) {
 
             tvItemname.text = orderModelArrayList[position].orderNumber
+
+            if (orderModelArrayList[position].paymentType==null){
+                tvpaymentmode.text = "Mode of payment : Cash On Delivery"
+
+            }else{
+                if (orderModelArrayList[position].paymentType.equals("Online")){
+                    tvpaymentmode.text = "Mode of payment : Online"
+                }else{
+                    tvpaymentmode.text = "Mode of payment : Cash On Delivery"
+                }
+            }
 //            val streetDetails =
 //                if (orderModelArrayList[position].streetDetails != null) orderModelArrayList[position].streetDetails else ""
 //            val cityDetails =
@@ -164,8 +175,8 @@ class MyOrderListAdapter(
             try {
 
                 Picasso.get()
-                    .load(R.drawable.login_img)
-                    .error(R.drawable.login_img)
+                    .load(R.drawable.noimagefound)
+                    .error(R.drawable.noimagefound)
 //                    .placeholder(R.drawable.loader_gif)
                     .into(holder.ivImg)
             } catch (e: Exception) {
@@ -198,6 +209,7 @@ class MyOrderListAdapter(
         var tvOrderDate: TextView
         var tvItemAmount: TextView
         var tvItemLocation: TextView
+        var tvpaymentmode: TextView
 
         init {
             ivImg = itemView.findViewById(R.id.ivItemImg)
@@ -206,6 +218,7 @@ class MyOrderListAdapter(
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate)
             tvItemAmount = itemView.findViewById(R.id.tvItemAmount)
             tvItemLocation = itemView.findViewById(R.id.tvItemLocation)
+            tvpaymentmode = itemView.findViewById(R.id.tvpaymentmode)
         }
     }
 }

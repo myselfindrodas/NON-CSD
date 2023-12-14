@@ -32,6 +32,7 @@ import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
 import com.grocery.sainik_grocery.data.model.categorymodel.CategoryRequest
 import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
+import com.grocery.sainik_grocery.data.model.profilemodel.GetProfileRequest
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentHomeBinding
 import com.grocery.sainik_grocery.ui.LocationActivity
@@ -577,6 +578,7 @@ class HomeFragment : Fragment(),
         super.onResume()
 
         productCartList()
+        profileget()
     }
 
 
@@ -593,6 +595,84 @@ class HomeFragment : Fragment(),
 
 
 
+    private fun profileget(){
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+
+
+            viewModel.getProfile(GetProfileRequest(id = Shared_Preferences.getUserId()))
+                .observe(mainActivity) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                resource.data?.let {itResponse->
+
+                                    if (itResponse.status) {
+
+
+                                        Shared_Preferences.setName(itResponse.data.customerName?:"")
+                                        mainActivity.tvUserName!!.text = Shared_Preferences.getName()
+                                        val inputString = itResponse.data.customerName?:""
+                                        val splitName = inputString.split(" ")
+                                        if (splitName.size >= 2) {
+                                            val firstLetter = splitName[0].first()
+                                            val lastLetter = splitName[1].first()
+                                            val result = "$firstLetter$lastLetter"
+                                            mainActivity.tvlettersBuyer!!.text = result
+
+                                        } else if (splitName.size >= 1) {
+                                            val firstLetter = splitName[0].first()
+                                            val result = firstLetter
+                                            mainActivity.tvlettersBuyer!!.text = result.toString()
+                                                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                                        }
+
+
+
+                                    } else {
+
+                                        Toast.makeText(
+                                            mainActivity,
+                                            resource.data?.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+                                    }
+                                }
+
+
+                            }
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = androidx.appcompat.app.AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
 
 
     override fun onClick(position: Int, view: View) {
@@ -607,4 +687,12 @@ class HomeFragment : Fragment(),
         val navController = Navigation.findNavController(view)
         navController.navigate(R.id.nav_productdetails, bundle)
     }
+
+
+
+
+
+
+
+
 }

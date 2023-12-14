@@ -73,7 +73,7 @@ class MyOrderFragment : Fragment(),MyOrderListAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragmentMyOrderBinding.topnav.tvNavtitle.text = "My orders"
+        fragmentMyOrderBinding.topnav.tvNavtitle.text = "My Orders"
 
         with(fragmentMyOrderBinding){
             productAdapter = MyOrderListAdapter(mainActivity, this@MyOrderFragment)

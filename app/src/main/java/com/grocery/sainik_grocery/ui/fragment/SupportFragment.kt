@@ -11,24 +11,24 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.sainikgrocerycustomer.data.model.AppContent
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
+import com.grocery.sainik_grocery.data.model.supportmodel.Data
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentSupportBinding
 import com.grocery.sainik_grocery.ui.MainActivity
-import com.grocery.sainik_grocery.ui.adapter.FAQ_Help_Adapter
+import com.grocery.sainik_grocery.ui.adapter.SupportAdapter
 import com.grocery.sainik_grocery.utils.Status
 import com.grocery.sainik_grocery.utils.Utilities
 import com.grocery.sainik_grocery.viewmodel.CommonViewModel
 import kotlin.collections.ArrayList
 
-class SupportFragment : Fragment(), FAQ_Help_Adapter.OnItemClickListener {
+class SupportFragment : Fragment(), SupportAdapter.OnItemClickListener {
     lateinit var mainActivity: MainActivity
     lateinit var fragmentSupportBinding: FragmentSupportBinding
     private lateinit var viewModel: CommonViewModel
-    private var detailsAdapter: FAQ_Help_Adapter? = null
+    private var detailsAdapter: SupportAdapter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,18 +65,14 @@ class SupportFragment : Fragment(), FAQ_Help_Adapter.OnItemClickListener {
 
         fragmentSupportBinding.topnav.tvNavtitle.text = "Helps and Support"
 
-        detailsAdapter =
-            FAQ_Help_Adapter(
-                mainActivity,
-                this@SupportFragment
-            )
+        detailsAdapter = SupportAdapter(mainActivity, this@SupportFragment)
         fragmentSupportBinding.rvProductList.adapter = detailsAdapter
         fragmentSupportBinding.rvProductList.layoutManager = GridLayoutManager(mainActivity, 1)
-        val faqList = ArrayList<AppContent>()
-        for (i in 1..5){
-            faqList.add(AppContent("", "", "Receive notification relat to order status, payment and support Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudian dum. Quod si ita se habeat, non possit beatam praestare vitam sapientia.", 8, 1, "How to Check status of My Order", 1, ""))
-        }
-        detailsAdapter!!.updateData(faqList)
+//        val faqList = ArrayList<AppContent>()
+//        for (i in 1..5){
+//            faqList.add(AppContent("", "", "Receive notification relat to order status, payment and support Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudian dum. Quod si ita se habeat, non possit beatam praestare vitam sapientia.", 8, 1, "How to Check status of My Order", 1, ""))
+//        }
+//        detailsAdapter!!.updateData(faqList)
 /*
 
         fragmentSupportBinding.btnMyoderexpand.setOnClickListener {
@@ -125,78 +121,83 @@ class SupportFragment : Fragment(), FAQ_Help_Adapter.OnItemClickListener {
         }
         fragmentSupportBinding.topnav.btnBack.setOnClickListener {
 
-            mainActivity.onBackPressedDispatcher.onBackPressed()
+            val navController = Navigation.findNavController(fragmentSupportBinding.root)
+            navController.navigate(R.id.nav_home)
+
+//            mainActivity.onBackPressedDispatcher.onBackPressed()
         }
 
-//        getDetails()
+        getDetails()
     }
-//    private fun getDetails() {
-//
-//        if (Utilities.isNetworkAvailable(mainActivity)) {
-//
-//            viewModel.getSupportAndFAQ("1")
-//                .observe(mainActivity) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                mainActivity.hideProgressDialog()
-//                                resource.data?.let { itResponse ->
-//
-//                                    if (itResponse.status) {
-//
-//                                        detailsAdapter?.updateData(itResponse.data.appContent)
-//
-//                                    } else {
-//
-//                                        Toast.makeText(
-//                                            mainActivity,
-//                                            resource.data?.message,
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()
-//
-//                                    }
-//                                }
-//
-//
-//                            }
-//                            Status.ERROR -> {
-//                                mainActivity.hideProgressDialog()
-//                                val builder = AlertDialog.Builder(mainActivity)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.show()
-//
-//                            }
-//
-//                            Status.LOADING -> {
-//                                mainActivity.showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-//
-//    }
+
+
+    private fun getDetails() {
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+
+            viewModel.support()
+                .observe(mainActivity) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                resource.data?.let { itResponse ->
+
+                                    if (itResponse.status) {
+
+                                        detailsAdapter?.updateData(itResponse.data)
+
+                                    } else {
+
+                                        Toast.makeText(
+                                            mainActivity,
+                                            resource.data?.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+                                    }
+                                }
+
+
+                            }
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
+
+    }
 
     override fun onClick(
         position: Int,
         view: View,
         id: Int,
         s: String,
-        mNotificationListModelArrayList: ArrayList<AppContent>
+        mNotificationListModelArrayList: ArrayList<Data>
     ) {
 
 

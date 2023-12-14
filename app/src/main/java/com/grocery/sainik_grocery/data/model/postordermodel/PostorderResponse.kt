@@ -9,5 +9,7 @@ data class PostorderResponse(
     @SerializedName("status")
     val status: Boolean,
     @SerializedName("statusCode")
-    val statusCode: Int
+    val statusCode: Int,
+    @SerializedName("salesOrderId")
+    val salesOrderId: String
 )

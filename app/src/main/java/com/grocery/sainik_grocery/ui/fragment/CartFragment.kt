@@ -1,11 +1,13 @@
 package com.grocery.sainik_grocery.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -78,11 +80,13 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
 //            }
 //            cartAdapter!!.updateData(cartList, "R.drawable.item")
 
+
+
             topnav.btnBack.setOnClickListener {
 
-                mainActivity.onBackPressedDispatcher.onBackPressed()
+                val navController = Navigation.findNavController(fragmentCartBinding.root)
+                navController.navigate(R.id.nav_home)
             }
-
 
             /*fragmentCartBinding.topnav.clCart.setOnClickListener {
 
@@ -136,174 +140,6 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
     }
 
 
-//    private fun productDeleteFromCart( cartId: String) {
-//
-//
-//        if (Utilities.isNetworkAvailable(mainActivity)) {
-//
-//            viewModel.cartDelete(
-//                cartId
-//            )
-//                .observe(mainActivity) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                mainActivity.hideProgressDialog()
-//                                if (resource.data?.status == true) {
-//
-//                                    productCartList()
-//                                  /*  val builder = android.app.AlertDialog.Builder(mainActivity)
-//                                    builder.setMessage(resource.data.message)
-//                                    builder.setPositiveButton(
-//                                        "Ok"
-//                                    ) { dialog, which ->
-//
-//                                        *//*val navController = Navigation.findNavController(view)
-//                                        navController.navigate(R.id.nav_cart)*//*
-//                                        dialog.dismiss()
-//                                    }
-//                                    val alert = builder.create()
-//                                    alert.setOnShowListener { arg0 ->
-//                                        alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
-//                                            .setTextColor(resources.getColor(R.color.orange))
-//                                    }
-//                                    alert.show()*/
-//
-//                                } else {
-//
-//                                    Toast.makeText(
-//                                        mainActivity,
-//                                        resource.data?.message,
-//                                        Toast.LENGTH_SHORT
-//                                    ).show()
-//
-//                                }
-//
-//
-//                            }
-//                            Status.ERROR -> {
-//                                mainActivity.hideProgressDialog()
-//                                val builder = AlertDialog.Builder(mainActivity)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.setOnShowListener { arg0 ->
-//                                    alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
-//                                        .setTextColor(resources.getColor(R.color.orange))
-//                                }
-//                                alert.show()
-//                            }
-//
-//                            Status.LOADING -> {
-//                                mainActivity.showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-//
-//    }
-//
-//    private fun productaddtoCart(packSizeId: String, mIsAdded: Boolean) {
-//
-//
-//        if (Utilities.isNetworkAvailable(mainActivity)) {
-//
-//            val cartRequestModel = if (mIsAdded) {
-//                CartRequestModel(
-//                    urc_product_id = packSizeId,
-//                    is_added = "1"
-//                )
-//            } else {
-//                CartRequestModel(
-//                    urc_product_id = packSizeId,
-//                    is_added = "0"
-//                )
-//            }
-//            viewModel.cartadd(
-//                cartRequestModel
-//            )
-//                .observe(mainActivity) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                mainActivity.hideProgressDialog()
-//                                if (resource.data?.status == true) {
-//
-//                                    productCartList()
-//                                    val builder = android.app.AlertDialog.Builder(mainActivity)
-//                                    builder.setMessage(resource.data.message)
-//                                    builder.setPositiveButton(
-//                                        "Ok"
-//                                    ) { dialog, which ->
-//
-//                                        /*val navController = Navigation.findNavController(view)
-//                                        navController.navigate(R.id.nav_cart)*/
-//                                        dialog.dismiss()
-//                                    }
-//                                    val alert = builder.create()
-//                                    alert.setOnShowListener { arg0 ->
-//                                        alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
-//                                            .setTextColor(resources.getColor(R.color.orange))
-//                                    }
-//                                   // alert.show()
-//
-//                                } else {
-//
-//                                    Toast.makeText(
-//                                        mainActivity,
-//                                        resource.data?.message,
-//                                        Toast.LENGTH_SHORT
-//                                    ).show()
-//
-//                                }
-//
-//
-//                            }
-//                            Status.ERROR -> {
-//                                mainActivity.hideProgressDialog()
-//                                val builder = AlertDialog.Builder(mainActivity)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.show()
-//                            }
-//
-//                            Status.LOADING -> {
-//                                mainActivity.showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-//
-//    }
-
-
 
     private fun productCartList() {
 
@@ -321,8 +157,12 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
 
                                         if (itResponse.data[0].isAdvanceOrderRequest) {
                                             AdvanceOrder = true
+                                            fragmentCartBinding.tvorderType.text = "Order Type : Advance Order"
+
                                         }else{
                                             AdvanceOrder = false
+                                            fragmentCartBinding.tvorderType.text = "Order Type : Regular Order"
+
                                         }
 
                                         itResponse.let {itItem->
@@ -330,7 +170,9 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
 //                                                viewModel.cartListItem.value = 0
 //                                                cartAdapter?.updateData(arrayListOf(), "")
                                                 fragmentCartBinding.nodata.root.visibility=View.VISIBLE
+                                                mainActivity.setBottomNavigationVisibility(true)
                                             }else{
+                                                mainActivity.setBottomNavigationVisibility(false)
                                                 fragmentCartBinding.nodata.root.visibility=View.GONE
                                                 fragmentCartBinding.btnGo.visibility=View.VISIBLE
                                                 fragmentCartBinding.llTotalPice.visibility=View.VISIBLE
@@ -343,10 +185,17 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
                                             }
 
                                             fragmentCartBinding.tvItemprice.text= "₹ $totalPrice"
-                                            fragmentCartBinding.tvItemQty.text= "${itItem.data.size} Items"
+                                            fragmentCartBinding.tvItemQty.text= "${itItem.data.size} Item (s)"
                                         }
 //                                        viewModel.cartListItem.value= itResponse.data.cart.size
+                                        if (itResponse.totalCount==0){
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+                                        }else{
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
 
+                                        }
 
                                     } else {
                                         viewModel.cartListItem.value=0
@@ -356,10 +205,20 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
 //                                            resource.data?.message,
 //                                            Toast.LENGTH_SHORT
 //                                        ).show()
+                                        mainActivity.setBottomNavigationVisibility(true)
 
                                         fragmentCartBinding.nodata.root.visibility=View.VISIBLE
                                         fragmentCartBinding.btnGo.visibility=View.GONE
                                         fragmentCartBinding.llTotalPice.visibility=View.GONE
+
+                                        if (itResponse!!.totalCount==0){
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+                                        }else{
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+
+                                        }
                                     }
 
                                 }
@@ -420,7 +279,7 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
                     updateCart(cartData.discount.toString(), cartData.productId.toString(), cartData.productName.toString(), count.toString(), cartData.unitPrice.toString(), cartData.unitId, cartData.unitName.toString(), cartData.id.toString())
 
                 }
-//                productaddtoCart(cartData.urc_product_id.toString(),false)
+
             }
             1->{
 //                textView.text = count.toString()
@@ -458,6 +317,14 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
                         .setTextColor(resources.getColor(R.color.orange))
                 }
                 alert.show()
+            }
+            3->{
+
+                val bundle = Bundle()
+                bundle.putString("productid", cartData.productId)
+                val navController = Navigation.findNavController(view)
+                navController.navigate(R.id.nav_productdetails, bundle)
+
             }
         }
 
@@ -608,4 +475,7 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
 
         mainActivity.setBottomNavigationVisibility(false)
     }
+
+
+
 }

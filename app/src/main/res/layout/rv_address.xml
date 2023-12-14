@@ -30,7 +30,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
+                android:layout_weight="0.4"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical">
@@ -53,7 +53,7 @@
                     android:text="Lorem Ipsum is simply 4031 Haymond Rocks Road Medford, OR 9750"
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textSize="@dimen/_10ssp" />
 
 
 
@@ -92,7 +92,7 @@
 
                 <ImageView
                     android:id="@+id/btnDelete"
-                    android:layout_width="@dimen/_15sdp"
+                    android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_15sdp"
                     android:src="@drawable/delete_red"/>
 

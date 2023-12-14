@@ -55,7 +55,7 @@ class ProfileFragment : Fragment() {
     var selectdate: String? = ""
     var selectedgender: String? = ""
     var pathFromUri: String? = ""
-    private var imageURL: String="https://sainik.shyamfuture.in/"
+    private var imageURL: String="https://maitricomplex.in/"
     private lateinit var viewModel: CommonViewModel
 
 
@@ -383,7 +383,7 @@ class ProfileFragment : Fragment() {
 //            try {
 //                Picasso.get()
 //                    .load(fileUri)
-//                    .error(R.drawable.login_img)
+//                    .error(R.drawable.noimagefound)
 ////                    .placeholder(R.drawable.loader_gif)
 //                    .into(fragmentProfileBinding.PrfImg)
 //
@@ -543,7 +543,7 @@ class ProfileFragment : Fragment() {
 //                                    try {
 //                                        Picasso.get()
 //                                            .load(resource.data.imageUrl+"/"+resource.data.data.user.image)
-//                                            .error(R.drawable.login_img)
+//                                            .error(R.drawable.noimagefound)
 ////                                            .placeholder(R.drawable.loader_gif)
 //                                            .into(fragmentProfileBinding.PrfImg)
 //
@@ -641,7 +641,7 @@ class ProfileFragment : Fragment() {
 //
 //                                            Picasso.get()
 //                                                .load(resource.data.imageUrl+"/"+itResponse.data.user.image)
-//                                                .error(R.drawable.login_img)
+//                                                .error(R.drawable.noimagefound)
 ////                                                .placeholder(R.drawable.loader_gif)
 //                                                .into(fragmentProfileBinding.PrfImg)
 //                                        }catch (e:Exception){

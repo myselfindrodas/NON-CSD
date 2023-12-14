@@ -56,6 +56,7 @@ class MainActivity : BaseActivity(),
 
     var ivImgProfile: ImageView? = null
     var tvUserName: TextView? = null
+    var tvlettersBuyer: TextView? = null
     var tvEditProfile: TextView? = null
     var tvUrcName: TextView? = null
     var tvChangeURC: TextView? = null
@@ -74,6 +75,7 @@ class MainActivity : BaseActivity(),
     var btnNavnotification: LinearLayout? = null
     var btnNavfaq: LinearLayout? = null
     var btnNavlogout: LinearLayout?= null
+    var btnNavChangeOption: LinearLayout?= null
 
 
     var mNavController: NavController? = null
@@ -102,7 +104,7 @@ class MainActivity : BaseActivity(),
 
         viewModel = vm
 
-        ivImgProfile = findViewById(R.id.ivImgProfile)
+        tvlettersBuyer = findViewById(R.id.tvlettersBuyer)
         tvUserName = findViewById(R.id.tvUserName)
         tvEditProfile = findViewById(R.id.tvEditProfile)
         tvUrcName = findViewById(R.id.tvUrcName1)
@@ -122,6 +124,7 @@ class MainActivity : BaseActivity(),
         btnNavnotification = findViewById(R.id.btnNavnotification)
         btnNavfaq = findViewById(R.id.btnNavfaq)
         btnNavlogout = findViewById(R.id.btnNavlogout)
+        btnNavChangeOption = findViewById(R.id.btnNavChangeOption)
 
 //        tvUrcName?.text = URCName.replaceFirstChar { char ->
 //            char.uppercaseChar()
@@ -244,6 +247,16 @@ class MainActivity : BaseActivity(),
             mNavController!!.navigate(R.id.nav_faq)
         }
 
+
+        btnNavChangeOption?.setOnClickListener {
+
+            drawerLayout.closeDrawer(GravityCompat.START)
+            val intent = Intent(this, ShopFromActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
+
         btnNavlogout?.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("Do you want to logout?")
@@ -254,7 +267,7 @@ class MainActivity : BaseActivity(),
                 Shared_Preferences.clearPref()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
-                this.finish()
+                finish()
                 dialog.cancel()
             }
 
@@ -579,7 +592,7 @@ class MainActivity : BaseActivity(),
 //
 //                                            Picasso.get()
 //                                                .load(itResponse.imageUrl + "/" + itResponse.data.user.image)
-//                                                .error(R.drawable.login_img)
+//                                                .error(R.drawable.noimagefound)
 ////                                                .placeholder(R.drawable.loader_gif)
 //                                                .into(ivImgProfile)
 //                                        } catch (e: Exception) {

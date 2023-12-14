@@ -19,7 +19,7 @@ class CartListAdapter(
     var onItemClickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<CartListAdapter.MyViewHolder>() {
-    private var imageURL: String="https://sainik.shyamfuture.in/ProductImages/"
+    private var imageURL: String="https://maitricomplex.in/ProductImages/"
     private val inflater: LayoutInflater
     private var cartModelArrayList: ArrayList<CartData> = arrayListOf()
     var ctx: Context
@@ -54,7 +54,7 @@ class CartListAdapter(
             try {
                 Picasso.get()
                     .load(imageURL+cartModelArrayList[position].product.productUrl)
-                    .error(R.drawable.login_img)
+                    .error(R.drawable.noimagefound)
 //                    .placeholder(R.drawable.loader_gif)
                     .into(holder.ivImg)
             }catch (e:Exception){
@@ -85,6 +85,13 @@ class CartListAdapter(
             ivDelete.setOnClickListener {
 
                 onItemClickListener.onClick(position, it, 2, cartModelArrayList[position], count, tvCounter)
+            }
+
+
+            itemView.setOnClickListener {
+
+                onItemClickListener.onClick(position, it, 3, cartModelArrayList[position], count, tvCounter)
+
             }
 
         }

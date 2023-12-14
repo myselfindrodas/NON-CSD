@@ -16,7 +16,7 @@ class SearchAdapter(val context: Context, var onItemClickListener: SearchItemCli
 
     private val inflater : LayoutInflater
     var searchList: ArrayList<Data> = ArrayList()
-    private var imageURL: String="https://sainik.shyamfuture.in/"
+    private var imageURL: String="https://maitricomplex.in/"
 
     init {
         inflater = LayoutInflater.from(context)
@@ -50,7 +50,7 @@ class SearchAdapter(val context: Context, var onItemClickListener: SearchItemCli
 
             Picasso.get()
                 .load(imageURL+searchList[position].productUrl)
-                .error(R.drawable.login_img)
+                .error(R.drawable.noimagefound)
                 .into(holder.imgProduct)
 
             itemView.setOnClickListener {

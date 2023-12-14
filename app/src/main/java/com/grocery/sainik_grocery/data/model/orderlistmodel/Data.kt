@@ -41,6 +41,8 @@ data class Data(
     val termAndCondition: Any?,
     @SerializedName("totalAmount")
     val totalAmount: String,
+    @SerializedName("paymentType")
+    val paymentType: String,
     @SerializedName("totalDiscount")
     val totalDiscount: Double,
     @SerializedName("totalPaidAmount")

@@ -16,7 +16,7 @@ class OrderDetailsListAdapter(
     var onItemClickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<OrderDetailsListAdapter.MyViewHolder>() {
-    private var imageURL: String="https://sainik.shyamfuture.in/ProductImages/Thumbnail/"
+    private var imageURL: String="https://maitricomplex.in/ProductImages/Thumbnail/"
     private val inflater: LayoutInflater
     private var orderHistoryModelArrayList: ArrayList<SalesOrderItem> = arrayListOf()
     var ctx: Context
@@ -27,7 +27,7 @@ class OrderDetailsListAdapter(
     }
 
     interface OnItemClickListener {
-        fun onClick(position: Int, view: View)
+        fun onClick(position: Int, salesOrderItem: SalesOrderItem, view: View)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -47,14 +47,14 @@ class OrderDetailsListAdapter(
 
                 Picasso.get()
                     .load(imageURL+orderHistoryModelArrayList[position].product.productUrl)
-                    .error(R.drawable.login_img)
+                    .error(R.drawable.noimagefound)
 //                    .placeholder(R.drawable.loader_gif)
                     .into(holder.ivImg)
             }catch (e:Exception){
                 e.printStackTrace()
             }
             itemView.rootView.setOnClickListener {
-                onItemClickListener.onClick(position, it)
+                onItemClickListener.onClick(position, orderHistoryModelArrayList[position], it)
             }
 
         }

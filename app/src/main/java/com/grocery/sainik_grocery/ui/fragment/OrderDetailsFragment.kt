@@ -21,6 +21,7 @@ import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
 import com.grocery.sainik_grocery.data.model.orderdetailsmodel.OrderdetailsRequest
+import com.grocery.sainik_grocery.data.model.orderdetailsmodel.SalesOrderItem
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentOrderDetailsBinding
 import com.grocery.sainik_grocery.ui.MainActivity
@@ -419,7 +420,14 @@ class OrderDetailsFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
         return listOf(outputDate.format(d), outputTime.format(d))
     }
 
-    override fun onClick(position: Int, view: View) {
+
+
+    override fun onClick(position: Int, salesOrderItem: SalesOrderItem, view: View) {
+
+        val bundle = Bundle()
+        bundle.putString("productid", salesOrderItem.productId)
+        val navController = Navigation.findNavController(view)
+        navController.navigate(R.id.nav_productdetails, bundle)
 
     }
 

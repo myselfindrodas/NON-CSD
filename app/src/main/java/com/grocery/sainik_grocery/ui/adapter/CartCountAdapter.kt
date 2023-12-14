@@ -15,7 +15,7 @@ class CartCountAdapter(
     var onItemClickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<CartCountAdapter.MyViewHolder>() {
-    private var imageURL: String="https://sainik.shyamfuture.in/ProductImages/"
+    private var imageURL: String="https://maitricomplex.in/ProductImages/"
     private val inflater: LayoutInflater
     private var cartModelArrayList: ArrayList<CartData> = arrayListOf()
     var ctx: Context
@@ -41,6 +41,7 @@ class CartCountAdapter(
             tvOrderitemname.text = convertToCamelCase(cartModelArrayList[position].productName)
             // holder.ivImg.setImageResource(productModelArrayList[position].productid)
             tvOrderitemqty.text = cartModelArrayList[position].quantity.toString()+" Item"
+            tvPrice.text = "₹ "+cartModelArrayList[position].unitPrice
 
 
         }
@@ -73,10 +74,12 @@ class CartCountAdapter(
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvOrderitemname: TextView
         var tvOrderitemqty: TextView
+        var tvPrice: TextView
 
         init {
             tvOrderitemname = itemView.findViewById(R.id.tvOrderitemname)
             tvOrderitemqty = itemView.findViewById(R.id.tvOrderitemqty)
+            tvPrice = itemView.findViewById(R.id.tvPrice)
 
         }
     }

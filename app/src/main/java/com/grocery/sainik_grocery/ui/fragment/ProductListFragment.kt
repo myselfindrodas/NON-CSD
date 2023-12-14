@@ -1,5 +1,6 @@
 package com.grocery.sainik_grocery.ui.fragment
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
@@ -79,7 +80,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
     var mIsLoading = false;
     var mIsLastPage = false;
     var mCurrentPage = 0;
-    var pageSize = 10;
+    var pageSize = 15;
 
     companion object {
         var sortType: String = "popularity"
@@ -129,11 +130,9 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        horizontalSubCategoryAdapter =
-            HorizontalSubCategoryAdapter(mainActivity, this@ProductListFragment)
+        horizontalSubCategoryAdapter = HorizontalSubCategoryAdapter(mainActivity, this@ProductListFragment, categoryName)
         fragmentProductListBinding.rvHorizontalSubCategory.adapter = horizontalSubCategoryAdapter
-        fragmentProductListBinding.rvHorizontalSubCategory.layoutManager =
-            LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+        fragmentProductListBinding.rvHorizontalSubCategory.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
 //        getAllcategory(Shared_Preferences.getUrcid().toString())
 //        val horizontalcategoryList = ArrayList<Category>()
 //        for (i in 1..5) {
@@ -170,7 +169,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
         if (category == "category") {
             mainActivity.setBottomNavigationVisibility(true)
             fragmentProductListBinding.rvHorizontalSubCategory.visibility = View.GONE
-            fragmentProductListBinding.topnav.tvNavtitle.text = categoryName
+            fragmentProductListBinding.topnav.tvNavtitle.text = "Category"
 //            fragmentProductListBinding.tvsubtitle.text = "Category List"
             fragmentProductListBinding.tvsubtitle.visibility = View.GONE
             fragmentProductListBinding.llfilersort.visibility = View.GONE
@@ -203,6 +202,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             //productAdapter?.updateData(categoryModelArrayList)
             val itemDecoration = ItemOffsetDecoration(mainActivity, R.dimen.photos_list_spacing1)
             fragmentProductListBinding.rvProductList.addItemDecoration(itemDecoration)
+            mCurrentPage=0
             getAllProductList(true)
 
 //            getAllProdutList(true, Shared_Preferences.getUrcid().toString())
@@ -335,6 +335,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 //        }
 //    }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getAllProductList(isFirstPage: Boolean) {
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
@@ -345,19 +346,20 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             mCurrentPage += 1
 
 
-            viewModel.productList(ProductListRequest("50", "0", categoryId)).observe(mainActivity) {
+            viewModel.productList(ProductListRequest("25", mCurrentPage.toString(), categoryId)).observe(mainActivity) {
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
                             if (resource.data?.status == true) {
-                                resource.data?.let { itProfileInfo ->
+                                resource.data.let { itProfileInfo ->
                                     productArrayList.clear()
+                                    productAdapter?.notifyDataSetChanged()
                                     productArrayList.addAll(itProfileInfo.data)
+                                    productAdapter?.notifyItemRangeInserted(0, itProfileInfo.totalCount)
 
                                     mIsLoading = false
-                                    mIsLastPage =
-                                        mCurrentPage == itProfileInfo.totalCount
-                                    pageSize = itProfileInfo.pageSize
+                                    mIsLastPage = mCurrentPage == itProfileInfo.totalPages
+                                    pageSize = itProfileInfo.totalPages
                                     fragmentProductListBinding.tvsubtitle.text =
                                         " ${itProfileInfo.data.size} products"
 
@@ -373,6 +375,8 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
                                     }
                                 }
                             } else {
+
+                                mIsLoading = false
                                 if (resource.data!!.data.isEmpty()) {
 
                                     fragmentProductListBinding.nodata.root.visibility =
@@ -394,6 +398,8 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 
                         Status.ERROR -> {
                             mainActivity.hideProgressDialog()
+
+                            mIsLoading = false
                             Log.d(ContentValues.TAG, "print-->" + resource.data?.status)
 
 //                            if (it.message!!.contains("401", true)) {
@@ -444,6 +450,12 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 
                                     if (itResponse?.status == true) {
 
+//                                        for (i in 0 until itResponse.data.size) {
+//                                            if (resource.data!!.data[i].name == categoryName) {
+//
+//                                            }
+//
+//                                        }
                                         horizontalSubCategoryAdapter!!.updateData(itResponse.data)
                                         categoryListAdapter!!.updateData(itResponse.data)
 
@@ -485,59 +497,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 
     }
 
-//    private fun getAllcategory(urcid: String) {
-//
-//        if (Utilities.isNetworkAvailable(mainActivity)) {
-//
-//            viewModel.categoryall(
-//                CategoryRequestModel(urc_id = urcid)
-//            ).observe(mainActivity) {
-//                it?.let { resource ->
-//                    when (resource.status) {
-//                        Status.SUCCESS -> {
-//                            mainActivity.hideProgressDialog()
-//                            resource.data?.let { itProfileInfo ->
-//
-//
-//                                categoryListAdapter?.updateData(
-//                                    itProfileInfo.data.category as ArrayList<Category>,
-//                                    itProfileInfo.categoryImageUrl
-//                                )
-//
-//                                subCategoryListAdapter?.updateData(
-//                                    itProfileInfo.data.category as ArrayList<Category>
-//                                )
-//
-//                                horizontalSubCategoryAdapter?.updateData(
-//                                    itProfileInfo.data.category as ArrayList<Category>
-//                                )
-//
-//                            }
-//
-//                        }
-//                        Status.ERROR -> {
-//                            mainActivity.hideProgressDialog()
-//                            Log.d(ContentValues.TAG, "print-->" + resource.data?.status)
-//
-//
-//                        }
-//
-//                        Status.LOADING -> {
-//                            mainActivity.showProgressDialog()
-//                        }
-//
-//                    }
-//
-//                }
-//            }
-//
-//        } else {
-//
-//            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT).show()
-//
-//        }
-//
-//    }
+
 
     val recyclerOnScroll = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -548,20 +508,19 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
             super.onScrolled(recyclerView, dx, dy)
 
             // number of visible items
-            val visibleItemCount = recyclerView.layoutManager?.childCount;
+            val visibleItemCount = recyclerView.layoutManager?.childCount
             // number of items in layout
-            val totalItemCount = recyclerView.layoutManager?.itemCount;
+            val totalItemCount = recyclerView.layoutManager?.itemCount
             // the position of first visible item
-            val firstVisibleItemPosition =
-                (recyclerView.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+            val firstVisibleItemPosition = (recyclerView.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
 
-            val isNotLoadingAndNotLastPage = !mIsLoading && !mIsLastPage;
+            val isNotLoadingAndNotLastPage = !mIsLoading && !mIsLastPage
             // flag if number of visible items is at the last
-            val isAtLastItem = firstVisibleItemPosition + visibleItemCount!! >= totalItemCount!!;
+            val isAtLastItem = firstVisibleItemPosition + visibleItemCount!! >= totalItemCount!!
             // validate non negative values
-            val isValidFirstItem = firstVisibleItemPosition >= 0;
+            val isValidFirstItem = firstVisibleItemPosition >= 0
             // validate total items are more than possible visible items
-            val totalIsMoreThanVisible = totalItemCount >= pageSize;
+            val totalIsMoreThanVisible = totalItemCount >= pageSize
             // flag to know whether to load more
             val shouldLoadMore =
                 isValidFirstItem && isAtLastItem && totalIsMoreThanVisible && isNotLoadingAndNotLastPage
@@ -570,131 +529,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
         }
     }
 
-//    private fun getAllProdutList(isFirstPage: Boolean, urcid: String) {
-//        fragmentProductListBinding.nodata.root.visibility = View.GONE
-//        if (Utilities.isNetworkAvailable(mainActivity)) {
-//
-//            mIsLoading = true
-//            if (isFirstPage)
-//                mCurrentPage = 1
-//            else
-//                mCurrentPage += 1
-//
-//
-//            val productListRequestModel = ProductListRequestModel(urc_id = urcid)
-//            productListRequestModel.keywords = keyword
-//            productListRequestModel.price = filterPrice
-//            productListRequestModel.attribute_id = attribute_id
-//            when (category) {
-//                "features" -> {
-//                    productListRequestModel.is_featured = 1
-//
-//                    fragmentProductListBinding.topnav.tvNavtitle.text = "Featured products"
-//                }
-//                "essentials" -> {
-//                    productListRequestModel.is_essential = 1
-//                    fragmentProductListBinding.topnav.tvNavtitle.text = "Daily essential products"
-//
-//                }
-//                "topselling" -> {
-//                    productListRequestModel.top_selling = 1
-//                    fragmentProductListBinding.topnav.tvNavtitle.text = "Top selling products"
-//                }
-//                "categoryProduct" -> {
-//                    productListRequestModel.category_id = categoryId
-//                    fragmentProductListBinding.topnav.tvNavtitle.text = categoryName
-//                }
-//            }
-//
-//            when (sortType) {
-//                "alphabate" -> {
-//                    productListRequestModel.alphabetical = 1
-//                }
-//                "lowtohigh" -> {
-//                    productListRequestModel.is_low_price = 1
-//                }
-//                "hightolow" -> {
-//                    productListRequestModel.is_high_price = 1
-//                }
-//                "popularity" -> {
-//                    productListRequestModel.top_selling = 1
-//                }
-//            }
-//
-//            viewModel.productList(
-//                productListRequestModel, mCurrentPage.toString()
-//            ).observe(mainActivity) {
-//                it?.let { resource ->
-//                    when (resource.status) {
-//                        Status.SUCCESS -> {
-//                            if (resource.data?.status == true){
-//                                resource.data?.let { itProfileInfo ->
-//                                    if (isFirstPage) productAdapter?.updateData(
-//                                        itProfileInfo.data.productList.data,
-//                                        itProfileInfo.productImageUrl
-//                                    ) else productAdapter?.addData(
-//                                        itProfileInfo.data.productList.data
-//                                    )
-//                                    mIsLoading = false
-//                                    mIsLastPage =
-//                                        mCurrentPage == itProfileInfo.data.productList.lastPage
-//                                    pageSize = itProfileInfo.data.productList.perPage
-//                                    fragmentProductListBinding.tvsubtitle.text =
-//                                        " ${itProfileInfo.data.totalProduct} products"
-//
-//                                    if (itProfileInfo.data.totalProduct > 0) {
-//
-//                                        fragmentProductListBinding.nodata.root.visibility = View.GONE
-//                                    } else {
-//
-//                                        fragmentProductListBinding.nodata.root.visibility = View.VISIBLE
-//                                    }
-//                                }
-//                            }else{
-//                                fragmentProductListBinding.nodata.root.visibility = View.VISIBLE
-//                            }
-//                            mainActivity.hideProgressDialog()
-//
-//
-//                        }
-//                        Status.ERROR -> {
-//                            mainActivity.hideProgressDialog()
-//                            Log.d(ContentValues.TAG, "print-->" + resource.data?.status)
-//
-////                            if (it.message!!.contains("401", true)) {
-////                                val builder = AlertDialog.Builder(this@LoginemailActivity)
-////                                builder.setMessage("Invalid Employee Id / Password")
-////                                builder.setPositiveButton(
-////                                    "Ok"
-////                                ) { dialog, which ->
-////
-////                                    dialog.cancel()
-////
-////                                }
-////                                val alert = builder.create()
-////                                alert.show()
-////                            } else
-////                                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-//
-//                        }
-//
-//                        Status.LOADING -> {
-//                            mainActivity.showProgressDialog()
-//                        }
-//
-//                    }
-//
-//                }
-//            }
-//
-//        } else {
-//
-//            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//
-//        }
-//
-//    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

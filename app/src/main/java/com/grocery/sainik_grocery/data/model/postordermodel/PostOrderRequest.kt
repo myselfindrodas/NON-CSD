@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class PostOrderRequest(
     @SerializedName("customerId")
     val customerId: String,
+    @SerializedName("PaymentType")
+    val PaymentType: String,
     @SerializedName("productMainCategoryId")
     val productMainCategoryId: String,
     @SerializedName("isAppOrderRequest")

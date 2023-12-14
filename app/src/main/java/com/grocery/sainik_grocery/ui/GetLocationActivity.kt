@@ -241,11 +241,11 @@ class GetLocationActivity : BaseActivity() {
             LocationActivity.locationAddress = address
           /*  val lat = location.latitude
             val lon = location.longitude*/
-            Toast.makeText(
-                this@GetLocationActivity,
-                "Lat: $lati  Long: $longi",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this@GetLocationActivity,
+//                "Lat: $lati  Long: $longi",
+//                Toast.LENGTH_SHORT
+//            ).show()
 
             Shared_Preferences.setLat(lati)
             Shared_Preferences.setLong(longi)
@@ -258,7 +258,7 @@ class GetLocationActivity : BaseActivity() {
 
             val intent = Intent(
                 this@GetLocationActivity,
-                MainActivity::class.java
+                ShopFromActivity::class.java
             )
             startActivity(intent)
             /*activityRegistrationDetailsBinding.etLocation.setText(address)*/
@@ -316,7 +316,7 @@ class GetLocationActivity : BaseActivity() {
 
                             val intent = Intent(
                                 this@GetLocationActivity,
-                                MainActivity::class.java
+                                ShopFromActivity::class.java
                             )
                             startActivity(intent)
 

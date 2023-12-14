@@ -12,7 +12,7 @@ class BannerAdapter(var context: Context) :
     RecyclerView.Adapter<BannerAdapter.MyViewHolder>() {
     private val inflater: LayoutInflater
     var modelList:  ArrayList<Data> = arrayListOf()
-    private var imageURL: String="https://sainik.shyamfuture.in/"
+    private var imageURL: String="https://maitricomplex.in/"
     var ctx: Context
     override fun onCreateViewHolder(
         parent: ViewGroup,

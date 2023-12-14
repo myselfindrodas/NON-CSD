@@ -22,7 +22,7 @@ class RelatedProductAdapter(
     private val inflater: LayoutInflater
     private var topsellingModelArrayList: ArrayList<Data> = arrayListOf()
     var ctx: Context
-    private var imageURL: String="https://sainik.shyamfuture.in/"
+    private var imageURL: String="https://maitricomplex.in/"
 
     init {
         inflater = LayoutInflater.from(ctx)
@@ -58,11 +58,11 @@ class RelatedProductAdapter(
 
       //  }
 
-        holder.tvItemname.text = topsellingModelArrayList[position].name
+        holder.tvItemname.text = convertToCamelCase(topsellingModelArrayList[position].name?:"")
         try {
             Picasso.get()
                 .load(imageURL+topsellingModelArrayList[position].productUrl)
-                .error(R.drawable.login_img)
+                .error(R.drawable.noimagefound)
 //                .placeholder(R.drawable.loader_gif)
                 .into(holder.ivImg)
 
@@ -104,6 +104,20 @@ class RelatedProductAdapter(
     fun updateData(mTopseelingModelArrayList: List<Data>){
         topsellingModelArrayList= mTopseelingModelArrayList as ArrayList<Data>
         notifyDataSetChanged()
+    }
+
+
+    fun convertToCamelCase(input: String): String {
+        val words = input.split(" ").toMutableList()
+//        if (words.size == 1) {
+//            return words[0].toLowerCase()
+//        }
+
+        for (i in 1 until words.size) {
+            words[i] = words[i].replaceFirstChar { char -> char.uppercase() }
+        }
+
+        return words.joinToString(" ").toLowerCase().replaceFirstChar { char -> char.uppercase() }
     }
 
 

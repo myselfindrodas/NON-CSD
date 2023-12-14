@@ -4,14 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
@@ -21,6 +26,7 @@ import com.grocery.sainik_grocery.data.model.ordersummerymodel.OrdersummeryReque
 import com.grocery.sainik_grocery.data.model.postordermodel.PostOrderRequest
 import com.grocery.sainik_grocery.data.model.postordermodel.SalesOrderItem
 import com.grocery.sainik_grocery.data.model.postordermodel.UnitConversation
+import com.grocery.sainik_grocery.data.model.salesordermodel.SalesOrderPaymentRequest
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentOrderSummaryBinding
 import com.grocery.sainik_grocery.ui.MainActivity
@@ -50,6 +56,8 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
     var totalAmount = ""
     var discount = ""
     var cartCountAdapter:CartCountAdapter?=null
+    var dialog:BottomSheetDialog?=null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +89,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
         if (payment.equals("success")){
 
-            ordernumbergeneration()
+            ordernumbergeneration("Online")
         }
     }
 
@@ -160,7 +168,10 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
                 if (total.isNotEmpty()){
                     if (fragmentOrderSummaryBinding.tvAddress.text.toString().isNotEmpty()){
-                        mainActivity.startPayment(total)
+
+                        showBottomDialog(total)
+
+//                        mainActivity.startPayment(total)
 
                     }else{
 
@@ -184,6 +195,43 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
 
     }
+
+
+
+
+    private fun showBottomDialog(total:String) {
+        dialog = BottomSheetDialog(mainActivity,R.style.SheetDialog)
+        dialog!!.setContentView(R.layout.bottom_sheet_payment)
+        val btnCOD = dialog!!.findViewById<AppCompatButton>(R.id.btnCOD)
+        val btnOnline = dialog!!.findViewById<AppCompatButton>(R.id.btnOnline)
+        dialog!!.show()
+        btnCOD!!.setOnClickListener {
+//            val navController = Navigation.findNavController(fragmentOrderSummaryBinding.root)
+//            navController.navigate(R.id.nav_addaddress)
+            dialog!!.dismiss()
+            ordernumbergeneration("Offline")
+//            openSearchBar()
+//            dialog.dismiss()
+        }
+
+
+        btnOnline!!.setOnClickListener {
+//            val navController = Navigation.findNavController(fragmentOrderSummaryBinding.root)
+//            navController.navigate(R.id.nav_addaddress)
+            dialog!!.dismiss()
+            mainActivity.startPayment(total)
+
+//            openSearchBar()
+//            dialog.dismiss()
+        }
+
+
+
+
+    }
+
+
+
 
     private fun getAddressList() {
 
@@ -452,7 +500,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
 
 
-    private fun ordernumbergeneration(){
+    private fun ordernumbergeneration(payment:String){
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
@@ -468,7 +516,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                     if (itResponse.status) {
 
 
-                                        postOrder(itResponse.orderNumber)
+                                        postOrder(itResponse.orderNumber, payment)
 
 
 
@@ -523,7 +571,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
 
 
-    private fun postOrder(number:String) {
+    private fun postOrder(number:String, paymentType:String) {
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
@@ -532,6 +580,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
             viewModel.postorder(
                 PostOrderRequest(
                     customerId = Shared_Preferences.getUserId(),
+                    PaymentType = paymentType,
                     productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAppOrderRequest = true,
                     customerName = Shared_Preferences.getName(),
@@ -566,13 +615,14 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 //                                    val intent = Intent(mainActivity, MainActivity::class.java)
 //                                    startActivity(intent)
 //                                    mainActivity.finish()
+
+                                    salesorderpayment(resource.data.salesOrderId, orderDate, total, paymentType)
                                     payment = ""
                                     val bundle = Bundle()
                                     bundle.putString("address", fragmentOrderSummaryBinding.tvAddress.text.toString())
                                     bundle.putString("amount", total)
                                     val navController = Navigation.findNavController(fragmentOrderSummaryBinding.root)
                                     navController.navigate(R.id.nav_succeess, bundle)
-                                    // addressAdapter?.updateData(itResponse.data.address)
 
                                 } else {
 
@@ -623,6 +673,59 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
     override fun onDestroy() {
         super.onDestroy()
         payment = ""
+
+    }
+
+
+    private fun salesorderpayment(salesorderid:String, orderDate:String, total:String, paymentType:String){
+
+
+        if (Utilities.isNetworkAvailable(mainActivity)) {
+
+
+            viewModel.SalesOrderPayment(SalesOrderPaymentRequest(amount=total, attachmentData="",
+                attachmentUrl="", note=paymentType, paymentDate = orderDate, paymentMethod = 0, referenceNumber = "RFN-COD",
+                salesOrderId = salesorderid))
+                .observe(mainActivity) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                mainActivity.hideProgressDialog()
+                                resource.data?.let { itResponse ->
+
+                                }
+
+
+                            }
+
+                            Status.ERROR -> {
+                                mainActivity.hideProgressDialog()
+                                val builder = AlertDialog.Builder(mainActivity)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                mainActivity.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(mainActivity, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
 
     }
 
@@ -722,9 +825,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 //
 //    }
 
-    override fun onClick(position: Int, view: View) {
 
-    }
 
     override fun onClick(
         position: Int,
@@ -735,6 +836,15 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
         textView: TextView
     ) {
 
+
+
+    }
+
+    override fun onClick(
+        position: Int,
+        salesOrderItem: com.grocery.sainik_grocery.data.model.orderdetailsmodel.SalesOrderItem,
+        view: View
+    ) {
 
 
     }
