@@ -1,11 +1,14 @@
 package com.grocery.sainik_grocery.ui.adapter
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.model.productlistmodel.Data
@@ -36,6 +39,27 @@ class SearchAdapter(val context: Context, var onItemClickListener: SearchItemCli
 
     override fun onBindViewHolder(holder: SearchAdapter.classViewHolder, position: Int) {
         with(holder){
+
+            if (searchList[position].stock==null || searchList[position].stock.toInt()<=0){
+                holder.itemView.setOnClickListener {
+                    Toast.makeText(context,"Product Out of stock", Toast.LENGTH_SHORT).show()
+
+                }
+
+            }else{
+
+                holder.itemView.setOnClickListener {
+                    onItemClickListener.searchListOnClick(position, searchList, it)
+                    Log.d(TAG, "value-->"+(searchList[position].stock))
+
+                }
+
+            }
+
+
+
+
+
             if (searchList[position].name.isNullOrEmpty()) {
                 searchText.text = " "
             } else {
@@ -53,10 +77,15 @@ class SearchAdapter(val context: Context, var onItemClickListener: SearchItemCli
                 .error(R.drawable.noimagefound)
                 .into(holder.imgProduct)
 
-            itemView.setOnClickListener {
-                onItemClickListener.searchListOnClick(position, searchList, it)
 
-            }
+
+
+//            itemView.setOnClickListener {
+//
+//
+//                onItemClickListener.searchListOnClick(position, searchList, it)
+//
+//            }
         }
     }
 

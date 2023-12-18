@@ -365,12 +365,10 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 
                                     if (itProfileInfo.data.isEmpty()) {
 
-                                        fragmentProductListBinding.nodata.root.visibility =
-                                            View.VISIBLE
+                                        fragmentProductListBinding.nodata.root.visibility = View.VISIBLE
                                     } else {
 
-                                        fragmentProductListBinding.nodata.root.visibility =
-                                            View.GONE
+                                        fragmentProductListBinding.nodata.root.visibility = View.GONE
 
                                     }
                                 }
@@ -379,8 +377,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
                                 mIsLoading = false
                                 if (resource.data!!.data.isEmpty()) {
 
-                                    fragmentProductListBinding.nodata.root.visibility =
-                                        View.VISIBLE
+                                    fragmentProductListBinding.nodata.root.visibility = View.VISIBLE
                                 } else {
 
                                     fragmentProductListBinding.nodata.root.visibility =
@@ -919,7 +916,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
                 CartListRequest(
                     customerId = Shared_Preferences.getUserId(),
                     productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
-                    pageSize = 10,
+                    pageSize = 100,
                     skip = 0
                 )
             )
@@ -936,6 +933,7 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
                                         if (itResponse.data[0].isAdvanceOrderRequest) {
 
                                             val builder = AlertDialog.Builder(mainActivity)
+                                            builder.setCancelable(false)
                                             builder.setMessage(
                                                 "You Have Some of advance order already added inside cart!" +
                                                         " Please Delete previous cart items for regular product add"
@@ -1093,7 +1091,9 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
                             Status.SUCCESS -> {
                                 mainActivity.hideProgressDialog()
                                 if (resource.data?.status == true) {
-                                    getAllProductList(true)
+//                                    getAllProductList(true)
+                                    CartList(true)
+
 
 
                                 } else {

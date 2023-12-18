@@ -65,6 +65,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
     var count=0
     var cartid = ""
     var productdetails = ""
+    var stockcount = 0.00
 
 
 
@@ -246,6 +247,10 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                             Toast.LENGTH_SHORT
                         ).show()
                     }else{
+                        if (stockcount.toInt()==count || stockcount.toInt()<=0){
+                            Toast.makeText(mainActivity,"Product Out of stock",Toast.LENGTH_SHORT).show()
+                            return@setOnClickListener
+                        }
                         productaddtoCart()
                     }
 
@@ -253,7 +258,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
                     val builder = AlertDialog.Builder(mainActivity)
                     builder.setMessage(
-                        "You Have Some of party order already added inside cart!" +
+                        "You Have Some of advace order already added inside cart!" +
                                 " Please Delete previous cart items for regular product add"
                     )
                     builder.setPositiveButton(
@@ -336,9 +341,24 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
         }
 
         fragmentProductDetailsBinding.btnAdd.setOnClickListener {
-            count++
-            fragmentProductDetailsBinding.tvCounter.text = count.toString()
-            onUpdate(count, "update", 1)
+
+            if (partyadd.equals("partyadd")) {
+                if (advanceisadded == true) {
+                    count++
+                    fragmentProductDetailsBinding.tvCounter.text = count.toString()
+                    onUpdate(count, "update", 1)
+                }
+            }else{
+
+                if (stockcount.toInt()==count || stockcount.toInt()<=0){
+                    Toast.makeText(mainActivity,"Product Out of stock",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                count++
+                fragmentProductDetailsBinding.tvCounter.text = count.toString()
+                onUpdate(count, "update", 1)
+            }
+
 
             /*tvCounter.text = count.toString()*/
         }
@@ -423,11 +443,11 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
                                     } else {
 
-                                        Toast.makeText(
-                                            mainActivity,
-                                            resource.data?.message,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+//                                        Toast.makeText(
+//                                            mainActivity,
+//                                            resource.data?.message,
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
 
                                     }
                                 }
@@ -480,10 +500,12 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                                 mainActivity.hideProgressDialog()
                                 resource.data?.let { itProfileInfo ->
 
+                                    stockcount = itProfileInfo.data.inventory.stock
+                                    Log.d(TAG, "stockcount-->" + itProfileInfo.data.inventory.stock)
 
                                     try {
                                         Picasso.get()
-                                            .load(imageURL +itProfileInfo.data.productUrl)
+                                            .load(imageURL + itProfileInfo.data.productUrl)
                                             .error(R.drawable.noimagefound)
 //                                        .placeholder(R.drawable.loader_gif)
                                             .into(fragmentProductDetailsBinding.ivProductmain)
@@ -497,9 +519,17 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                                     with(fragmentProductDetailsBinding) {
 
                                         tvProductName.setText(convertToCamelCase(itProfileInfo.data.name))
-                                        if (itProfileInfo.data.discount > 0) {
+                                        if (itProfileInfo.data.discount == null || itProfileInfo.data.discount.toInt() > 0) {
                                             tvDiscount.text = "${itProfileInfo.data.discount}% Off"
-                                            discount = itProfileInfo.data.discount.toString()
+                                            if (itProfileInfo.data.discount.toString()
+                                                    .equals("null")
+                                            ) {
+                                                discount = "0"
+
+                                            } else {
+                                                discount = itProfileInfo.data.discount.toString()
+
+                                            }
                                             llDiscount.visibility = View.VISIBLE
 //                                            tvPriceOld.visibility = View.VISIBLE
                                         } else {
@@ -510,17 +540,34 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
 
 
-                                        tvPrice.text = " ₹ ${itProfileInfo.data.salesPrice.toString()}/${itProfileInfo.data.unitName ?: ""}"
-                                        llaboutproduct.text = itProfileInfo.data.description?:""
-                                        tvPriceOld.text = "₹ " +itProfileInfo.data.mrp
-                                        tvSaveAmount.text = "Save ₹ "+ String.format("%.2f", itProfileInfo.data.mrp.toDouble().minus(itProfileInfo.data.salesPrice.toDouble()))
-                                        llbenifits.text = "Save ₹ "+ String.format("%.2f", itProfileInfo.data.mrp.toDouble().minus(itProfileInfo.data.salesPrice.toDouble()))
-                                        tvPriceOld.paintFlags = tvPriceOld.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                                        tvPrice.text =
+                                            " ₹ ${itProfileInfo.data.salesPrice.toString()}/${itProfileInfo.data.unitName ?: ""}"
+                                        if (itProfileInfo.data.description.isNullOrEmpty()) {
+                                            llaboutproduct.text = "No Description Available"
+
+                                        } else {
+                                            llaboutproduct.text =
+                                                itProfileInfo.data.description ?: ""
+
+                                        }
+                                        tvPriceOld.text = "₹ " + itProfileInfo.data.mrp
+                                        tvSaveAmount.text = "Save ₹ " + String.format(
+                                            "%.2f",
+                                            itProfileInfo.data.mrp.toDouble()
+                                                .minus(itProfileInfo.data.salesPrice.toDouble())
+                                        )
+                                        llbenifits.text = "Save ₹ " + String.format(
+                                            "%.2f",
+                                            itProfileInfo.data.mrp.toDouble()
+                                                .minus(itProfileInfo.data.salesPrice.toDouble())
+                                        )
+                                        tvPriceOld.paintFlags =
+                                            tvPriceOld.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                                         urc_productId = itProfileInfo.data.id
                                         wishlistId = itProfileInfo.data.id
-                                        if (itProfileInfo.data.salesPrice==null){
+                                        if (itProfileInfo.data.salesPrice == null) {
                                             price = ""
-                                        }else{
+                                        } else {
                                             price = itProfileInfo.data.salesPrice
 
                                         }
@@ -763,7 +810,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                 CartListRequest(
                     customerId = Shared_Preferences.getUserId(),
                     productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
-                    pageSize = 10,
+                    pageSize = 100,
                     skip = 0
                 )
             )
@@ -784,12 +831,17 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                                                     count = itResponse.data[i].quantity
                                                     cartid = itResponse.data[i].id
 
-                                                        fragmentProductDetailsBinding.tvCounter.text = count.toString()
+                                                    fragmentProductDetailsBinding.tvCounter.text =
+                                                        count.toString()
                                                     if (count > 0) {
-                                                        fragmentProductDetailsBinding.btnAddtoproduct.visibility = View.GONE
-                                                        fragmentProductDetailsBinding.llcounter.visibility = View.VISIBLE
+                                                        fragmentProductDetailsBinding.btnAddtoproduct.visibility =
+                                                            View.GONE
+                                                        fragmentProductDetailsBinding.llcounter.visibility =
+                                                            View.VISIBLE
                                                     }
-                                                    Log.d(TAG, "count-->" + count)
+                                                    Log.d(TAG, "countpresent-->" + count)
+                                                    return@let
+
                                                 } else {
                                                     count = 0
                                                     Log.d(TAG, "count-->" + count)
@@ -816,17 +868,39 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
 
                                     } else {
-                                        viewModel.cartListItem.value = 0
-                                        advanceisadded= false
 
-                                        if (itResponse!!.totalCount==0){
-                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
-                                        }else{
-                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
-                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
-                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+                                        if (partyadd.equals("partyadd")) {
+                                            advanceisadded = true
+
+                                        } else {
+                                            advanceisadded = false
 
                                         }
+                                        viewModel.cartListItem.value = 0
+
+                                        if (itResponse!!.totalCount == 0) {
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible =
+                                                false
+                                        } else {
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible =
+                                                true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number =
+                                                itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor =
+                                                Color.parseColor("#E63425")
+
+                                        }
+//                                        viewModel.cartListItem.value = 0
+//                                        advanceisadded= false
+//
+//                                        if (itResponse!!.totalCount==0){
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+//                                        }else{
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+//                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+//
+//                                        }
 
                                     }
 
@@ -936,7 +1010,6 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
             when (clickType) {
                 0 -> {
 
-
                     if (count<1) {
                         productDeleteFromCart(cartid)
 //                        Toast.makeText(mainActivity, "Delete cart", Toast.LENGTH_SHORT).show()
@@ -962,22 +1035,24 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                 1 -> {
                     if (count==1) {
 //                    Toast.makeText(mainActivity, "Add to cart", Toast.LENGTH_SHORT).show()
+
                         productaddtoCart()
 
-                    }else if (count>1){
+
+                    }else if (count>1) {
 
 //                    Toast.makeText(mainActivity, "Update Increase", Toast.LENGTH_SHORT).show()
 
-                        updateCart(
-                            discount,
-                            productId,
-                            fragmentProductDetailsBinding.tvProductName.text.toString(),
-                            count.toString(),
-                            price,
-                            unitid,
-                            unitname,
-                            cartid
-                        )
+                            updateCart(
+                                discount,
+                                productId,
+                                fragmentProductDetailsBinding.tvProductName.text.toString(),
+                                count.toString(),
+                                price,
+                                unitid,
+                                unitname,
+                                cartid
+                            )
 
                     }
 
@@ -1072,11 +1147,17 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
         Log.d(TAG, "count-->" + qty)
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
+            var isPartyOrder = false
+            if (partyadd.equals("partyadd")){
+                isPartyOrder = true
+            }else{
+                isPartyOrder = false
+            }
             viewModel.updatecart(
                 CartUpdateRequest(
                     customerId = Shared_Preferences.getUserId(),
                     productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
-                    isAdvanceOrderRequest = false,
+                    isAdvanceOrderRequest = isPartyOrder,
                     customerName = Shared_Preferences.getName().toString(),
                     discount = discount,
                     discountPercentage = discount,

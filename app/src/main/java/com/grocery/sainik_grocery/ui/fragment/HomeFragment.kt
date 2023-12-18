@@ -417,7 +417,7 @@ class HomeFragment : Fragment(),
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
-            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), productMainCategoryId = Shared_Preferences.getMaincatid().toString(), pageSize = 10, skip = 0))
+            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), productMainCategoryId = Shared_Preferences.getMaincatid().toString(), pageSize = 100, skip = 0))
                 .observe(this) {
                     it?.let { resource ->
                         when (resource.status) {
@@ -621,7 +621,7 @@ class HomeFragment : Fragment(),
                                             val result = "$firstLetter$lastLetter"
                                             mainActivity.tvlettersBuyer!!.text = result
 
-                                        } else if (splitName.size >= 1) {
+                                        } else {
                                             val firstLetter = splitName[0].first()
                                             val result = firstLetter
                                             mainActivity.tvlettersBuyer!!.text = result.toString()

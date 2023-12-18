@@ -12,6 +12,8 @@ data class PostOrderRequest(
     val productMainCategoryId: String,
     @SerializedName("isAppOrderRequest")
     val isAppOrderRequest: Boolean,
+    @SerializedName("IsAdvanceOrderRequest")
+    val IsAdvanceOrderRequest: Boolean,
     @SerializedName("customerName")
     val customerName: String?,
     @SerializedName("deliveryAddress")

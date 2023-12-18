@@ -88,7 +88,10 @@ class WishListFragment : Fragment(), WishListAdapter.OnItemClickListener {
 
         fragmentWishListBinding.topnav.btnBack.setOnClickListener {
 
-            mainActivity.onBackPressedDispatcher.onBackPressed()
+//            mainActivity.onBackPressedDispatcher.onBackPressed()
+
+            val navController = Navigation.findNavController(it)
+            navController.navigate(R.id.nav_home)
         }
 
 

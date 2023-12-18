@@ -292,7 +292,7 @@ class ProfileFragment : Fragment() {
             }
             when {
                 fragmentProfileBinding.etFirstname.text.toString().length==0 -> {
-                    Toast.makeText(mainActivity, "Please Enter first name", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mainActivity, "Please Enter full name", Toast.LENGTH_SHORT).show()
                 }
 //                fragmentProfileBinding.etLastname.text.toString().length==0 -> {
 //                    Toast.makeText(mainActivity, "Please Enter last name", Toast.LENGTH_SHORT).show()
@@ -611,7 +611,9 @@ class ProfileFragment : Fragment() {
                                 resource.data?.let {itResponse->
 
                                     if (itResponse.status) {
-
+                                        fragmentProfileBinding.etFirstname.setText(itResponse.data.customerName)
+//                                        fragmentProfileBinding.etLastname.setText(itResponse.data.user.lastName)
+                                        fragmentProfileBinding.etPhone.setText(itResponse.data.mobileNo)
 
                                         val inputString = itResponse.data.customerName?:""
                                         val splitName = inputString.split(" ")
@@ -621,16 +623,14 @@ class ProfileFragment : Fragment() {
                                             val result = "$firstLetter$lastLetter"
                                             fragmentProfileBinding.tvlettersBuyer.text = result
 
-                                        } else if (splitName.size >= 1) {
+                                        } else  {
                                             val firstLetter = splitName[0].first()
                                             val result = firstLetter
                                             fragmentProfileBinding.tvlettersBuyer.text = result.toString()
                                                 .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                                         }
 
-                                        fragmentProfileBinding.etFirstname.setText(itResponse.data.customerName)
-//                                        fragmentProfileBinding.etLastname.setText(itResponse.data.user.lastName)
-                                        fragmentProfileBinding.etPhone.setText(itResponse.data.mobileNo)
+
 //                                        if (itResponse.data.user.gender==1){
 //                                            fragmentProfileBinding.spGender.setSelection(1)
 //                                        }else{

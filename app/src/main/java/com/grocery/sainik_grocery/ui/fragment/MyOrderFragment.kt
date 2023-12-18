@@ -212,7 +212,7 @@ class MyOrderFragment : Fragment(),MyOrderListAdapter.OnItemClickListener {
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
             viewModel.orderlist(OrderlistRequest(customerId = Shared_Preferences.getUserId(),
-                pageSize = 10, skip = 0))
+                pageSize = 100, skip = 0))
                 .observe(mainActivity) {
                     it?.let { resource ->
                         when (resource.status) {
@@ -286,7 +286,7 @@ class MyOrderFragment : Fragment(),MyOrderListAdapter.OnItemClickListener {
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
-            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), productMainCategoryId = Shared_Preferences.getMaincatid().toString(), pageSize = 10, skip = 0))
+            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), productMainCategoryId = Shared_Preferences.getMaincatid().toString(), pageSize = 100, skip = 0))
                 .observe(this) {
                     it?.let { resource ->
                         when (resource.status) {

@@ -119,6 +119,7 @@ class SupportFragment : Fragment(), SupportAdapter.OnItemClickListener {
             navController.navigate(R.id.nav_cart)
 
         }
+
         fragmentSupportBinding.topnav.btnBack.setOnClickListener {
 
             val navController = Navigation.findNavController(fragmentSupportBinding.root)

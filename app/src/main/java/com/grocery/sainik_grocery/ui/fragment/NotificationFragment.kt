@@ -98,7 +98,8 @@ class NotificationFragment : Fragment(), NotificationAdapter.OnItemClickListener
             if (Utilities.isClickRecently()){
                 return@setOnClickListener
             }
-            mainActivity.onBackPressedDispatcher.onBackPressed()
+            val navController = Navigation.findNavController(it)
+            navController.navigate(R.id.nav_home)
 
         }
 

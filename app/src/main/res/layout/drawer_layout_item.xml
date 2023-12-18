@@ -116,6 +116,7 @@
 
 
             <LinearLayout
+                android:id="@+id/btnAddress"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_45sdp"
                 android:background="@color/blue"
@@ -135,10 +136,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="URC Baranagar, West Bengal"
+                    android:text=""
                     android:layout_weight="1"
                     android:id="@+id/tvUrcName1"
                     android:maxLines="1"
+                    android:ellipsize="end"
                     android:textSize="@dimen/_9ssp"
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@android:color/white"/>

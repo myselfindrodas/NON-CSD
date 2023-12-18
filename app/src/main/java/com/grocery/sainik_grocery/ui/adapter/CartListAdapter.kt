@@ -31,7 +31,7 @@ class CartListAdapter(
     }
 
     interface OnItemClickListener {
-        fun onClick(position: Int, view: View, clickType: Int, cartData: CartData, count: Int, textView: TextView)
+        fun onClick(position: Int, view: View, clickType: Int, cartData: ArrayList<CartData>, count: Int, textView: TextView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -66,7 +66,7 @@ class CartListAdapter(
             btnSub.setOnClickListener {
                 if (count > 0)
                     count--
-                onItemClickListener.onClick(position, it, 0,cartModelArrayList[position], count, tvCounter)
+                onItemClickListener.onClick(position, it, 0,cartModelArrayList, count, tvCounter)
 
                 /*tvCounter.text = count.toString()*/
             }
@@ -77,20 +77,20 @@ class CartListAdapter(
                     return@setOnClickListener
                 }
                 count++
-                onItemClickListener.onClick(position, it, 1, cartModelArrayList[position],count, tvCounter)
+                onItemClickListener.onClick(position, it, 1, cartModelArrayList,count, tvCounter)
 
                 /*tvCounter.text = count.toString()*/
             }
 
             ivDelete.setOnClickListener {
 
-                onItemClickListener.onClick(position, it, 2, cartModelArrayList[position], count, tvCounter)
+                onItemClickListener.onClick(position, it, 2, cartModelArrayList, count, tvCounter)
             }
 
 
             itemView.setOnClickListener {
 
-                onItemClickListener.onClick(position, it, 3, cartModelArrayList[position], count, tvCounter)
+                onItemClickListener.onClick(position, it, 3, cartModelArrayList, count, tvCounter)
 
             }
 

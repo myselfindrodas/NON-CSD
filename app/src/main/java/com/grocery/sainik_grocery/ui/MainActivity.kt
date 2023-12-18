@@ -76,6 +76,7 @@ class MainActivity : BaseActivity(),
     var btnNavfaq: LinearLayout? = null
     var btnNavlogout: LinearLayout?= null
     var btnNavChangeOption: LinearLayout?= null
+    var btnAddress: LinearLayout?= null
 
 
     var mNavController: NavController? = null
@@ -125,6 +126,7 @@ class MainActivity : BaseActivity(),
         btnNavfaq = findViewById(R.id.btnNavfaq)
         btnNavlogout = findViewById(R.id.btnNavlogout)
         btnNavChangeOption = findViewById(R.id.btnNavChangeOption)
+        btnAddress = findViewById(R.id.btnAddress)
 
 //        tvUrcName?.text = URCName.replaceFirstChar { char ->
 //            char.uppercaseChar()
@@ -178,6 +180,12 @@ class MainActivity : BaseActivity(),
             btnMyaccountExpand?.visibility = View.VISIBLE
             btnMyaccountClose?.visibility = View.GONE
             llmyaccountsubmenu?.visibility = View.GONE
+
+        }
+
+        btnAddress?.setOnClickListener {
+
+
 
         }
 

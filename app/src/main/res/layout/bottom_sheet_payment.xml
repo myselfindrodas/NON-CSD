@@ -60,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:visibility="gone"
             android:layout_weight="1"
             android:background="@drawable/rounded_orange_bg_btn"
             android:fontFamily="@font/poppins_medium"

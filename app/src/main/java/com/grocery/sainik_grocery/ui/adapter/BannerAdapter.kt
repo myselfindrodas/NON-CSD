@@ -1,8 +1,10 @@
 package com.grocery.sainik_grocery.ui.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.grocery.sainik_grocery.R
@@ -46,7 +48,14 @@ class BannerAdapter(var context: Context) :
             .into(holder.ivBanner)
 
 
+        holder.itemView.setOnClickListener {
 
+            val bundle = Bundle()
+            bundle.putString("viewalltype", "category")
+            val navController = Navigation.findNavController(it)
+            navController.navigate(R.id.nav_productlist, bundle)
+
+        }
     }
 
     override fun getItemCount(): Int {

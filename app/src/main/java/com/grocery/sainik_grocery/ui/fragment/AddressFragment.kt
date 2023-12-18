@@ -82,7 +82,9 @@ class AddressFragment : Fragment(), AddressAdapter.OnItemClickListener {
                 if (Utilities.isClickRecently()) {
                     return@setOnClickListener
                 }
-                mainActivity.onBackPressedDispatcher.onBackPressed()
+                val navController = Navigation.findNavController(it)
+                navController.navigate(R.id.nav_home)
+//                mainActivity.onBackPressedDispatcher.onBackPressed()
             }
 
             if (HomeFragment.cartCount > 0) {
@@ -195,11 +197,11 @@ class AddressFragment : Fragment(), AddressAdapter.OnItemClickListener {
 
                                     } else {
 
-                                        Toast.makeText(
-                                            mainActivity,
-                                            resource.data?.message,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+//                                        Toast.makeText(
+//                                            mainActivity,
+//                                            resource.data?.message,
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
 
                                     }
                                 }

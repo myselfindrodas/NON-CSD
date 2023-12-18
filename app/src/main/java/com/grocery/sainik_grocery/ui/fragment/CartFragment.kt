@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -145,7 +144,7 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
-            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), productMainCategoryId = Shared_Preferences.getMaincatid().toString(), pageSize = 10, skip = 0))
+            viewModel.CartList(CartListRequest(customerId = Shared_Preferences.getUserId(), productMainCategoryId = Shared_Preferences.getMaincatid().toString(), pageSize = 100, skip = 0))
                 .observe(mainActivity) {
                     it?.let { resource ->
                         when (resource.status) {
@@ -259,7 +258,7 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
         position: Int,
         view: View,
         clickType: Int,
-        cartData: CartData,
+        cartData: ArrayList<CartData>,
         count: Int,
         textView: TextView
     ) {
@@ -274,9 +273,9 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
 //                ).show()
 
                 if (count.toString().equals("0")){
-                    productDeleteFromCart(cartData.id)
+                    productDeleteFromCart(cartData[position].id)
                 }else{
-                    updateCart(cartData.discount.toString(), cartData.productId.toString(), cartData.productName.toString(), count.toString(), cartData.unitPrice.toString(), cartData.unitId, cartData.unitName.toString(), cartData.id.toString())
+                    updateCart(cartData[position].discount.toString(), cartData[position].productId.toString(), cartData[position].productName.toString(), count.toString(), cartData[position].unitPrice.toString(), cartData[position].unitId, cartData[position].unitName.toString(), cartData[position].id.toString())
 
                 }
 
@@ -288,19 +287,19 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
 //                    count.toString(),
 //                    Toast.LENGTH_SHORT
 //                ).show()
-                updateCart(cartData.discount.toString(), cartData.productId.toString(), cartData.productName.toString(), count.toString(), cartData.unitPrice.toString(), cartData.unitId, cartData.unitName.toString(), cartData.id.toString())
+                updateCart(cartData[position].discount.toString(), cartData[position].productId.toString(), cartData[position].productName.toString(), count.toString(), cartData[position].unitPrice.toString(), cartData[position].unitId, cartData[position].unitName.toString(), cartData[position].id.toString())
 
 //                productaddtoCart(cartData.urc_product_id.toString(),true)
             }
             2->{
                 val builder = AlertDialog.Builder(mainActivity)
-                builder.setTitle("Delete ${cartData.productName}")
-                builder.setMessage("Are you sure you delete ${cartData.productName} from cart?")
+                builder.setTitle("Delete ${cartData[position].productName}")
+                builder.setMessage("Are you sure you delete ${cartData[position].productName} from cart?")
                 builder.setPositiveButton(
                     "Yes"
                 ) { dialog, which ->
 
-                    productDeleteFromCart(cartData.id.toString())
+                    productDeleteFromCart(cartData[position].id.toString())
                     dialog.dismiss()
                 }
                 builder.setNegativeButton(
@@ -321,7 +320,7 @@ class CartFragment : Fragment(), CartListAdapter.OnItemClickListener {
             3->{
 
                 val bundle = Bundle()
-                bundle.putString("productid", cartData.productId)
+                bundle.putString("productid", cartData[position].product.id)
                 val navController = Navigation.findNavController(view)
                 navController.navigate(R.id.nav_productdetails, bundle)
 

@@ -57,6 +57,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
     var discount = ""
     var cartCountAdapter:CartCountAdapter?=null
     var dialog:BottomSheetDialog?=null
+    var advanceorder = false
 
 
 
@@ -269,16 +270,15 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                             }
                                         }
 
-                                        productCartList()
                                         // addressAdapter?.updateData(itResponse.data.address)
 
                                     } else {
 
-                                        Toast.makeText(
-                                            mainActivity,
-                                            resource.data?.message,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+//                                        Toast.makeText(
+//                                            mainActivity,
+//                                            resource.data?.message,
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
 
                                     }
                                 }
@@ -325,7 +325,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                 CartListRequest(
                     customerId = Shared_Preferences.getUserId(),
                     productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
-                    pageSize = 10,
+                    pageSize = 100,
                     skip = 0
                 )
             )
@@ -339,6 +339,14 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                     if (itResponse?.status == true) {
 
                                         cartCountAdapter?.updateData(itResponse.data)
+                                        fragmentOrderSummaryBinding.tvItemQtyTxt.text = (if (itResponse.data.size.toFloat() > 1) "Basket Value(${itResponse.data.size} Items)" else "Basket Value(${itResponse.data.size} Items)").toString()
+
+
+                                        if (itResponse.data[0].isAdvanceOrderRequest == false){
+                                            advanceorder = false
+                                        }else{
+                                            advanceorder = true
+                                        }
 
                                         for (i in 0 until itResponse.data.size) {
                                             val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -434,7 +442,6 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
 
                                         with(fragmentOrderSummaryBinding) {
 //                                            tvItemQtyTxt.text = if (itResponse.data.items > 1) "Price (${itResponse.data.items} Items)" else "Price (${itResponse.data.items} Item)"
-                                            tvItemQtyTxt.text = (if (itResponse.data.items.toFloat() > 1) "Basket Value(${itResponse.data.items} Items)" else "Basket Value(${itResponse.data.items} Items)").toString()
                                             tvPrice.text = "₹ ${itResponse.data.price}"
                                             totalAmount = itResponse.data.price.toString()
                                             tvDeliveryCharge.text =
@@ -448,6 +455,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                             tvTotalPrice.text = "₹ $total"
                                         }
 
+                                        productCartList()
 
 //                                        println("PRICE SUMMERY $total")
                                         // addressAdapter?.updateData(itResponse.data.address)
@@ -583,6 +591,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                     PaymentType = paymentType,
                     productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
                     isAppOrderRequest = true,
+                    IsAdvanceOrderRequest = advanceorder,
                     customerName = Shared_Preferences.getName(),
                     deliveryAddress = fragmentOrderSummaryBinding.tvAddress.text.toString(),
                     deliveryAddressId = addressId,

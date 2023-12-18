@@ -115,7 +115,7 @@ class ReturnOrderFragment : Fragment(), ReturnItemAdapter.OnItemClickListener {
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
 
-            viewModel.orderdetails(OrderdetailsRequest(id= orderId, pageSize = 10, skip = 0))
+            viewModel.orderdetails(OrderdetailsRequest(id= orderId, pageSize = 100, skip = 0))
                 .observe(mainActivity) {
                     it?.let { resource ->
                         when (resource.status) {

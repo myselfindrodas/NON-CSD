@@ -96,6 +96,9 @@ class PartyProductAdapter(
             }else{
 
                 holder.tvAvailable.visibility = View.GONE
+                holder.itemView.setOnClickListener {
+                    onItemClickListener.onClick(position, it, holder.tvQty, holder.tvPrice, "ivImg", productModelArrayList[position].id, productModelArrayList[position])
+                }
 
             }
 

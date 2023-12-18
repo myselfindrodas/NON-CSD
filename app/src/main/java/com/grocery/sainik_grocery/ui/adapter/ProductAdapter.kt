@@ -97,9 +97,14 @@ class ProductAdapter(
 
             }else{
 
-                if (productModelArrayList[position].stock.toInt()==count){
+                if (productModelArrayList[position].stock.toInt()==count || productModelArrayList[position].stock.toInt()<=0){
+//                    holder.itemView.setOnClickListener {
+//                        Toast.makeText(ctx,"Product Out of stock", Toast.LENGTH_SHORT).show();
+//                    }
+
                     holder.itemView.setOnClickListener {
-                        Toast.makeText(ctx,"Product Out of stock", Toast.LENGTH_SHORT).show();
+                        onItemClickListener.onClick(position, it, holder.tvQty, holder.tvPrice, "ivImg", productModelArrayList[position].id, productModelArrayList[position])
+
                     }
 
                 }else{
@@ -122,7 +127,7 @@ class ProductAdapter(
 
 
             holder.btnGo.setOnClickListener {
-                if (productModelArrayList[position].stock.toInt()==count){
+                if (productModelArrayList[position].stock.toInt()==count || productModelArrayList[position].stock.toInt()<=0){
                     Toast.makeText(ctx,"Product Out of stock",Toast.LENGTH_SHORT).show();
                     return@setOnClickListener
                 }
@@ -170,7 +175,7 @@ class ProductAdapter(
             }
 
             holder.btnAdd.setOnClickListener {
-                if (productModelArrayList[position].stock.toInt()==count){
+                if (productModelArrayList[position].stock.toInt()==count || productModelArrayList[position].stock.toInt()<=0){
                     Toast.makeText(ctx,"Product Out of stock",Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }

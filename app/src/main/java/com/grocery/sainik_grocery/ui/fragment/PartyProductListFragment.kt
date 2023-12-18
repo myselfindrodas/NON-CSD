@@ -133,6 +133,13 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
         }
 
 
+//        binding.topnav.etSearch.setOnClickListener {
+//
+//            val navController = Navigation.findNavController(it)
+//            navController.navigate(R.id.nav_searchorder)
+//        }
+
+
         mainActivity.setBottomNavigationVisibility(true)
 
 
@@ -240,7 +247,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
                 CartListRequest(
                     customerId = Shared_Preferences.getUserId(),
                     productMainCategoryId = Shared_Preferences.getMaincatid().toString(),
-                    pageSize = 10,
+                    pageSize = 100,
                     skip = 0
                 )
             )
@@ -259,6 +266,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
                                         if (itResponse.data[0].isAdvanceOrderRequest == false) {
 
                                             val builder = AlertDialog.Builder(mainActivity)
+                                            builder.setCancelable(false)
                                             builder.setMessage(
                                                 "You Have Some of regular product already added inside cart!" +
                                                         " Please Delete previous cart items for advance product add"
@@ -348,6 +356,7 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
                                     } else {
                                         cartArrayList.clear()
                                         viewModel.cartListItem.value = 0
+
                                         if (itResponse!!.totalCount == 0) {
                                             mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible =
                                                 false
