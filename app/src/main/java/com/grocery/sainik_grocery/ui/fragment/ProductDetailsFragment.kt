@@ -825,6 +825,16 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
 
                                         advanceisadded = itResponse.data[0].isAdvanceOrderRequest
 
+                                        if (itResponse.totalCount==0){
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
+                                        }else{
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
+                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
+
+                                        }
+
+
                                         if (itResponse.data.isNotEmpty()) {
                                             for (i in 0 until itResponse.data.size) {
                                                 if (itResponse.data[i].productId == productId) {
@@ -857,14 +867,6 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                                         }
 
 
-                                        if (itResponse.totalCount==0){
-                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = false
-                                        }else{
-                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).isVisible = true
-                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).number = itResponse.totalCount
-                                            mainActivity.bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
-
-                                        }
 
 
                                     } else {

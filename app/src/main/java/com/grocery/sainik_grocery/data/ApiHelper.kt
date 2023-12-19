@@ -33,6 +33,7 @@ class ApiHelper(private val apiInterface: ApiInterface) {
     suspend fun login(requestBody: LoginRequest) = apiInterface.login(requestBody)
     suspend fun otpverify(requestBody: OtpverifyRequest) = apiInterface.otpverify(requestBody)
     suspend fun getnonCSDlist() = apiInterface.getnonCSDlist()
+    suspend fun appversion() = apiInterface.appversion()
     suspend fun GetNewOrderNumber() = apiInterface.GetNewOrderNumber()
     suspend fun LoginPageBanners() = apiInterface.LoginPageBanners()
     suspend fun categorylist(requestBody: CategoryRequest) = apiInterface.categorylist(requestBody)

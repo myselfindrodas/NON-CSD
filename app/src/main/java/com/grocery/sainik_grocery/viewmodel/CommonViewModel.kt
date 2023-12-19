@@ -101,6 +101,23 @@ class CommonViewModel(private val mainRepository: MainRepository) : ViewModel() 
 
 
 
+
+    fun appversion() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(
+                Resource.success(
+                    data = mainRepository.appversion()
+                )
+            )
+        } catch (e: Exception) {
+            emit(Resource.error(data = null, message = e.message ?: "Error Occurred!"))
+        }
+    }
+
+
+
+
     fun GetNewOrderNumber() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {

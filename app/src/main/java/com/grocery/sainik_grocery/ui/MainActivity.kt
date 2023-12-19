@@ -3,7 +3,7 @@ package com.grocery.sainik_grocery.ui
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,13 +21,12 @@ import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.grocery.sainik_grocery.BuildConfig
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.base.BaseActivity
 import com.grocery.sainik_grocery.data.ApiClient
 import com.grocery.sainik_grocery.data.ApiHelper
-import com.grocery.sainik_grocery.data.model.getcartlistmodel.CartListRequest
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.ActivityMainBinding
 import com.grocery.sainik_grocery.ui.fragment.HomeFragment.Companion.cartCount
@@ -40,7 +39,6 @@ import com.razorpay.ExternalWalletListener
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
 import org.json.JSONObject
-import kotlin.math.roundToInt
 
 
 class MainActivity : BaseActivity(),
@@ -57,6 +55,7 @@ class MainActivity : BaseActivity(),
     var ivImgProfile: ImageView? = null
     var tvUserName: TextView? = null
     var tvlettersBuyer: TextView? = null
+    var tvappVersion: TextView? = null
     var tvEditProfile: TextView? = null
     var tvUrcName: TextView? = null
     var tvChangeURC: TextView? = null
@@ -77,7 +76,7 @@ class MainActivity : BaseActivity(),
     var btnNavlogout: LinearLayout?= null
     var btnNavChangeOption: LinearLayout?= null
     var btnAddress: LinearLayout?= null
-
+    var versionName = ""
 
     var mNavController: NavController? = null
     override fun resourceLayout(): Int {
@@ -127,6 +126,7 @@ class MainActivity : BaseActivity(),
         btnNavlogout = findViewById(R.id.btnNavlogout)
         btnNavChangeOption = findViewById(R.id.btnNavChangeOption)
         btnAddress = findViewById(R.id.btnAddress)
+        tvappVersion = findViewById(R.id.tvappVersion)
 
 //        tvUrcName?.text = URCName.replaceFirstChar { char ->
 //            char.uppercaseChar()
@@ -341,13 +341,11 @@ class MainActivity : BaseActivity(),
 
         Log.d(TAG, "cartcount-->"+cartCount)
 
-//        if (cartcount.isNotEmpty()){
-//
-//        }else{
-//
-//            bottomNavView.getOrCreateBadge(R.id.nav_basket).number = 0
-//            bottomNavView.getOrCreateBadge(R.id.nav_basket).backgroundColor = Color.parseColor("#E63425")
-//        }
+        val versionCode: Int = BuildConfig.VERSION_CODE
+        versionName = BuildConfig.VERSION_NAME
+        tvappVersion?.text = "Version : "+versionName
+        versioncheck()
+
 
 
 
@@ -358,6 +356,98 @@ class MainActivity : BaseActivity(),
 
 
 
+    private fun versioncheck(){
+        if (Utilities.isNetworkAvailable(this)) {
+            viewModel.appversion().observe(this) {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                this.hideProgressDialog()
+                                resource.data?.let { itResponse ->
+
+                                    if (itResponse.status) {
+                                        for (i in 0 until itResponse.data.size) {
+                                            if (itResponse.data[i].appType.equals("Android")) {
+                                                val versioncurrent = itResponse.data[i].version
+                                                if (versioncurrent.toDouble()>versionName.toDouble()){
+
+                                                    val builder = AlertDialog.Builder(this)
+                                                    builder.setCancelable(false)
+                                                    builder.setMessage("New Updated Version Available please download latest version of the app")
+                                                    builder.setPositiveButton(
+                                                        "Continue"
+                                                    ) { dialog, which ->
+                                                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://maitricomplex.in/download"))
+                                                        startActivity(browserIntent)
+                                                        finish()
+                                                        dialog.cancel()
+                                                    }
+
+                                                    builder.setNegativeButton("Cancel") { dialog, which ->
+                                                        dialog.cancel()
+                                                        finishAffinity()
+                                                    }
+                                                    val alert = builder.create()
+                                                    alert.setOnShowListener { arg0: DialogInterface? ->
+                                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+                                                            .setTextColor(resources.getColor(R.color.blue, resources.newTheme()))
+                                                        alert.getButton(AlertDialog.BUTTON_POSITIVE)
+                                                            .setTextColor(resources.getColor(R.color.orange, resources.newTheme()))
+                                                    }
+                                                    alert.show()
+
+                                                }
+
+                                            }
+
+                                        }
+
+
+                                    } else {
+
+                                        Toast.makeText(
+                                            this,
+                                            resource.data?.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+                                    }
+                                }
+
+
+                            }
+
+                            Status.ERROR -> {
+                                this.hideProgressDialog()
+                                val builder =
+                                    androidx.appcompat.app.AlertDialog.Builder(this)
+                                builder.setMessage(it.message)
+                                builder.setPositiveButton(
+                                    "Ok"
+                                ) { dialog, which ->
+
+                                    dialog.cancel()
+
+                                }
+                                val alert = builder.create()
+                                alert.show()
+                            }
+
+                            Status.LOADING -> {
+                                this.showProgressDialog()
+                            }
+
+                        }
+
+                    }
+                }
+
+        } else {
+            Toast.makeText(this, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
+                .show()
+        }
+
+    }
 
 
 
@@ -443,70 +533,6 @@ class MainActivity : BaseActivity(),
 
     }
 
-//    private fun productCartList() {
-//
-//        if (Utilities.isNetworkAvailable(this)) {
-//
-//            viewModel.cartList()
-//                .observe(this) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                resource.data.let {itResponse->
-//
-//                                    if (itResponse?.status == true) {
-//
-//                                        //cartCount=itResponse.data.cart.size
-//                                        if (itResponse.data.cart.isNullOrEmpty()) {
-//                                            viewModel.cartListItem.value = 0
-//                                        }else
-//                                            viewModel.cartListItem.value= itResponse.data.cart.size
-//
-//                                    } else {
-//
-//                                        viewModel.cartListItem.value=0
-//                                        /*Toast.makeText(
-//                                            mainActivity,
-//                                            resource.data?.message,
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()*/
-//
-//                                    }
-//
-//                                }
-//
-//                                hideProgressDialog()
-//                            }
-//                            Status.ERROR -> {
-//                                hideProgressDialog()
-//                                val builder = AlertDialog.Builder(this)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.show()
-//                            }
-//
-//                            Status.LOADING -> {
-//                                showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(this, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-//
-//    }
     override fun onPaymentError(p0: Int, p1: String?, p2: PaymentData?) {
         Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "Error-->"+p1)
@@ -523,194 +549,6 @@ class MainActivity : BaseActivity(),
 
 
 
-//    private fun orderpayment(orderId: String, paymentid:String, refid:String){
-//
-//        if (Utilities.isNetworkAvailable(this)) {
-//            viewModel.orderpayment(OrderPaymentRequestModel(order_id = orderId,
-//                payment_id = paymentid,
-//                transaction_id = refid))
-//                .observe(this) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                hideProgressDialog()
-//                                resource.data?.let {itResponse->
-//
-//                                    if (itResponse.status) {
-//                                        productCartList()
-//                                        Toast.makeText(this, itResponse.message, Toast.LENGTH_SHORT).show()
-//                                        mNavController?.navigate(R.id.nav_myorder)
-//
-//                                    } else {
-//                                        Toast.makeText(this, resource.data.message, Toast.LENGTH_SHORT).show()
-//                                    }
-//                                }
-//
-//
-//                            }
-//                            Status.ERROR -> {
-//                                hideProgressDialog()
-//                                val builder = AlertDialog.Builder(this)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.show()
-//                            }
-//
-//                            Status.LOADING -> {
-//                                showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(this, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT).show()
-//        }
-//
-//
-//    }
-//
-//    private fun profileget() {
-//
-//        if (Utilities.isNetworkAvailable(this)) {
-//
-//
-//            viewModel.profileget()
-//                .observe(this) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                this.hideProgressDialog()
-//                                resource.data?.let { itResponse ->
-//
-//                                    if (itResponse.status) {
-//                                        tvUserName?.text =
-//                                            "${itResponse.data.user.name} ${itResponse.data.user.lastName}"
-//
-//                                        try {
-//
-//                                            Picasso.get()
-//                                                .load(itResponse.imageUrl + "/" + itResponse.data.user.image)
-//                                                .error(R.drawable.noimagefound)
-////                                                .placeholder(R.drawable.loader_gif)
-//                                                .into(ivImgProfile)
-//                                        } catch (e: Exception) {
-//                                            e.printStackTrace()
-//                                        }
-//
-//                                    } else {
-//
-//                                        Toast.makeText(
-//                                            this,
-//                                            resource.data?.message,
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()
-//
-//                                    }
-//                                }
-//
-//
-//                            }
-//                            Status.ERROR -> {
-//                                this.hideProgressDialog()
-//                                val builder =
-//                                    androidx.appcompat.app.AlertDialog.Builder(this)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.show()
-//                            }
-//
-//                            Status.LOADING -> {
-//                                this.showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(this, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-//    }
-//
-//    private fun logout() {
-//
-//        if (Utilities.isNetworkAvailable(this)) {
-//
-//            viewModel.logout()
-//                .observe(this) {
-//                    it?.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                this.hideProgressDialog()
-//                                if (resource.data?.status == true) {
-//
-//                                    Shared_Preferences.setLoginStatus(false)
-//                                    Shared_Preferences.clearPref()
-//                                    val intent = Intent(this, LoginActivity::class.java)
-//                                    startActivity(intent)
-//                                    this.finish()
-//
-//                                } else {
-//
-//                                    Toast.makeText(
-//                                        this,
-//                                        resource.data?.message,
-//                                        Toast.LENGTH_SHORT
-//                                    ).show()
-//
-//                                }
-//
-//
-//                            }
-//                            Status.ERROR -> {
-//                                this.hideProgressDialog()
-//                                val builder = AlertDialog.Builder(this)
-//                                builder.setMessage(it.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.show()
-//                            }
-//
-//                            Status.LOADING -> {
-//                                this.showProgressDialog()
-//                            }
-//
-//                        }
-//
-//                    }
-//                }
-//
-//        } else {
-//            Toast.makeText(this, "Ooops! Internet Connection Error", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-//
-//    }
 
     fun openDrawer() {
         val drawer = activityMainBinding.drawerLayout

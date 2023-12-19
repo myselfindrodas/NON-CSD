@@ -171,7 +171,8 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_45sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -572,5 +573,24 @@
 
 
     </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/tvappVersion"
+        android:layout_width="@dimen/_255sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:text="Version : 1.0"
+        android:textAlignment="center"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/orange"
+        android:textSize="@dimen/_13sdp" />
+
+
+
+
 
 </RelativeLayout>

@@ -76,7 +76,7 @@ class WishListFragment : Fragment(), WishListAdapter.OnItemClickListener {
         //productAdapter?.updateData(categoryModelArrayList)
         val itemDecoration = ItemOffsetDecoration(mainActivity, R.dimen.photos_list_spacing1)
         fragmentWishListBinding.rvWishlist.addItemDecoration(itemDecoration)
-        fragmentWishListBinding.topnav.tvNavtitle.text = "Wish List"
+        fragmentWishListBinding.topnav.tvNavtitle.text = "Wishlist"
 //
 //        val wishList = ArrayList<DataWishListItem>()
 //        for (i in 1..5){

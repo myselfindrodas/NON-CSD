@@ -7,6 +7,7 @@ import com.grocery.sainik_grocery.data.model.addressaddmodel.AddressEditRequest
 import com.grocery.sainik_grocery.data.model.addresslistmodel.AddressListResponse
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartRequest
 import com.grocery.sainik_grocery.data.model.addtocartmodel.AddtocartResponse
+import com.grocery.sainik_grocery.data.model.appversionmodel.AppversionResponse
 import com.grocery.sainik_grocery.data.model.bannermodel.HomeBannerResponse
 import com.grocery.sainik_grocery.data.model.categorymodel.CategoryListResponse
 import com.grocery.sainik_grocery.data.model.categorymodel.CategoryRequest
@@ -140,6 +141,13 @@ interface ApiInterface {
     @GET("GetNonCSDlist")
     suspend fun getnonCSDlist(
     ): NoncsdResponse
+
+
+
+
+    @GET("AppVersion")
+    suspend fun appversion(
+    ): AppversionResponse
 
 
 

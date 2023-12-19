@@ -36,6 +36,9 @@ class MainRepository(private val apiHelper: ApiHelper) {
     suspend fun login(requestBody: LoginRequest) = apiHelper.login(requestBody)
     suspend fun otpverify(requestBody: OtpverifyRequest) = apiHelper.otpverify(requestBody)
     suspend fun getnonCSDlist() = apiHelper.getnonCSDlist()
+
+    suspend fun appversion() = apiHelper.appversion()
+
     suspend fun GetNewOrderNumber() = apiHelper.GetNewOrderNumber()
 
     suspend fun LoginPageBanners() = apiHelper.LoginPageBanners()
