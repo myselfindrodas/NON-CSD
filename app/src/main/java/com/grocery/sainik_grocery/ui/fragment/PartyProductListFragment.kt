@@ -166,11 +166,15 @@ class PartyProductListFragment : Fragment(), PartyProductAdapter.OnItemClickList
 //                mCurrentPage = 0
 //            else
             mCurrentPage += 1
+            var pageskip = ""
+            if (isFirstPage){
+                pageskip = "0"
+            }else{
+                pageskip = mCurrentPage.toString()
+            }
 
 
-            viewModel.productList(
-                ProductListRequest("25", mCurrentPage.toString(), catId)
-            ).observe(mainActivity) {
+            viewModel.productList(ProductListRequest("50", pageskip, catId)).observe(mainActivity) {
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {

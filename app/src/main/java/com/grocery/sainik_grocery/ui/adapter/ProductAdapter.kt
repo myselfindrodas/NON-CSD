@@ -88,7 +88,7 @@ class ProductAdapter(
                     holder.btnGo.visibility = View.GONE
                     holder.llcounter.visibility = View.GONE
                     holder.tvAvailable.visibility = View.VISIBLE
-                    holder.tvAvailable.text = "ORDER TIME EXPRIED"
+                    holder.tvAvailable.text = "PRODUCT NOT AVAILABLE"
                     holder.itemView.setOnClickListener {
                         Toast.makeText(ctx,"Product Not Availabe at this time",Toast.LENGTH_SHORT).show()
 

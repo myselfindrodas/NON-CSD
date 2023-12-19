@@ -596,7 +596,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                     deliveryAddress = fragmentOrderSummaryBinding.tvAddress.text.toString(),
                     deliveryAddressId = addressId,
                     deliveryCharges = deliverycharges,
-                    deliveryDate = "2023-11-20T09:50:00.279Z",
+                    deliveryDate = orderDate,
                     deliveryStatus = "0",
                     isSalesOrderRequest = false,
                     note = "",

@@ -343,10 +343,17 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
 //            if (isFirstPage)
 //                mCurrentPage = 0
 //            else
+
             mCurrentPage += 1
+            var pageskip = ""
+            if (isFirstPage){
+                pageskip = "0"
+            }else{
+                pageskip = mCurrentPage.toString()
+            }
 
 
-            viewModel.productList(ProductListRequest("25", mCurrentPage.toString(), categoryId)).observe(mainActivity) {
+            viewModel.productList(ProductListRequest("50", pageskip, categoryId)).observe(mainActivity) {
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
@@ -357,6 +364,8 @@ class ProductListFragment : Fragment(), ProductAdapter.OnItemClickListener,
                                     productArrayList.addAll(itProfileInfo.data)
                                     productAdapter?.notifyItemRangeInserted(0, itProfileInfo.totalCount)
 
+                                    Log.d(TAG, "pagenumber-->"+pageskip)
+                                    Log.d(TAG, "totalpagenumber-->"+itProfileInfo.totalPages)
                                     mIsLoading = false
                                     mIsLastPage = mCurrentPage == itProfileInfo.totalPages
                                     pageSize = itProfileInfo.totalPages
