@@ -37,6 +37,7 @@ import com.grocery.sainik_grocery.utils.Shared_Preferences
 import com.grocery.sainik_grocery.utils.Status
 import com.grocery.sainik_grocery.utils.Utilities
 import com.grocery.sainik_grocery.viewmodel.CommonViewModel
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.random.Random
@@ -443,16 +444,17 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                         with(fragmentOrderSummaryBinding) {
 //                                            tvItemQtyTxt.text = if (itResponse.data.items > 1) "Price (${itResponse.data.items} Items)" else "Price (${itResponse.data.items} Item)"
                                             tvPrice.text = "₹ ${itResponse.data.price}"
-                                            totalAmount = itResponse.data.price.toString()
                                             tvDeliveryCharge.text =
                                                 "₹ ${itResponse.data.deliveryCharges}"
-                                            deliverycharges =
-                                                itResponse.data.deliveryCharges.toString()
+                                            deliverycharges = itResponse.data.deliveryCharges.toString()
                                             tvDiscount.text = "₹ ${itResponse.data.discount}"
                                             discount = itResponse.data.discount.toString()
 //                                            total = ((itResponse.data.price.toDouble() - itResponse.data.discount.toDouble()) + itResponse.data.deliveryCharges.toDouble()).toString()
                                             total = String.format("%.2f", ((itResponse.data.price.toDouble() - itResponse.data.discount.toDouble()) + itResponse.data.deliveryCharges.toDouble()))
-                                            tvTotalPrice.text = "₹ $total"
+                                            val df = DecimalFormat("#")
+                                            tvTotalPrice.text = "₹ "+df.format(total.toDouble())
+                                            totalAmount = df.format(total.toDouble())
+
                                         }
 
                                         productCartList()
@@ -629,7 +631,7 @@ class OrderSummaryFragment : Fragment(), OrderDetailsListAdapter.OnItemClickList
                                     payment = ""
                                     val bundle = Bundle()
                                     bundle.putString("address", fragmentOrderSummaryBinding.tvAddress.text.toString())
-                                    bundle.putString("amount", total)
+                                    bundle.putString("amount", totalAmount)
                                     val navController = Navigation.findNavController(fragmentOrderSummaryBinding.root)
                                     navController.navigate(R.id.nav_succeess, bundle)
 

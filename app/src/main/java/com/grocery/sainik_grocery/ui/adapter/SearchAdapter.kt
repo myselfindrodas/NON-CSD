@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.model.productlistmodel.Data
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class SearchAdapter(val context: Context, var onItemClickListener: SearchItemClickListener)
     :RecyclerView.Adapter<SearchAdapter.classViewHolder>() {
@@ -38,6 +41,11 @@ class SearchAdapter(val context: Context, var onItemClickListener: SearchItemCli
     }
 
     override fun onBindViewHolder(holder: SearchAdapter.classViewHolder, position: Int) {
+
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val currentTime = Date()
+        Log.d(TAG,"currentTime-->"+sdf.format(currentTime))
+
         with(holder){
 
             if (searchList[position].stock==null || searchList[position].stock.toInt()<=0){
@@ -48,13 +56,40 @@ class SearchAdapter(val context: Context, var onItemClickListener: SearchItemCli
 
             }else{
 
-                holder.itemView.setOnClickListener {
-                    onItemClickListener.searchListOnClick(position, searchList, it)
-                    Log.d(TAG, "value-->"+(searchList[position].stock))
 
+                if (searchList[position].isProductOrderTime){
+
+                    if (sdf.format(currentTime).toString()>= searchList[position].orderStartTime.toString()
+                        && sdf.format(currentTime).toString()<= searchList[position].orderEndTime.toString()){
+                        holder.itemView.setOnClickListener {
+                            onItemClickListener.searchListOnClick(position, searchList, it)
+                            Log.d(TAG, "value-->"+(searchList[position].stock))
+
+                        }
+                    }else{
+                        holder.itemView.setOnClickListener {
+                            Toast.makeText(context,"Product Not Availabe at this time", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                }else{
+
+                    holder.itemView.setOnClickListener {
+                        onItemClickListener.searchListOnClick(position, searchList, it)
+                        Log.d(TAG, "value-->"+(searchList[position].stock))
+
+                    }
                 }
 
+//                holder.itemView.setOnClickListener {
+//                    onItemClickListener.searchListOnClick(position, searchList, it)
+//                    Log.d(TAG, "value-->"+(searchList[position].stock))
+//
+//                }
+
             }
+
+
 
 
 

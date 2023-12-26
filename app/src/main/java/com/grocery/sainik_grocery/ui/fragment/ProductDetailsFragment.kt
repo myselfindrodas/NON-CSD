@@ -556,11 +556,7 @@ class ProductDetailsFragment : Fragment(), RelatedProductAdapter.OnItemClickList
                                             itProfileInfo.data.mrp.toDouble()
                                                 .minus(itProfileInfo.data.salesPrice.toDouble())
                                         )
-                                        llbenifits.text = "Save ₹ " + String.format(
-                                            "%.2f",
-                                            itProfileInfo.data.mrp.toDouble()
-                                                .minus(itProfileInfo.data.salesPrice.toDouble())
-                                        )
+                                        llbenifits.text = "Save ₹ " + String.format("%.2f", itProfileInfo.data.mrp.toDouble().minus(itProfileInfo.data.salesPrice.toDouble()))
                                         tvPriceOld.paintFlags =
                                             tvPriceOld.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                                         urc_productId = itProfileInfo.data.id
