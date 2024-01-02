@@ -9,5 +9,7 @@ data class Data(
     @SerializedName("name")
     val name: String,
     @SerializedName("categoryImageUrl")
-    val categoryImageUrl: String
+    val categoryImageUrl: String,
+    @SerializedName("description")
+    val description: String
 )

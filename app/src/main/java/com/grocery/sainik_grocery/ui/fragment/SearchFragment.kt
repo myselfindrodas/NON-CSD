@@ -160,7 +160,7 @@ class SearchFragment : Fragment(), SearchAdapter.SearchItemClickListener {
     private fun search(keyword:String){
 
         if (Utilities.isNetworkAvailable(mainActivity)) {
-            viewModel.search(SearchRequest("", keyword, "25", "0", )).observe(mainActivity) {
+            viewModel.search(SearchRequest("", keyword, "100", "0", )).observe(mainActivity) {
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {

@@ -42,7 +42,8 @@ class OrderDetailsListAdapter(
             // holder.ivImg.setImageResource(productModelArrayList[position].productid)
             tvItemprice.text = "Price: ₹ " + orderHistoryModelArrayList[position].unitPrice.toString()
             tvItemAmtTxt.text = orderHistoryModelArrayList[position].unitConversation.name
-            tvItemQtyTxt.text = "Qty: "+orderHistoryModelArrayList[position].quantity.toString()
+            tvItemQtyTxt.text = "Qty: "+orderHistoryModelArrayList[position].quantity.toString()+" "+
+                    orderHistoryModelArrayList[position].unitConversation.code
             try {
 
                 Picasso.get()
@@ -50,9 +51,12 @@ class OrderDetailsListAdapter(
                     .error(R.drawable.noimagefound)
 //                    .placeholder(R.drawable.loader_gif)
                     .into(holder.ivImg)
+
             }catch (e:Exception){
                 e.printStackTrace()
             }
+
+
             itemView.rootView.setOnClickListener {
                 onItemClickListener.onClick(position, orderHistoryModelArrayList[position], it)
             }

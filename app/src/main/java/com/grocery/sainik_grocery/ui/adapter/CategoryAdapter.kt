@@ -1,6 +1,8 @@
 package com.grocery.sainik_grocery.ui.adapter
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,15 +42,27 @@ class CategoryAdapter(
 
         holder.tvCatname.text = categoryModelArrayList[position].name
         try {
-            Picasso.get()
-                .load(imageURL+categoryModelArrayList[position].productCategoryUrl)
-                .error(R.drawable.noimagefound)
+            if (categoryModelArrayList[position].productCategoryUrl.isEmpty()){
+                Picasso.get()
+                    .load(R.drawable.noimagefound)
+                    .error(R.drawable.noimagefound)
 //                .placeholder(R.drawable.loader_gif)
-                .into(holder.imgIcon)
+                    .into(holder.imgIcon)
 
+            }else{
+                Picasso.get()
+                    .load(imageURL+categoryModelArrayList[position].productCategoryUrl)
+                    .error(R.drawable.noimagefound)
+//                .placeholder(R.drawable.loader_gif)
+                    .into(holder.imgIcon)
+
+            }
         }catch (e:Exception){
-            e.printStackTrace()
+
+            Log.d(TAG, "exception-->"+e)
         }
+
+
 
 //        holder.ivImg.setImageResource(productModelArrayList[position].image)
         holder.itemView.rootView.setOnClickListener {

@@ -255,13 +255,14 @@ class AddressFragment : Fragment(), AddressAdapter.OnItemClickListener {
                                 resource.data?.let { itResponse ->
 
                                     if (itResponse.status) {
-                                        getAddressList()
+//                                        getAddressList()
                                         val builder = android.app.AlertDialog.Builder(mainActivity)
                                         builder.setMessage(itResponse.message)
                                         builder.setPositiveButton(
                                             "Ok"
                                         ) { dialog, which ->
-
+                                            val navController = Navigation.findNavController(fragmentAddressBinding.root)
+                                            navController.navigate(R.id.nav_address)
                                             dialog.dismiss()
                                         }
                                         val alert = builder.create()

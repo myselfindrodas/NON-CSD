@@ -7,6 +7,25 @@
         android:layout_height="match_parent"
         tools:context=".ui.SplashScreenActivity">
 
+        <RelativeLayout
+            android:id="@+id/rlLoading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/blackTransparent"
+            android:clickable="true"
+            android:elevation="@dimen/_10sdp"
+            android:focusable="true"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/orange"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

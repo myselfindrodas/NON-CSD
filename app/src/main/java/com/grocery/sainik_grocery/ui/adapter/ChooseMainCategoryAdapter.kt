@@ -43,6 +43,7 @@ class ChooseMainCategoryAdapter(
         with(holder) {
 
             tvCatname.text = maincategotyModelArrayList[position].name
+            tvDescription.text = maincategotyModelArrayList[position].description
 
             itemView.setOnClickListener {
                 onItemClickListener.onClick(position, it, maincategotyModelArrayList)
@@ -74,12 +75,14 @@ class ChooseMainCategoryAdapter(
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var tvCatname: TextView
+        var tvDescription: TextView
         var rvItemImg: ImageView
 
 
         init {
 
             tvCatname = itemView.findViewById(R.id.tvCatname)
+            tvDescription = itemView.findViewById(R.id.tvDescription)
             rvItemImg = itemView.findViewById(R.id.rvItemImg)
 
         }

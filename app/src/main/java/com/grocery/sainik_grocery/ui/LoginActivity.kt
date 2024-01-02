@@ -85,7 +85,7 @@ class LoginActivity : BaseActivity() {
 
         with(binding){
 
-            Shared_Preferences.setUserToken("")
+//            Shared_Preferences.setUserToken("")
             val vm: CommonViewModel by viewModels {
                 CommonModelFactory(ApiHelper(ApiClient.apiService))
             }
@@ -104,16 +104,10 @@ class LoginActivity : BaseActivity() {
                 if (binding.etUserName.text.toString().isEmpty()){
                     Toast.makeText(applicationContext, "Enter Mobile Number", Toast.LENGTH_LONG).show()
                 }
-//                else if (binding.etPassword.text.toString().isEmpty()){
-//                    Toast.makeText(applicationContext, "Enter Password", Toast.LENGTH_LONG).show()
-//                }
+
             else{
                     loginapi()
 
-//                    loginapi(binding.etUserName.text.toString(),
-//                        binding.etPassword.text.toString())
-
-//                    startActivity(Intent(this@LoginActivity,OtpActivity::class.java))
 
                 }
 
@@ -142,19 +136,7 @@ class LoginActivity : BaseActivity() {
         }
 
 
-//        if (ContextCompat.checkSelfPermission(
-//                this@LoginActivity,
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            requestPermissionLauncher.launch(
-//                arrayOf(
-//                    Manifest.permission.ACCESS_FINE_LOCATION
-//                )
-//            )
-//        } else {
-//            displayLocationSettingsRequest(this@LoginActivity)
-//        }
+        generateToken()
 
 
 
@@ -423,57 +405,20 @@ class LoginActivity : BaseActivity() {
                             hideProgressDialog()
                             if (resource.data?.status==true){
 
+//                                Shared_Preferences.setEmail(resource.data.data.email)
+//                                Shared_Preferences.setName(resource.data.data.customerName)
+                                Shared_Preferences.setPhoneNo(resource.data.data.mobileNo.toString())
+
                                 val intent = Intent(this, OtpActivity::class.java)
                                 intent.putExtra("otp", resource.data.data.otp.toString())
-                                intent.putExtra("phone", resource.data.data.mobileNo.toString())
+//                                intent.putExtra("phone", resource.data.data.mobileNo.toString())
                                 startActivity(intent)
-                                Shared_Preferences.setEmail(resource.data.data.email)
-                                Shared_Preferences.setName(resource.data.data.customerName)
-                                Shared_Preferences.setPhoneNo(resource.data.data.mobileNo.toString())
-                                finish()
+//                                finish()
 
-
-//                                val builder = AlertDialog.Builder(this@LoginActivity)
-//                                builder.setMessage(resource.data.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    Shared_Preferences.setEmail(resource.data.data.email)
-//                                    Shared_Preferences.setName(resource.data.data.customerName)
-//                                    Shared_Preferences.setPhoneNo(resource.data.data.mobileNo.toString())
-//
-//                                    val intent = Intent(this, OtpActivity::class.java)
-//                                    intent.putExtra("otp", resource.data.data.otp.toString())
-//                                    intent.putExtra("phone", resource.data.data.mobileNo.toString())
-//                                    startActivity(intent)
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.setOnShowListener { arg0 ->
-//                                    alert.getButton(AlertDialog.BUTTON_POSITIVE)
-//                                        .setTextColor(resources.getColor(R.color.orange))
-//                                }
-//                                alert.show()
                             }else{
 
                                 Toast.makeText(this, it.data?.message, Toast.LENGTH_SHORT).show()
 
-//                                val builder = AlertDialog.Builder(this@LoginActivity)
-//                                builder.setMessage(it.data?.message)
-//                                builder.setPositiveButton(
-//                                    "Ok"
-//                                ) { dialog, which ->
-//
-//                                    dialog.cancel()
-//
-//                                }
-//                                val alert = builder.create()
-//                                alert.setOnShowListener { arg0 ->
-//                                    alert.getButton(AlertDialog.BUTTON_POSITIVE)
-//                                        .setTextColor(resources.getColor(R.color.orange))
-//                                }
-//                                alert.show()
 
                             }
 
@@ -525,6 +470,8 @@ class LoginActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+//        Shared_Preferences.setUserToken("")
+//        generateToken()
 
         headerHandler.postDelayed(Runnable {
             headerHandler.postDelayed(runnable!!, delay.toLong())
@@ -536,7 +483,6 @@ class LoginActivity : BaseActivity() {
 
         }.also { runnable = it }, delay.toLong())
 
-        generateToken()
 
     }
 

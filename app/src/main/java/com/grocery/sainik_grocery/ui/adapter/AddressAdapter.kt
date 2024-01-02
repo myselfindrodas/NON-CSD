@@ -64,12 +64,16 @@ class AddressAdapter(
             }
 
             btnhomeAddaddress.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putString("viewtype", "edit")
-                bundle.putSerializable("data", addressModelArrayList[position]!!)
+                try {
+                    val bundle = Bundle()
+                    bundle.putString("viewtype", "edit")
+                    bundle.putSerializable("data", addressModelArrayList[position]!!)
+                    val navController = Navigation.findNavController(it)
+                    navController.navigate(R.id.nav_addaddress, bundle)
+                }catch (e:Exception){
 
-                val navController = Navigation.findNavController(it)
-                navController.navigate(R.id.nav_addaddress, bundle)
+                }
+
             }
 
 

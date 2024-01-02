@@ -9,6 +9,8 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -145,7 +147,8 @@ class AddAddressFragment : Fragment() {
                     etLandmark.setText(itAddressData.landMark)
 //                    etApartmentName.setText(itAddressData.apartmentName)
 //                    etAreaDetails.setText(itAddressData.area)
-                    etStreeDetails.setText(itAddressData.streetDetails)
+                    etStreeDetails.setText(itAddressData.streetDetails?:"")
+                    etPinCode.setText(itAddressData.pincode?:"")
 //                    etCity.setText(itAddressData.city)
 //                    etPinCode.setText(itAddressData.pincode)
                     btnAddAddress.text = "Edit Address"
@@ -196,6 +199,8 @@ class AddAddressFragment : Fragment() {
                 if (Utilities.isClickRecently()){
                     return@setOnClickListener
                 }
+//                val navController = Navigation.findNavController(it)
+//                navController.navigate(R.id.nav_notification)
                 mainActivity.onBackPressedDispatcher.onBackPressed()
             }
             if (HomeFragment.cartCount > 0) {
@@ -285,6 +290,34 @@ class AddAddressFragment : Fragment() {
                     postAddAddress(it)
                 }
             }
+
+
+
+            etPinCode.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                    if (etPinCode.text.toString().matches(Regex("^0"))) {
+                        // Not allowed
+//                        Toast.makeText(mainActivity, "not allowed", Toast.LENGTH_LONG).show()
+                        etPinCode.setText("")
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+
+
+
+                }
+            })
+
 
         }
     }
@@ -518,6 +551,7 @@ class AddAddressFragment : Fragment() {
 
 
                             fragmentAddAddressBinding.etStreeDetails.setText(street+" , "+district)
+                            fragmentAddAddressBinding.etPinCode.setText(zipcode)
 
 
 
@@ -609,6 +643,13 @@ class AddAddressFragment : Fragment() {
                 Toast.makeText(mainActivity, "Enter Street details.", Toast.LENGTH_SHORT).show()
                 etHouseNo.requestFocus()
                 return false
+            }else if (etPinCode.text.toString().isEmpty()){
+                Toast.makeText(
+                    mainActivity,
+                    "Enter Pincode",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return false
             } else if (addressType.isEmpty()) {
                 Toast.makeText(
                     mainActivity,
@@ -642,6 +683,7 @@ class AddAddressFragment : Fragment() {
                     false,
                     fragmentAddAddressBinding.etLandmark.text.toString().trim(),
                     fragmentAddAddressBinding.etStreeDetails.text.toString().trim(),
+                    fragmentAddAddressBinding.etPinCode.text.toString().trim(),
                     addressType,
                     latitude.toString(),
                     longitude.toString()
@@ -731,6 +773,7 @@ class AddAddressFragment : Fragment() {
                     false,
                     fragmentAddAddressBinding.etLandmark.text.toString().trim(),
                     fragmentAddAddressBinding.etStreeDetails.text.toString().trim(),
+                    fragmentAddAddressBinding.etPinCode.text.toString().trim(),
                     addressType,
                     latitude.toString(),
                     longitude.toString()

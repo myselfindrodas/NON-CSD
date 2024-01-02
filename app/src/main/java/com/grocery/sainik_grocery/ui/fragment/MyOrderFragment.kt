@@ -222,14 +222,19 @@ class MyOrderFragment : Fragment(),MyOrderListAdapter.OnItemClickListener {
 
                                     if (itResponse.status) {
                                         productAdapter?.updateData(itResponse.data)
+                                        fragmentMyOrderBinding.tvNoorderfound.visibility = View.GONE
+                                        fragmentMyOrderBinding.rvProductList.visibility = View.VISIBLE
 
                                     } else {
 
-                                        Toast.makeText(
-                                            mainActivity,
-                                            resource.data?.message,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        fragmentMyOrderBinding.tvNoorderfound.visibility = View.VISIBLE
+                                        fragmentMyOrderBinding.rvProductList.visibility = View.GONE
+
+//                                        Toast.makeText(
+//                                            mainActivity,
+//                                            resource.data?.message,
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
 
                                     }
                                 }

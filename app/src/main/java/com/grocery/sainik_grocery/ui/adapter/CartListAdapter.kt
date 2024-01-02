@@ -44,7 +44,7 @@ class CartListAdapter(
 
             tvItemname.text = convertToCamelCase(cartModelArrayList[position].productName)
             // holder.ivImg.setImageResource(productModelArrayList[position].productid)
-            tvItemprice.text = "₹ " + cartModelArrayList[position].unitPrice.toString()
+            tvItemprice.text = "₹ " + cartModelArrayList[position].unitPrice.toString()+" "+cartModelArrayList[position].unitName
             tvProductcategory.text = cartModelArrayList[position].product.productCategory.name
             /* itemView.rootView.setOnClickListener {
                  onItemClickListener.onClick(position, it)

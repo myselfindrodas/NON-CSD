@@ -25,7 +25,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.example.sainikgrocerycustomer.data.model.Category
 import com.example.sainikgrocerycustomer.data.model.DataProductList
 import com.grocery.sainik_grocery.R
 import com.grocery.sainik_grocery.data.ApiClient
@@ -36,6 +35,7 @@ import com.grocery.sainik_grocery.data.model.profilemodel.GetProfileRequest
 import com.grocery.sainik_grocery.data.modelfactory.CommonModelFactory
 import com.grocery.sainik_grocery.databinding.FragmentHomeBinding
 import com.grocery.sainik_grocery.ui.LocationActivity
+import com.grocery.sainik_grocery.ui.LoginActivity
 import com.grocery.sainik_grocery.ui.MainActivity
 import com.grocery.sainik_grocery.ui.adapter.BannerAdapter
 import com.grocery.sainik_grocery.ui.adapter.CategoryAdapter
@@ -459,17 +459,33 @@ class HomeFragment : Fragment(),
                             }
                             Status.ERROR -> {
                                 mainActivity.hideProgressDialog()
-                                val builder = AlertDialog.Builder(mainActivity)
-                                builder.setMessage(it.message)
-                                builder.setPositiveButton(
-                                    "Ok"
-                                ) { dialog, which ->
-
-                                    dialog.cancel()
-
-                                }
-                                val alert = builder.create()
-                                alert.show()
+//                                if (it.message!!.contains("400",true) && it.message!!.contains("401",true)) {
+//                                    Shared_Preferences.setLoginStatus(false)
+//                                    Shared_Preferences.clearPref()
+//                                    val intent = Intent(mainActivity, LoginActivity::class.java)
+//                                    startActivity(intent)
+//                                    mainActivity.finish()
+//                                }else{
+//                                    Shared_Preferences.setLoginStatus(false)
+//                                    Shared_Preferences.clearPref()
+//                                    val intent = Intent(mainActivity, LoginActivity::class.java)
+//                                    startActivity(intent)
+//                                    mainActivity.finish()
+//                                }
+//                                    Toast.makeText(mainActivity, it.message, Toast.LENGTH_SHORT).show()
+//
+//
+//                                val builder = AlertDialog.Builder(mainActivity)
+//                                builder.setMessage(it.message)
+//                                builder.setPositiveButton(
+//                                    "Ok"
+//                                ) { dialog, which ->
+//
+//                                    dialog.cancel()
+//
+//                                }
+//                                val alert = builder.create()
+//                                alert.show()
                             }
 
                             Status.LOADING -> {
@@ -624,8 +640,9 @@ class HomeFragment : Fragment(),
                                         } else {
                                             val firstLetter = splitName[0].first()
                                             val result = firstLetter
-                                            mainActivity.tvlettersBuyer!!.text = result.toString()
-                                                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                                            mainActivity.tvlettersBuyer!!.text = result.toString().replaceFirstChar {
+                                                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                                                }
                                         }
 
 
@@ -645,17 +662,17 @@ class HomeFragment : Fragment(),
                             }
                             Status.ERROR -> {
                                 mainActivity.hideProgressDialog()
-                                val builder = androidx.appcompat.app.AlertDialog.Builder(mainActivity)
-                                builder.setMessage(it.message)
-                                builder.setPositiveButton(
-                                    "Ok"
-                                ) { dialog, which ->
-
-                                    dialog.cancel()
-
-                                }
-                                val alert = builder.create()
-                                alert.show()
+//                                val builder = AlertDialog.Builder(mainActivity)
+//                                builder.setMessage(it.message)
+//                                builder.setPositiveButton(
+//                                    "Ok"
+//                                ) { dialog, which ->
+//
+//                                    dialog.cancel()
+//
+//                                }
+//                                val alert = builder.create()
+//                                alert.show()
                             }
 
                             Status.LOADING -> {

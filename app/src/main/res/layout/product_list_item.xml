@@ -282,23 +282,23 @@
                         android:textSize="@dimen/_10ssp"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-<!--                    <androidx.appcompat.widget.AppCompatButton-->
-<!--                        android:id="@+id/btnOutofstock"-->
-<!--                        android:layout_width="@dimen/_110sdp"-->
-<!--                        android:layout_height="@dimen/_30sdp"-->
-<!--                        android:layout_gravity="end"-->
-<!--                        android:layout_marginTop="@dimen/_7sdp"-->
-<!--                        android:layout_marginEnd="@dimen/_8sdp"-->
-<!--                        android:background="@drawable/rounded_blue_bg_btn"-->
-<!--                        android:clickable="false"-->
-<!--                        android:backgroundTint="@color/grey_text"-->
-<!--                        android:fontFamily="@font/poppins_regular"-->
-<!--                        android:text="Out Of Stock"-->
-<!--                        android:visibility="gone"-->
-<!--                        android:textAllCaps="false"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="@dimen/_10ssp"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent" />-->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnOutofstock"
+                        android:layout_width="@dimen/_110sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:background="@drawable/rounded_blue_bg_btn"
+                        android:clickable="false"
+                        android:backgroundTint="@color/grey_text"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Out Of Stock"
+                        android:visibility="gone"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintEnd_toEndOf="parent" />
 
 
 

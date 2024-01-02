@@ -2,6 +2,7 @@ package com.grocery.sainik_grocery.ui
 
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -209,7 +210,7 @@ class OtpActivity : BaseActivity() {
 
         if (Utilities.isNetworkAvailable(this)) {
             viewModel.otpverify(
-                OtpverifyRequest(mobileNo = phone.toString(), otp = otp.toString())
+                OtpverifyRequest(mobileNo = Shared_Preferences.getPhoneNo(), otp = otp.toString())
             ).observe(this) {
                 it?.let { resource ->
                     when (resource.status) {
@@ -220,6 +221,7 @@ class OtpActivity : BaseActivity() {
 
                                 Shared_Preferences.setLoginStatus(true)
                                 Shared_Preferences.setUserId(resource.data.data.id)
+                                Log.d(TAG, "userid-->"+resource.data.data.id)
                                 Toast.makeText(this, resource.data.message, Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@OtpActivity, LocationActivity::class.java)
                                 startActivity(intent)

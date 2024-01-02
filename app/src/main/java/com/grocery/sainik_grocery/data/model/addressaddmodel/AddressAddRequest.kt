@@ -15,6 +15,8 @@ data class AddressAddRequest(
     val landMark: String,
     @SerializedName("streetDetails")
     val streetDetails: String,
+    @SerializedName("Pincode")
+    val Pincode: String,
     @SerializedName("type")
     val type: String,
     @SerializedName("Latitude")

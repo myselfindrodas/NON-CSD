@@ -20,5 +20,7 @@ data class Data(
     @SerializedName("streetDetails")
     val streetDetails: String,
     @SerializedName("type")
-    val type: String
+    val type: String,
+    @SerializedName("pincode")
+    val pincode: String
 ):Serializable

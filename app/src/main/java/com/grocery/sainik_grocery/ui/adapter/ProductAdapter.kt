@@ -124,6 +124,13 @@ class ProductAdapter(
             holder.tvCounterProduct.text = count.toString()
 
 
+            if (productModelArrayList[position].stock.toInt()==count|| productModelArrayList[position].stock.toInt()<=0){
+                btnOutofstock.visibility = View.VISIBLE
+                btnGo.visibility = View.GONE
+            }else{
+                btnOutofstock.visibility = View.GONE
+                btnGo.visibility = View.VISIBLE
+            }
 
 
             holder.btnGo.setOnClickListener {
@@ -184,6 +191,13 @@ class ProductAdapter(
                 onItemClickListener.onUpdate(position, it, count, holder.tvPrice,  productModelArrayList[position].id, cartid, productModelArrayList[position], "update", 1)
 
                 /*tvCounter.text = count.toString()*/
+            }
+
+
+            holder.btnOutofstock.setOnClickListener {
+
+                Toast.makeText(ctx,"Product Out of stock",Toast.LENGTH_SHORT).show()
+
             }
 
 
@@ -339,6 +353,7 @@ class ProductAdapter(
         var btnAdd: AppCompatButton
         var btnSub: AppCompatButton
         var btnGo: AppCompatButton
+        var btnOutofstock: AppCompatButton
         var tvQty: TextView
         var llcounter:LinearLayout
 //        var llAddProduct: LinearLayout
@@ -364,6 +379,7 @@ class ProductAdapter(
             btnSub = itemView.findViewById(R.id.btnSub)
             btnAdd = itemView.findViewById(R.id.btnAdd)
             tvCounterProduct = itemView.findViewById(R.id.tvCounter)
+            btnOutofstock = itemView.findViewById(R.id.btnOutofstock)
             tvCounterProduct.text = count.toString()
         }
     }

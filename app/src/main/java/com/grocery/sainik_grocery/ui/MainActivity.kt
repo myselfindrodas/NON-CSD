@@ -273,9 +273,9 @@ class MainActivity : BaseActivity(),
             ) { dialog, which ->
                 Shared_Preferences.setLoginStatus(false)
                 Shared_Preferences.clearPref()
-                val intent = Intent(this, LoginActivity::class.java)
+                val intent = Intent(this, SplashScreenActivity::class.java)
                 startActivity(intent)
-                finish()
+                finishAffinity()
                 dialog.cancel()
             }
 

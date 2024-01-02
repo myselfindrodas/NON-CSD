@@ -100,7 +100,8 @@ class ProfileFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            mainActivity.onBackPressedDispatcher.onBackPressed()
+            val navController = Navigation.findNavController(it)
+            navController.navigate(R.id.nav_home)
 
         }
 

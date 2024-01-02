@@ -23,6 +23,17 @@
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp" />
 
+        <TextView
+            android:id="@+id/tvNoorderfound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:text="No Order Found!!"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/blue"
+            android:textAlignment="center"/>
+
         <!--<androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnGo"
             android:layout_width="@dimen/_100sdp"
